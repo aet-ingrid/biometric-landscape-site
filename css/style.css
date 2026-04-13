@@ -1696,6 +1696,12 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 .report-toc a { color: var(--accent); }
 .report-toc a:hover { text-decoration: underline; }
 
+.report-layer-page {
+  padding: 2rem 0 2rem;
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+
 /* ============================================================
    PRINT STYLES — scoped to body.report (report.html)
    ============================================================ */
@@ -1916,6 +1922,12 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 
   /* TOC — page break after */
   body.report .report-toc { break-after: page; page-break-after: always; }
+
+  /* Layer architecture — own page */
+  body.report .report-layer-page { break-before: page; page-break-before: always; break-after: page; page-break-after: always; }
+
+  /* Binding matrix — page break before */
+  body.report .report-matrix-break { break-before: page; page-break-before: always; }
 
   /* Appendix — page break before */
   body.report .report-appendix { break-before: page; page-break-before: always; }

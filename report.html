@@ -56,7 +56,8 @@
   <section class="report-toc">
     <h2>Contents</h2>
     <ol>
-      <li><a href="#comparison">Landscape Comparison</a> — player overview, binding quality matrix, comparison axes</li>
+      <li><a href="#layers">Layer Architecture</a> — three-layer identity stack model</li>
+      <li><a href="#comparison">Landscape Comparison</a> — binding quality matrix, agentic coverage</li>
       <li><a href="#microsoft">Microsoft (P03)</a> — Enterprise IAM Orchestrator · Layer 1 (partial) + Layer 2</li>
       <li><a href="#okta">Okta (P04)</a> — Enterprise IAM Orchestrator · Layer 2 only</li>
       <li><a href="#world">World / World ID (P05)</a> — Proof-of-Personhood Protocol · Layer 1</li>
@@ -65,7 +66,40 @@
     </ol>
   </section>
 
-  <hr>
+  <!-- ============================================================
+       LAYER ARCHITECTURE PAGE
+       ============================================================ -->
+  <section id="layers" class="report-layer-page">
+    <div class="section-title" style="margin-bottom:0.5rem;">Layer Architecture</div>
+    <p style="font-size:0.875rem;color:var(--text-3);margin-bottom:1.5rem;max-width:600px;">Three-layer model used throughout this research. A player may occupy one, two, or all three layers. Layer position determines whether hard binding is achievable natively or only through supplier dependency.</p>
+
+    <div class="layer-diagram" style="max-width:600px;">
+      <div class="layer-box">
+        <div class="layer-box__label">Layer 2 — top of stack</div>
+        <div class="layer-box__name">Binding Authority / IAM Orchestrator</div>
+        <div class="layer-box__def">The actor that receives Layer 1 results and issues the downstream credential — the session token, OAuth JWT, W3C VC, or agent identity — that travels to relying parties. This is the policy and orchestration layer.</div>
+        <div class="layer-box__examples">Players in this research: Microsoft Entra ID (Layer 2); Okta (Layer 2 only); Ping Identity PingOne / PingFederate (Layer 2)</div>
+      </div>
+      <div class="layer-arrow">↑ verification results and signed credentials flow up from Layer 1</div>
+      <div class="layer-box">
+        <div class="layer-box__label">Layer 1</div>
+        <div class="layer-box__name">Biometric Verification / IDV Supplier / Credential Issuer</div>
+        <div class="layer-box__def">The actor that captures a biometric, verifies liveness, matches the biometric to a claimed identity, and produces a verification result or signed credential. Converts a physical event into a digital claim.</div>
+        <div class="layer-box__examples">Players in this research: World / Tools for Humanity — Orb + ZK credential issuance (Layer 1); Keyless sMPC — Ping Identity, acq. Jan 2026 (Layer 1); iProov, Nametag — Okta partners (not owned)</div>
+      </div>
+      <div class="layer-arrow">↑ hardware-attested biometric events flow up from Layer 0</div>
+      <div class="layer-box">
+        <div class="layer-box__label">Layer 0 — hardware foundation</div>
+        <div class="layer-box__name">Hardware Substrate</div>
+        <div class="layer-box__def">The physical root of trust: the chip, secure enclave, or sensor that hardware-enforces liveness or key storage. No software can impersonate hardware physics at this layer.</div>
+        <div class="layer-box__examples">Example actors: Intel PTT / AMD fTPM / Infineon (TPM 2.0); Apple Secure Enclave; Android StrongBox; World Orb (iris hardware); Thales Luna HSM</div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);max-width:600px;">
+      <p style="font-size:0.85rem;color:var(--text-3);margin:0;line-height:1.6;"><strong style="color:var(--text);">Why layer position determines binding quality:</strong> A Layer 2 orchestrator that does not own Layer 1 cannot guarantee the biometric proof enters the artifact it issues — it can only condition token issuance on a result received from a supplier. A player owning both layers has native control of the full chain from biometric event to signed credential. <strong style="color:var(--text);">Ping Identity is the only enterprise IAM orchestrator in this research that owns both layers</strong> following the Keyless acquisition (January 2026).</p>
+    </div>
+  </section>
 
   <!-- ============================================================
        LANDSCAPE COMPARISON
@@ -76,7 +110,6 @@
     </div>
 
     <!-- Player summary strip -->
-    <div class="section-title" style="margin-bottom:0.75rem;">Player overview</div>
     <div class="player-strip">
       <div class="player-card">
         <div class="player-card__header">
@@ -141,6 +174,7 @@
     </div>
 
     <!-- Binding matrix -->
+    <div class="report-matrix-break"></div>
     <div class="section-title" style="margin-bottom:0.75rem;">Binding quality matrix — all 11 lanes</div>
     <div class="matrix-wrap">
       <table class="binding-matrix">
@@ -194,36 +228,6 @@
       </div>
     </div>
 
-    <!-- Comparison axes — all expanded -->
-    <div class="section-title" style="margin:1.5rem 0 0.75rem;">Comparison axes</div>
-
-    <!-- Strategic open questions -->
-    <div style="margin-bottom:1.5rem;">
-      <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:0.85rem;color:var(--text);">Strategic Open Questions</h3>
-      <div class="gap-cards">
-        <div class="gap-card"><div class="gap-card__player">Microsoft (P03)</div><p class="gap-card__text">Entra Agent ID produces soft binding — biometric proof from WHFB provisioning event does not travel to the agent credential; upgrade path (Face Check receipt model extended to agent credentials) architecturally understood but not shipped.</p></div>
-        <div class="gap-card"><div class="gap-card__player">Okta (P04)</div><p class="gap-card__text">No native hard-binding mechanism anywhere in the stack; software-only token signing; soft-to-hard binding transition requires acquiring Nametag or executing deep third-party integration — most exposed player in enterprise IAM to regulatory pressure on this gap.</p></div>
-        <div class="gap-card"><div class="gap-card__player">World (P05)</div><p class="gap-card__text">Token-incentivized growth model means user count claims cannot be read equivalently to SaaS adoption; issuance-side is centralized (TFH controls Orb + deduplication algorithm) despite decentralized presentation-side design.</p></div>
-        <div class="gap-card"><div class="gap-card__player">Ping Identity (P23)</div><p class="gap-card__text">Gap between owning the Keyless ZK mechanism and having it integrated into the agent credential artifact signing chain — hard binding path is native but integration not confirmed shipped as of March 2026.</p></div>
-      </div>
-    </div>
-
-    <!-- Decision role & authority model -->
-    <div style="margin-bottom:1.5rem;">
-      <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:0.85rem;color:var(--text);">Decision Role &amp; Authority Model</h3>
-      <table class="comp-table">
-        <thead>
-          <tr><th>Player</th><th>Decision Role</th><th>Authority Model</th><th>Vertical Integration</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Microsoft</strong></td><td>Layer 1 (partial, OEM-dependent) + Layer 2 (dominant enterprise binding authority)</td><td>Institutional</td><td>Strong Layer 2; Layer 1 OEM/cloud-dependent</td></tr>
-          <tr><td><strong>Okta</strong></td><td>Layer 2 only — relying party for FIDO2; policy engine for biometric partner results</td><td>Institutional</td><td>Layer 2 only. No native biometric capability</td></tr>
-          <tr><td><strong>World</strong></td><td>Layer 1 — biometric verification and ZK credential issuance; no Layer 2 downstream binding</td><td>Sovereign/personal — pseudonymous, protocol-issued</td><td>Strongly integrated on issuance side (Orb + registry); presentation decentralizing</td></tr>
-          <tr><td><strong>Ping Identity</strong></td><td>Layer 1 (Keyless ZK sMPC, acq. Jan 2026) + Layer 2 (PingOne/PingFederate)</td><td>Institutional</td><td>Layer 1 + Layer 2. Only enterprise IAM with native ZK biometrics</td></tr>
-        </tbody>
-      </table>
-    </div>
-
     <!-- Agentic coverage -->
     <div style="margin-bottom:1.5rem;">
       <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:0.85rem;color:var(--text);">Agentic Coverage</h3>
@@ -236,39 +240,6 @@
       </div>
     </div>
 
-    <!-- Regulatory exposure -->
-    <div style="margin-bottom:1.5rem;">
-      <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:0.85rem;color:var(--text);">Regulatory Exposure</h3>
-      <table class="comp-table">
-        <thead>
-          <tr><th>Framework</th><th>Microsoft</th><th>Okta</th><th>World</th><th>Ping Identity</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>EU AI Act Art. 14</td><td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ gap</span></td><td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ gap</span></td><td>—</td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td></tr>
-          <tr><td>eIDAS / EUDIW</td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td><td><span style="color:#fcd34d;font-family:var(--mono);font-size:0.78rem;">~ in progress</span></td><td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ proprietary format</span></td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td></tr>
-          <tr><td>NIST IAL2 / AAL2</td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td><td>—</td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td></tr>
-          <tr><td>GDPR Art. 9</td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td><td>—</td><td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ active bans (10 jurisdictions)</span></td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ Keyless sMPC GDPR-exempt</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Protocol adoption -->
-    <div style="margin-bottom:1.5rem;">
-      <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:0.85rem;color:var(--text);">Protocol Adoption</h3>
-      <table class="comp-table">
-        <thead>
-          <tr><th>Protocol</th><th>Microsoft</th><th>Okta</th><th>World</th><th>Ping Identity</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>FIDO2 / WebAuthn</td><td><span class="status-badge status-badge--production">production</span></td><td><span class="status-badge status-badge--production">production</span></td><td><span class="status-badge status-badge--partial">not adopted</span></td><td><span class="status-badge status-badge--production">production</span></td></tr>
-          <tr><td>W3C VC Data Model</td><td><span class="status-badge status-badge--production">production</span></td><td><span class="status-badge status-badge--announced">FY2027 roadmap</span></td><td><span class="status-badge status-badge--partial">not adopted</span></td><td><span class="status-badge status-badge--production">production</span></td></tr>
-          <tr><td>OpenID4VP / VCI</td><td><span class="status-badge status-badge--production">production</span></td><td><span class="status-badge status-badge--announced">in progress</span></td><td><span class="status-badge status-badge--partial">not adopted</span></td><td><span class="status-badge status-badge--production">production</span></td></tr>
-          <tr><td>MCP</td><td><span class="status-badge status-badge--production">production</span></td><td><span class="status-badge status-badge--announced">announced</span></td><td><span class="status-badge status-badge--partial">not referenced</span></td><td><span class="status-badge status-badge--production">production</span></td></tr>
-          <tr><td>IETF WIMSE</td><td><span class="status-badge status-badge--announced">announced</span></td><td><span class="status-badge status-badge--announced">engaged</span></td><td><span class="status-badge status-badge--partial">not referenced</span></td><td><span class="status-badge status-badge--production">active contributor</span></td></tr>
-          <tr><td>XAA (Okta protocol)</td><td><span class="status-badge status-badge--partial">not adopted</span></td><td><span class="status-badge status-badge--production">production (own)</span></td><td><span class="status-badge status-badge--partial">not referenced</span></td><td><span class="status-badge status-badge--partial">not adopted</span></td></tr>
-        </tbody>
-      </table>
-    </div>
   </section>
 
   <hr>
