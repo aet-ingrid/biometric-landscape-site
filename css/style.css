@@ -1391,6 +1391,14 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
   line-height: 1.45;
 }
 
+.stack-layer-arrow {
+  font-size: 0.7rem;
+  color: var(--text-4);
+  opacity: 0.5;
+  text-align: center;
+  margin-top: 0.6rem;
+}
+
 .stack-cell {
   border: 1px solid var(--border);
   margin: -1px 0 0 -1px;
