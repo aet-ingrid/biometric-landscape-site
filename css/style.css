@@ -1128,6 +1128,176 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 }
 
 /* ============================================================
+   LAYER MODEL DIAGRAM (about.html)
+   ============================================================ */
+.layer-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 1.5rem 0;
+  max-width: 680px;
+}
+
+.layer-box {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  position: relative;
+}
+
+.layer-box + .layer-box {
+  border-top: none;
+  border-radius: 0;
+}
+
+.layer-box:first-child {
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.layer-box:last-child {
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.layer-box__label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-4);
+  margin-bottom: 0.25rem;
+}
+
+.layer-box__name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.layer-box__def {
+  font-size: 0.85rem;
+  color: var(--text-3);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.layer-box__examples {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-4);
+}
+
+.layer-arrow {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-4);
+  padding: 0.2rem 0;
+  line-height: 1;
+}
+
+/* Annotated lane card callout labels (about.html) */
+.annotated-lane {
+  position: relative;
+}
+
+.callout-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--accent-2);
+  background: var(--surface-2);
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  padding: 0.1em 0.5em;
+  margin-top: 0.35rem;
+  white-space: nowrap;
+}
+
+.callout-label::before {
+  content: '▸';
+  font-size: 0.75rem;
+}
+
+/* Glossary */
+.glossary {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.glossary dt {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--text);
+  font-weight: 600;
+  padding: 0.7rem 0 0.1rem;
+  border-top: 1px solid var(--border);
+}
+
+.glossary dt:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.glossary dd {
+  font-size: 0.875rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  padding-bottom: 0.5rem;
+  margin: 0;
+}
+
+/* Primer section headings */
+.primer-section {
+  margin-bottom: 3rem;
+}
+
+.primer-section__heading {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.primer-section__num {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Download button */
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-family: var(--mono);
+  color: var(--text-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.3em 0.85em;
+  background: var(--surface);
+  white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.download-btn:hover {
+  color: var(--text);
+  border-color: var(--border-2);
+  text-decoration: none;
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 .site-footer {
@@ -1197,4 +1367,229 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
   color: var(--accent-2);
   border-left-color: var(--accent-2);
   background: var(--surface-2);
+}
+
+/* ============================================================
+   PRINT STYLES — scoped to body.report (report.html)
+   ============================================================ */
+@media print {
+  body.report {
+    background: #fff;
+    color: #111;
+    font-size: 10pt;
+    line-height: 1.55;
+  }
+
+  body.report .global-nav,
+  body.report .player-sidebar,
+  body.report .player-switcher,
+  body.report .mobile-section-nav,
+  body.report .back-link,
+  body.report .disclosure-trigger,
+  body.report .site-footer,
+  body.report .report-actions {
+    display: none !important;
+  }
+
+  /* Expand all disclosures */
+  body.report .disclosure-body {
+    display: block !important;
+  }
+
+  /* Cover page */
+  body.report .report-cover {
+    page-break-after: always;
+    break-after: page;
+    padding: 4cm 0 3cm;
+    border-bottom: 2px solid #111;
+  }
+
+  body.report .report-cover__title {
+    font-size: 24pt;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 0.5rem;
+  }
+
+  body.report .report-cover__subtitle {
+    font-size: 13pt;
+    color: #555;
+    margin-bottom: 2rem;
+  }
+
+  body.report .report-cover__meta {
+    font-size: 9pt;
+    color: #666;
+  }
+
+  /* Section breaks before each player */
+  body.report .report-player-section {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  /* Collapse player layout to single column */
+  body.report .player-page {
+    display: block;
+  }
+
+  /* Typography */
+  body.report h2 { font-size: 14pt; color: #111; margin-bottom: 0.5rem; }
+  body.report h3 { font-size: 12pt; color: #111; }
+  body.report h4 { font-size: 10pt; color: #111; }
+
+  body.report .page-header__title,
+  body.report .player-page-title {
+    font-size: 18pt;
+    color: #111;
+  }
+
+  body.report .page-header__label,
+  body.report .page-header__sub {
+    color: #555;
+  }
+
+  /* Surfaces → white */
+  body.report .player-card,
+  body.report .lane-card,
+  body.report .classification-card,
+  body.report .gap-callout,
+  body.report .pull-quote,
+  body.report .accordion-body,
+  body.report .gap-card,
+  body.report .agentic-card {
+    background: #fff;
+    border-color: #bbb;
+    color: #111;
+  }
+
+  body.report .pull-quote {
+    border-left-color: #555;
+    color: #333;
+  }
+
+  body.report .gap-callout {
+    background: #fff7ed;
+    border-color: #b45309;
+  }
+
+  body.report .gap-callout__label { color: #92400e; }
+  body.report .gap-callout__text { color: #333; }
+
+  /* Binding badges — print safe */
+  body.report .bq {
+    background: #fff;
+    color: #111;
+    border-width: 1.5px;
+  }
+
+  body.report .bq--hard {
+    border-color: #16a34a;
+    color: #15803d;
+  }
+
+  body.report .bq--hard::before { background: #16a34a; }
+
+  body.report .bq--hard_path_native {
+    border-color: #d97706;
+    border-style: dashed;
+    color: #b45309;
+  }
+
+  body.report .bq--hard_path_native::before { background: #d97706; }
+
+  body.report .bq--soft {
+    border-color: #6b7280;
+    border-style: dashed;
+    color: #6b7280;
+  }
+
+  body.report .bq--soft::before { background: #9ca3af; }
+
+  /* Tags / pills */
+  body.report .tag,
+  body.report .pill {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+    color: #374151;
+  }
+
+  body.report .pill--artifact { background: #eff6ff; border-color: #93c5fd; color: #1d4ed8; }
+  body.report .pill--agentic  { background: #f5f3ff; border-color: #a5b4fc; color: #4338ca; }
+  body.report .tag--agentic   { border-color: #a5b4fc; color: #4338ca; }
+
+  /* Status badges */
+  body.report .status-badge--production { background: #f0fdf4; border-color: #86efac; color: #15803d; }
+  body.report .status-badge--announced  { background: #fffbeb; border-color: #fcd34d; color: #92400e; }
+  body.report .status-badge--partial    { background: #f9fafb; border-color: #d1d5db; color: #6b7280; }
+
+  /* Tables */
+  body.report .binding-matrix th,
+  body.report .binding-matrix td,
+  body.report .comp-table th,
+  body.report .comp-table td,
+  body.report .proto-table th,
+  body.report .proto-table td {
+    background: #fff;
+    border-color: #d1d5db;
+    color: #111;
+  }
+
+  body.report .binding-matrix thead th,
+  body.report .comp-table thead th,
+  body.report .proto-table thead th {
+    background: #f9fafb;
+    color: #374151;
+  }
+
+  body.report .binding-matrix td:first-child,
+  body.report .binding-matrix tbody tr:hover td,
+  body.report .comp-table tbody tr:nth-child(odd) td,
+  body.report .proto-table tbody tr:nth-child(odd) td {
+    background: #f9fafb;
+  }
+
+  /* Links: show as text in print */
+  body.report a { color: #111; text-decoration: none; }
+
+  /* Prose text */
+  body.report .prose { color: #222; }
+  body.report .prose strong { color: #111; }
+  body.report .player-card__position,
+  body.report .lane-cell__name,
+  body.report .gap-card__text { color: #333; }
+
+  body.report .section-title { color: #555; }
+  body.report .player-section__label { color: #888; }
+  body.report .player-section__title { color: #111; }
+
+  /* Accordion expanded in print */
+  body.report .accordion-body { display: block !important; }
+  body.report .accordion-trigger { display: none; }
+
+  /* Avoid orphans */
+  body.report .player-section { break-inside: avoid-page; }
+  body.report .lane-card { break-inside: avoid; }
+
+  body.report code,
+  body.report .mono {
+    background: #f3f4f6;
+    color: #374151;
+  }
+
+  /* Print text overrides for dark text vars */
+  body.report [style*="color:var(--text"] { color: #333 !important; }
+  body.report [style*="color:var(--hard-text)"] { color: #15803d !important; }
+  body.report [style*="color:var(--hpn-text)"] { color: #b45309 !important; }
+  body.report [style*="color:var(--soft-text)"] { color: #6b7280 !important; }
+  body.report [style*="color:#fca5a5"] { color: #dc2626 !important; }
+  body.report [style*="color:#fcd34d"] { color: #d97706 !important; }
+  body.report [style*="background:var(--bg)"] { background: #fff !important; }
+  body.report [style*="background:var(--surface)"] { background: #f9fafb !important; }
+  body.report [style*="font-family:var(--mono)"] { color: #374151 !important; }
+
+  @page {
+    margin: 1.8cm 2cm;
+    size: A4;
+  }
 }

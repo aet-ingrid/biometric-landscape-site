@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biometric Anchoring Landscape — Consolidated Report (April 2026)</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="report">
+
+<nav class="global-nav" role="navigation" aria-label="Site navigation">
+  <div class="global-nav__inner">
+    <span class="global-nav__brand"><strong>Biometric Anchoring</strong> — Research Dashboard</span>
+    <span class="global-nav__sep">|</span>
+    <div class="global-nav__links">
+      <a href="index.html">Comparison</a>
+      <a href="about.html">Primer</a>
+      <a href="players/microsoft.html">Microsoft</a>
+      <a href="players/okta.html">Okta</a>
+      <a href="players/world.html">World</a>
+      <a href="players/ping.html">Ping Identity</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrap" style="max-width:960px;">
+
+  <!-- Print action bar (hidden in print) -->
+  <div class="report-actions" style="display:flex;align-items:center;gap:1rem;margin-bottom:2rem;padding:0.85rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);">
+    <span style="font-size:0.875rem;color:var(--text-3);flex:1;">To save as PDF: <strong style="color:var(--text-2);">File → Print → Save as PDF</strong> (or Cmd+P on Mac / Ctrl+P on Windows). All sections are pre-expanded for print.</span>
+    <button onclick="window.print()" style="font-size:0.82rem;font-family:var(--mono);color:var(--text-2);background:var(--surface-2);border:1px solid var(--border-2);border-radius:var(--radius);padding:0.35em 1em;cursor:pointer;">Print / Save PDF</button>
+  </div>
+
+  <!-- ============================================================
+       COVER PAGE
+       ============================================================ -->
+  <div class="report-cover">
+    <div style="margin-bottom:3rem;">
+      <div style="font-family:var(--mono);font-size:0.72rem;color:var(--text-4);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">Research corpus</div>
+      <div class="report-cover__title">Biometric Anchoring Landscape</div>
+      <div class="report-cover__subtitle">Enterprise and decentralized biometric identity — four players analyzed across binding quality, agentic coverage, authority model, and regulatory exposure</div>
+    </div>
+    <div class="report-cover__meta">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.5rem 2rem;max-width:480px;">
+        <div><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);text-transform:uppercase;letter-spacing:0.08em;">Date</span><br>April 12, 2026</div>
+        <div><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);text-transform:uppercase;letter-spacing:0.08em;">Research scope</span><br>Four players: Microsoft (P03), Okta (P04), World (P05), Ping Identity (P23)</div>
+        <div><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);text-transform:uppercase;letter-spacing:0.08em;">Lanes covered</span><br>11 lanes total; 5 agentic</div>
+        <div><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);text-transform:uppercase;letter-spacing:0.08em;">Audience</span><br>Technical and policy stakeholders</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SECTION 1 — Framework primer (condensed)
+       ============================================================ -->
+  <section class="index-section">
+    <div class="index-section-header">
+      <h2 style="font-size:1.2rem;">Section 1: Framework</h2>
+    </div>
+
+    <div class="prose">
+      <h4>What is biometric anchoring?</h4>
+      <p>Biometric anchoring is the cryptographic linkage of a biometric proof event to a credential artifact that travels with the identity claim. A biometrically-anchored credential carries within itself — or in a cryptographically-linked signed record — evidence that a specific biometric event occurred. A relying party can verify that evidence independently, without querying a separate audit system.</p>
+      <p>This distinguishes anchored credentials from conventional password or assertion-based models. Under regulatory frameworks that require artifact-level non-repudiation (EU AI Act Art. 14 human-in-the-loop), the difference between anchored and unanchored credentials determines whether an audit can be resolved from the artifact alone or requires the issuer's cooperation.</p>
+    </div>
+
+    <div style="margin-top:1.5rem;">
+      <div class="section-title">Layer model</div>
+      <div class="layer-diagram" style="max-width:100%;">
+        <div class="layer-box">
+          <div class="layer-box__label">Layer 2 — top of stack</div>
+          <div class="layer-box__name">Binding Authority / IAM Orchestrator</div>
+          <div class="layer-box__def">Issues downstream credentials (tokens, JWTs, W3C VCs, agent identities) that relying parties accept.</div>
+          <div class="layer-box__examples">Microsoft Entra ID · Okta · Ping Identity (PingOne, PingFederate)</div>
+        </div>
+        <div class="layer-arrow">↑ verification results and signed credentials flow up from Layer 1</div>
+        <div class="layer-box">
+          <div class="layer-box__label">Layer 1</div>
+          <div class="layer-box__name">Biometric Verification / IDV Supplier / Credential Issuer</div>
+          <div class="layer-box__def">Converts a physical biometric event into a digital verification result or signed credential.</div>
+          <div class="layer-box__examples">World / Tools for Humanity · Keyless sMPC (Ping Identity) · iProov · Nametag</div>
+        </div>
+        <div class="layer-arrow">↑ hardware-attested biometric events flow up from Layer 0</div>
+        <div class="layer-box">
+          <div class="layer-box__label">Layer 0 — hardware foundation</div>
+          <div class="layer-box__name">Hardware Substrate</div>
+          <div class="layer-box__def">Physical root of trust: chip, secure enclave, or purpose-built sensor.</div>
+          <div class="layer-box__examples">Intel PTT / AMD fTPM / Infineon TPM 2.0 · Apple Secure Enclave · Android StrongBox · World Orb · Thales Luna HSM</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem;">
+      <div class="section-title">Binding quality taxonomy</div>
+      <div style="display:flex;flex-direction:column;gap:0.75rem;margin-top:0.75rem;">
+        <div style="display:flex;align-items:flex-start;gap:1rem;">
+          <span class="bq bq--hard" style="flex-shrink:0;">hard</span>
+          <span style="font-size:0.875rem;color:var(--text-2);">Cryptographic chain from biometric proof to artifact; independently verifiable without issuer query. Supports non-repudiation.</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:1rem;">
+          <span class="bq bq--hard_path_native" style="flex-shrink:0;">hard path native</span>
+          <span style="font-size:0.875rem;color:var(--text-2);">Player owns the cryptographic mechanism (biometric-derived key, ZK proof system) but integration into artifact signing chain not confirmed shipped.</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:1rem;">
+          <span class="bq bq--soft" style="flex-shrink:0;">soft</span>
+          <span style="font-size:0.875rem;color:var(--text-2);">Audit log or policy signal only. Artifact carries no cryptographic proof of biometric event. Issuer query required to confirm connection.</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem;">
+      <div class="section-title">Key terms</div>
+      <dl class="glossary" style="display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:0.75rem;">
+        <div><dt>PoP</dt><dd>Proof of Personhood — unique real human, no legal identity required</dd></div>
+        <div><dt>IAM</dt><dd>Identity and Access Management</dd></div>
+        <div><dt>ZK</dt><dd>Zero-Knowledge Proof</dd></div>
+        <div><dt>VC</dt><dd>W3C Verifiable Credential</dd></div>
+        <div><dt>Agentic</dt><dd>Covers AI agent identity, not only human</dd></div>
+        <div><dt>sMPC</dt><dd>Secure Multi-Party Computation (Keyless architecture)</dd></div>
+        <div><dt>MCP</dt><dd>Model Context Protocol (agent tool/resource access)</dd></div>
+        <div><dt>WIMSE</dt><dd>IETF Workload Identity in Multi-System Environments</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================
+       SECTION 2 — Landscape comparison
+       ============================================================ -->
+  <section class="index-section">
+    <div class="index-section-header">
+      <h2 style="font-size:1.2rem;">Section 2: Landscape Comparison</h2>
+    </div>
+
+    <!-- Player summary strip -->
+    <div class="section-title" style="margin-bottom:0.75rem;">Player overview</div>
+    <div class="player-strip">
+      <div class="player-card">
+        <div class="player-card__header">
+          <div>
+            <div class="player-card__id">P03 · Public · Institutional</div>
+            <div class="player-card__name">Microsoft</div>
+          </div>
+        </div>
+        <div class="player-card__meta">
+          <span class="tag">Enterprise IAM</span>
+          <span class="tag">Layer 2</span>
+          <span class="tag tag--agentic">Agentic</span>
+          <span class="bq bq--hard">hard</span>
+        </div>
+        <p class="player-card__position">Dominant enterprise IAM orchestrator (Entra ID, 600M+ users). Governance shell for agentic AI is complete; agent credential binding remains soft.</p>
+      </div>
+      <div class="player-card">
+        <div class="player-card__header">
+          <div>
+            <div class="player-card__id">P04 · Public · Institutional</div>
+            <div class="player-card__name">Okta</div>
+          </div>
+        </div>
+        <div class="player-card__meta">
+          <span class="tag">Enterprise IAM</span>
+          <span class="tag">Layer 2 only</span>
+          <span class="tag tag--agentic">Agentic</span>
+          <span class="bq bq--hard">hard</span>
+        </div>
+        <p class="player-card__position">Most complete agentic governance shell in market. No native hard-binding mechanism. Most regulatory exposure in enterprise IAM.</p>
+      </div>
+      <div class="player-card">
+        <div class="player-card__header">
+          <div>
+            <div class="player-card__id">P05 · Protocol · Sovereign/Personal</div>
+            <div class="player-card__name">World (World ID)</div>
+          </div>
+        </div>
+        <div class="player-card__meta">
+          <span class="tag">Proof-of-Personhood</span>
+          <span class="tag">Layer 1</span>
+          <span class="tag tag--agentic">Agentic</span>
+          <span class="bq bq--hard">hard</span>
+        </div>
+        <p class="player-card__position">Only large-scale deployed system producing genuinely hard-binding, pseudonymous PoP credentials verifiable on-chain. Active regulatory bans in 10 jurisdictions.</p>
+      </div>
+      <div class="player-card">
+        <div class="player-card__header">
+          <div>
+            <div class="player-card__id">P23 · Private · Institutional</div>
+            <div class="player-card__name">Ping Identity</div>
+          </div>
+        </div>
+        <div class="player-card__meta">
+          <span class="tag">Enterprise IAM</span>
+          <span class="tag">Layer 1+2</span>
+          <span class="tag tag--agentic">Agentic</span>
+          <span class="bq bq--hard">hard</span>
+        </div>
+        <p class="player-card__position">Only enterprise IAM orchestrator that owns both Layer 1 (Keyless ZK sMPC) and Layer 2 binding. Native path to hard agent binding; integration not yet confirmed shipped.</p>
+      </div>
+    </div>
+
+    <!-- Binding matrix -->
+    <div class="section-title" style="margin-bottom:0.75rem;">Binding quality matrix — all 11 lanes</div>
+    <div class="matrix-wrap">
+      <table class="binding-matrix">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Lane 1</th>
+            <th>Lane 2</th>
+            <th>Lane 3</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="player-link" style="font-weight:600;">Microsoft</span><span class="player-tier" style="display:block;">P03 · Enterprise IAM</span></td>
+            <td><div class="lane-cell"><span class="bq bq--hard">hard</span><div class="lane-cell__name">Windows Hello for Business</div><div class="flex-wrap mt-1"><span class="pill">FIDO2</span><span class="pill pill--artifact">fido2_assertion</span></div></div></td>
+            <td><div class="lane-cell"><span class="bq bq--hard_path_native">hard path native</span><div class="lane-cell__name">Entra Verified ID + Face Check</div><div class="flex-wrap mt-1"><span class="pill pill--artifact">w3c_vc</span></div></div></td>
+            <td><div class="lane-cell"><span class="bq bq--soft">soft</span><div class="lane-cell__name">Entra Agent ID</div><div class="flex-wrap mt-1"><span class="pill pill--artifact">oidc_jwt</span><span class="pill pill--agentic">agentic</span></div></div></td>
+          </tr>
+          <tr>
+            <td><span class="player-link" style="font-weight:600;">Okta</span><span class="player-tier" style="display:block;">P04 · Enterprise IAM</span></td>
+            <td><div class="lane-cell"><span class="bq bq--hard">hard</span><div class="lane-cell__name">FIDO2 Passkeys (Relying Party)</div><div class="flex-wrap mt-1"><span class="pill">FIDO2</span><span class="pill pill--artifact">fido2_assertion</span></div></div></td>
+            <td><div class="lane-cell"><span class="bq bq--soft">soft</span><div class="lane-cell__name">OIDC Access Tokens / Workforce IAM</div><div class="flex-wrap mt-1"><span class="pill pill--artifact">oidc_jwt</span></div></div></td>
+            <td><div class="lane-cell"><span class="bq bq--soft">soft</span><div class="lane-cell__name">Okta Agent Identity</div><div class="flex-wrap mt-1"><span class="pill pill--artifact">oidc_jwt</span><span class="pill pill--agentic">agentic</span></div></div></td>
+          </tr>
+          <tr>
+            <td><span class="player-link" style="font-weight:600;">World (World ID)</span><span class="player-tier" style="display:block;">P05 · PoP Protocol</span></td>
+            <td><div class="lane-cell"><span class="bq bq--hard">hard</span><div class="lane-cell__name">World ID — ZK Proof of Personhood</div><div class="flex-wrap mt-1"><span class="pill">ZK-SNARK</span><span class="pill pill--artifact">zk_credential</span></div></div></td>
+            <td><div class="lane-cell"><span class="bq bq--hard_path_native">hard path native</span><div class="lane-cell__name">AgentKit — Pseudonymous PoP for AI Agents</div><div class="flex-wrap mt-1"><span class="pill pill--artifact">zk_credential</span><span class="pill pill--agentic">agentic</span></div></div></td>
+            <td><div class="lane-cell lane-cell--empty">—</div></td>
+          </tr>
+          <tr>
+            <td><span class="player-link" style="font-weight:600;">Ping Identity</span><span class="player-tier" style="display:block;">P23 · Enterprise IAM</span></td>
+            <td><div class="lane-cell"><span class="bq bq--hard">hard</span><div class="lane-cell__name">PingOne Neo W3C VCs</div><div class="flex-wrap mt-1"><span class="pill pill--artifact">w3c_vc</span></div></div></td>
+            <td><div class="lane-cell"><span class="bq bq--hard_path_native">hard path native</span><div class="lane-cell__name">Universal Services ZK Re-verification</div><div class="flex-wrap mt-1"><span class="pill">Keyless sMPC</span><span class="pill pill--artifact">zk_credential</span></div></div></td>
+            <td><div class="lane-cell"><span class="bq bq--hard_path_native">hard path native</span><div class="lane-cell__name">Identity for AI / Agent Gateway</div><div class="flex-wrap mt-1"><span class="pill pill--artifact">w3c_vc</span><span class="pill pill--agentic">agentic</span></div></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Binding quality legend -->
+    <div class="flex-wrap" style="gap:1rem; margin-top:-0.5rem; margin-bottom:2rem;">
+      <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--text-3);">
+        <span class="bq bq--hard">hard</span> Cryptographic chain from biometric proof to artifact; independently verifiable
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--text-3);">
+        <span class="bq bq--hard_path_native">hard path native</span> Player owns the mechanism; integration not confirmed shipped
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--text-3);">
+        <span class="bq bq--soft">soft</span> Audit log / policy signal only; no cryptographic proof on the artifact
+      </div>
+    </div>
+
+    <!-- Comparison axes — all expanded -->
+    <div class="section-title" style="margin:1.5rem 0 0.75rem;">Comparison axes</div>
+
+    <!-- Strategic open questions -->
+    <div style="margin-bottom:1.5rem;">
+      <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:0.85rem;color:var(--text);">Strategic Open Questions</h3>
+      <div class="gap-cards">
+        <div class="gap-card"><div class="gap-card__player">Microsoft (P03)</div><p class="gap-card__text">Entra Agent ID produces soft binding — biometric proof from WHFB provisioning event does not travel to the agent credential; upgrade path (Face Check receipt model extended to agent credentials) architecturally understood but not shipped.</p></div>
+        <div class="gap-card"><div class="gap-card__player">Okta (P04)</div><p class="gap-card__text">No native hard-binding mechanism anywhere in the stack; software-only token signing; soft→hard binding transition requires acquiring Nametag or executing deep third-party integration — most exposed player in enterprise IAM to regulatory pressure on this gap.</p></div>
+        <div class="gap-card"><div class="gap-card__player">World (P05)</div><p class="gap-card__text">Token-incentivized growth model means user count claims cannot be read equivalently to SaaS adoption; issuance-side is centralized (TFH controls Orb + deduplication algorithm) despite decentralized presentation-side design.</p></div>
+        <div class="gap-card"><div class="gap-card__player">Ping Identity (P23)</div><p class="gap-card__text">Gap between owning the Keyless ZK mechanism and having it integrated into the agent credential artifact signing chain — hard binding path is native but integration not confirmed shipped as of March 2026.</p></div>
+      </div>
+    </div>
+
+    <!-- Decision role & authority model -->
+    <div style="margin-bottom:1.5rem;">
+      <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:0.85rem;color:var(--text);">Decision Role &amp; Authority Model</h3>
+      <table class="comp-table">
+        <thead>
+          <tr><th>Player</th><th>Decision Role</th><th>Authority Model</th><th>Vertical Integration</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Microsoft</strong></td><td>Layer 1 (partial, OEM-dependent) + Layer 2 (dominant enterprise binding authority)</td><td>Institutional</td><td>Strong Layer 2; Layer 1 OEM/cloud-dependent</td></tr>
+          <tr><td><strong>Okta</strong></td><td>Layer 2 only — relying party for FIDO2; policy engine for biometric partner results</td><td>Institutional</td><td>Layer 2 only. No native biometric capability</td></tr>
+          <tr><td><strong>World</strong></td><td>Layer 1 — biometric verification and ZK credential issuance; no Layer 2 downstream binding</td><td>Sovereign/personal — pseudonymous, protocol-issued</td><td>Strongly integrated on issuance side (Orb + registry); presentation decentralizing</td></tr>
+          <tr><td><strong>Ping Identity</strong></td><td>Layer 1 (Keyless ZK sMPC, acq. Jan 2026) + Layer 2 (PingOne/PingFederate)</td><td>Institutional</td><td>Layer 1 + Layer 2. Only enterprise IAM with native ZK biometrics</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Agentic coverage -->
+    <div style="margin-bottom:1.5rem;">
+      <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:0.85rem;color:var(--text);">Agentic Coverage</h3>
+      <p style="font-size:0.875rem;color:var(--text-3);margin-bottom:1rem;">5 of 11 lanes are agentic. All four players have shipped or announced an agentic lane as of Q1 2026. None has shipped a type (a) biometric-anchored agent credential.</p>
+      <div class="agentic-grid">
+        <div class="agentic-card"><div class="agentic-card__player">Microsoft</div><div class="agentic-card__lanes"><div class="agentic-lane"><span class="bq bq--soft">soft</span><br><span>Entra Agent ID</span><br><small style="color:var(--text-4);">OAuth service principals; blueprint-based provisioning; governance-logged, no biometric anchor on agent credential</small></div></div></div>
+        <div class="agentic-card"><div class="agentic-card__player">Okta</div><div class="agentic-card__lanes"><div class="agentic-lane"><span class="bq bq--soft">soft</span><br><span>Okta Agent Identity</span><br><small style="color:var(--text-4);">OAuth service principals; XAA access control; Nametag Signa VHS is governance-logged attestation, not artifact-embedded</small></div></div></div>
+        <div class="agentic-card"><div class="agentic-card__player">World</div><div class="agentic-card__lanes"><div class="agentic-lane"><span class="bq bq--hard_path_native">hard path native</span><br><span>AgentKit</span><br><small style="color:var(--text-4);">Pseudonymous PoP delegation via World ID; ZK proof chain human → agent; x402 payment integration. Limited beta only.</small></div></div></div>
+        <div class="agentic-card"><div class="agentic-card__player">Ping Identity</div><div class="agentic-card__lanes"><div class="agentic-lane"><span class="bq bq--hard_path_native">hard path native</span><br><span>Identity for AI / Agent Gateway</span><br><small style="color:var(--text-4);">Scoped delegated identity per agent; MCP-based enforcement; Keyless ZK key is native path to hard binding — integration pending</small></div></div></div>
+      </div>
+    </div>
+
+    <!-- Regulatory exposure -->
+    <div style="margin-bottom:1.5rem;">
+      <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:0.85rem;color:var(--text);">Regulatory Exposure</h3>
+      <table class="comp-table">
+        <thead>
+          <tr><th>Framework</th><th>Microsoft</th><th>Okta</th><th>World</th><th>Ping Identity</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>EU AI Act Art. 14</td><td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ gap</span></td><td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ gap</span></td><td>—</td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td></tr>
+          <tr><td>eIDAS / EUDIW</td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td><td><span style="color:#fcd34d;font-family:var(--mono);font-size:0.78rem;">~ in progress</span></td><td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ proprietary format</span></td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td></tr>
+          <tr><td>NIST IAL2 / AAL2</td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td><td>—</td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td></tr>
+          <tr><td>GDPR Art. 9</td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td><td>—</td><td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ active bans (10 jurisdictions)</span></td><td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ Keyless sMPC GDPR-exempt</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Protocol adoption -->
+    <div style="margin-bottom:1.5rem;">
+      <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:0.85rem;color:var(--text);">Protocol Adoption</h3>
+      <table class="comp-table">
+        <thead>
+          <tr><th>Protocol</th><th>Microsoft</th><th>Okta</th><th>World</th><th>Ping Identity</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>FIDO2 / WebAuthn</td><td><span class="status-badge status-badge--production">production</span></td><td><span class="status-badge status-badge--production">production</span></td><td><span class="status-badge status-badge--partial">not adopted</span></td><td><span class="status-badge status-badge--production">production</span></td></tr>
+          <tr><td>W3C VC Data Model</td><td><span class="status-badge status-badge--production">production</span></td><td><span class="status-badge status-badge--announced">FY2027 roadmap</span></td><td><span class="status-badge status-badge--partial">not adopted</span></td><td><span class="status-badge status-badge--production">production</span></td></tr>
+          <tr><td>OpenID4VP / VCI</td><td><span class="status-badge status-badge--production">production</span></td><td><span class="status-badge status-badge--announced">in progress</span></td><td><span class="status-badge status-badge--partial">not adopted</span></td><td><span class="status-badge status-badge--production">production</span></td></tr>
+          <tr><td>MCP</td><td><span class="status-badge status-badge--production">production</span></td><td><span class="status-badge status-badge--announced">announced</span></td><td><span class="status-badge status-badge--partial">not referenced</span></td><td><span class="status-badge status-badge--production">production</span></td></tr>
+          <tr><td>IETF WIMSE</td><td><span class="status-badge status-badge--announced">announced</span></td><td><span class="status-badge status-badge--announced">engaged</span></td><td><span class="status-badge status-badge--partial">not referenced</span></td><td><span class="status-badge status-badge--production">active contributor</span></td></tr>
+          <tr><td>XAA (Okta protocol)</td><td><span class="status-badge status-badge--partial">not adopted</span></td><td><span class="status-badge status-badge--production">production (own)</span></td><td><span class="status-badge status-badge--partial">not referenced</span></td><td><span class="status-badge status-badge--partial">not adopted</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================
+       SECTION 3 — Microsoft (P03)
+       ============================================================ -->
+  <section class="report-player-section index-section">
+    <div class="index-section-header" style="margin-bottom:1.5rem;">
+      <h2 style="font-size:1.3rem;">Section 3: Microsoft (P03)</h2>
+      <span class="section-subtitle">Enterprise IAM Orchestrator · Layer 1 (partial) + Layer 2 · Institutional</span>
+    </div>
+
+    <div class="flex-wrap mt-1" style="margin-bottom:1.5rem;">
+      <span class="tag">Public company (MSFT)</span>
+      <span class="tag">$245B revenue</span>
+      <span class="tag">600M+ Entra ID users</span>
+      <span class="tag">3 lanes (1 agentic)</span>
+    </div>
+
+    <!-- Key Finding -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">01</span>
+        <h2 class="player-section__title">Key Finding</h2>
+      </div>
+      <blockquote class="pull-quote">
+        Microsoft has built the most complete governance shell for enterprise agentic AI identity in the market — agent blueprints, agent registry, Conditional Access for agents, Identity Protection, shadow AI detection, sponsor accountability, and lifecycle governance across MCP and A2A — yet the governance shell and cryptographic binding are distinct problems, and Microsoft has solved the first while the second remains open exactly as it was: the biometric proof that authenticated the provisioning administrator via Windows Hello never transfers to the agent identity or to any token the agent acquires; as EU AI Act high-risk AI obligations move from organizational governance logging to artifact-level non-repudiation, the unchanged soft binding gap at the agent credential layer is Microsoft's most significant remaining liability in the agentic AI era.
+      </blockquote>
+    </div>
+
+    <!-- Lanes -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">02</span>
+        <h2 class="player-section__title">Lanes</h2>
+      </div>
+      <div class="lanes-grid">
+        <div class="lane-card">
+          <div class="lane-card__header"><div><div class="lane-card__name">Windows Hello for Business</div><div class="lane-card__id">P03-L1 · Layer 2 · Enterprise · Non-agentic</div></div><span class="bq bq--hard bq--lg">hard</span></div>
+          <p class="lane-card__note">Biometric gesture unlocks TPM-protected private key; TPM signs authentication assertion; Entra ID issues PRT bound to TPM session key; AIK certificate enables cryptographic hardware residency verification.</p>
+          <div class="lane-card__pills"><span class="pill pill--artifact">fido2_assertion</span><span class="pill">device / hardware binding</span><span class="pill">IR facial + fingerprint</span></div>
+          <div class="coverage-wrap"><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span><span class="pill" style="border-color:#475569;color:#94a3b8;">device: <strong style="color:var(--hard-text);">hard</strong></span></div>
+        </div>
+        <div class="lane-card">
+          <div class="lane-card__header"><div><div class="lane-card__name">Entra Verified ID + Face Check</div><div class="lane-card__id">P03-L2 · Layer 2 · Enterprise · Non-agentic</div></div><span class="bq bq--hard_path_native bq--lg">hard path native</span></div>
+          <p class="lane-card__note">Holder presents W3C VC; Azure AI Face API compares live selfie to portrait; MicrosoftFaceCheckReceipt is a signed JWT — both artifacts are signed. Gap: face match is probabilistic, not cryptographic identity equivalence. Biometric proof is off-artifact.</p>
+          <div class="lane-card__pills"><span class="pill pill--artifact">w3c_vc</span><span class="pill">credential binding</span><span class="pill">Azure AI Face API (software liveness)</span></div>
+          <div class="coverage-wrap"><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span><span class="pill" style="border-color:#475569;color:#94a3b8;">cred: <strong style="color:var(--hpn-text);">hard_path_native</strong></span></div>
+        </div>
+        <div class="lane-card">
+          <div class="lane-card__header"><div><div class="lane-card__name">Entra Agent ID</div><div class="lane-card__id">P03-L3 · Layer 2 · Enterprise · Agentic ★</div></div><span class="bq bq--soft bq--lg">soft</span></div>
+          <p class="lane-card__note">AI agents get Entra managed identity or service principal; OAuth 2.0 client credentials flow; provisioning-time biometric proof (WHFB) does not transfer to agent credential; confirmation requires Entra audit log query.</p>
+          <div class="lane-card__pills"><span class="pill pill--artifact">oidc_jwt</span><span class="pill pill--agentic">agentic</span><span class="pill">OAuth 2.0 / MCP / A2A</span></div>
+          <div class="coverage-wrap"><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span><span class="pill" style="border-color:#475569;color:#94a3b8;">agent: <strong style="color:var(--soft-text);">soft</strong></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Architecture -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">03</span>
+        <h2 class="player-section__title">Architecture</h2>
+      </div>
+      <div class="prose">
+        <h4>Windows Hello for Business — Hard Binding Chain</h4>
+        <p>The biometric gesture (IR face or fingerprint) unlocks a TPM-protected private key. That private key signs the authentication assertion. Entra ID then issues a Primary Refresh Token (PRT) bound to the TPM session key, so every subsequent token request is signed with the PRT session key — which cannot be used without the TPM. The AIK (Attestation Identity Key) certificate produced during WHFB enrollment allows Entra to cryptographically verify that the private key is hardware-bound and has never been exported. The chain is independently verifiable against the AIK cert without querying a separate audit system.</p>
+        <p><strong>Why this is hard binding:</strong> the biometric proof activates the TPM key that signs the authentication request. The cryptographic chain runs from biometric unlock through TPM key through signed assertion to Entra-issued token. Supports non-repudiation. Caveat: TPM chip is third-party manufactured (Intel PTT, AMD fTPM, Infineon, STMicro, NXP). Microsoft designs the attestation protocol; it does not own the hardware root.</p>
+        <h4>Entra Verified ID Face Check — Approaching Hard Binding</h4>
+        <p>The holder presents a W3C Verifiable Credential signed by the organizational issuer's DID. At presentation, Azure AI Face API compares a live selfie to the portrait embedded in the VC. If the confidence score exceeds the configured threshold, Entra Verified ID issues a <code>MicrosoftFaceCheckReceipt</code> signed JWT encoding the comparison event, credential reference, timestamp, verifier context, and outcome.</p>
+        <p><strong>Why this approaches but does not reach hard binding:</strong> both artifacts are cryptographically signed, and the Face Check receipt JWT binds the face comparison outcome, identity credential, and temporal context in a single signed document. However, the confidence score produced by Azure AI Face API is probabilistic, not deterministic. The match is a statistical comparison, not a cryptographic proof of identity equivalence.</p>
+        <h4>Entra Agent ID — Soft Binding and the Strategic Gap</h4>
+        <p>An agent is provisioned using an agent identity blueprint — a reusable template defining the agent type, permission scopes, and metadata. A human sponsor is assigned for accountability. At runtime, the blueprint acquires tokens via OAuth 2.0 flows.</p>
+        <p><strong>Why this is soft binding:</strong> the agent identity and its token carry no biometric information and no cryptographic reference to any biometric event. Even if the human administrator who provisioned the blueprint authenticated via WHFB, the biometric proof does not transfer to the agent identity or to any token the agent acquires. Confirmation still requires querying Entra audit logs.</p>
+      </div>
+    </div>
+
+    <!-- Strategic Position -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">04</span>
+        <h2 class="player-section__title">Strategic Position</h2>
+      </div>
+      <div class="prose">
+        <p>Microsoft Corporation is the dominant general-purpose IAM orchestrator in the enterprise lane, with a now-shipping agentic AI identity product (Entra Agent ID, public preview Ignite Nov 2025; Microsoft Agent 365, GA May 1, 2026), a decentralized verifiable credentials product (Entra Verified ID with Face Check, GA Aug 2024), and a self-service account recovery product (public preview Ignite Nov 2025). As a two-layer player, Microsoft holds a partial Layer 1 position — OEM-dependent for Windows Hello IR/fingerprint hardware sensors, Microsoft-controlled for Azure AI Face API software liveness — and a strong Layer 2 binding authority position as the enterprise control plane for 600M+ Entra ID users across effectively all Fortune 500 organizations.</p>
+        <p>Binding quality varies sharply by lane: Windows Hello for Business produces <strong>hard binding</strong>; Entra Verified ID Face Check <strong>approaches hard binding</strong>; Entra Agent ID produces <strong>soft binding</strong>. Trust substrate is split — Microsoft owns the attestation protocol layer; hardware roots are third-party TPM, Apple SE / Android Keystore, and OEM biometric sensors. Revenue is enterprise SaaS subscription with Entra P1/P2 embedded in M365 E3/E5; no token incentives.</p>
+      </div>
+    </div>
+
+    <!-- Gaps -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">05</span>
+        <h2 class="player-section__title">Gaps &amp; Regulatory Exposure</h2>
+      </div>
+      <div class="gap-callout">
+        <div class="gap-callout__label">Critical Gap</div>
+        <p class="gap-callout__text">Entra Agent ID produces soft binding — biometric proof from WHFB provisioning event does not travel to the agent credential; upgrade path (Face Check receipt model extended to agent credentials) architecturally understood but not shipped.</p>
+      </div>
+      <div class="prose" style="margin-top:1rem;">
+        <p><strong>EU AI Act Art. 14:</strong> Entra Agent ID's soft binding architecture may not satisfy the strongest interpretations of human-in-the-loop accountability for high-risk AI deployments. <strong>eIDAS 2.0 / EUDIW:</strong> Entra Verified ID's OpenID4VP/VCI architecture aligns with EUDIW technical architecture; no confirmed EUDIW-compliant shipping wallet as of early 2026. <strong>NIST IAL2 / AAL2:</strong> WHFB satisfies AAL2; combination with Verified ID + IDV partner approaches IAL2.</p>
+      </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="player-section">
+      <div class="player-section__header">
+        <span class="player-section__label">06</span>
+        <h2 class="player-section__title">Sources</h2>
+      </div>
+      <ul class="sources-list">
+        <li><a href="https://learn.microsoft.com/en-us/entra/agent-id/identity-professional/microsoft-entra-agent-identities-for-ai-agents">What is Microsoft Entra Agent ID — Microsoft Learn (April 2026)</a></li>
+        <li><a href="https://techcommunity.microsoft.com/blog/microsoft-entra-blog/announcing-microsoft-entra-agent-id-secure-and-manage-your-ai-agents/3827392">Announcing Microsoft Entra Agent ID — Build 2025</a></li>
+        <li><a href="https://www.microsoft.com/en-us/security/blog/2024/02/06/microsoft-entra-verified-id-introduces-face-check-in-preview/">Entra Verified ID Face Check (GA Aug 2024)</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/">Windows Hello for Business overview — Microsoft Learn</a></li>
+        <li>Sources verified via live web research, April 2026.</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================
+       SECTION 4 — Okta (P04)
+       ============================================================ -->
+  <section class="report-player-section index-section">
+    <div class="index-section-header" style="margin-bottom:1.5rem;">
+      <h2 style="font-size:1.3rem;">Section 4: Okta (P04)</h2>
+      <span class="section-subtitle">Enterprise IAM Orchestrator · Layer 2 only · Institutional</span>
+    </div>
+
+    <div class="flex-wrap mt-1" style="margin-bottom:1.5rem;">
+      <span class="tag">Public company (OKTA)</span>
+      <span class="tag">~$3.0B ARR</span>
+      <span class="tag">~19,300+ customers</span>
+      <span class="tag">3 lanes (1 agentic)</span>
+    </div>
+
+    <!-- Key Finding -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">01</span>
+        <h2 class="player-section__title">Key Finding</h2>
+      </div>
+      <blockquote class="pull-quote">
+        Okta has built the most complete enterprise governance shell for agentic AI in the market — agent discovery, registration, XAA access control, lifecycle management, and human-in-the-loop re-verification via Nametag Signa — yet the governance shell and the cryptographic binding question are distinct problems, and Okta has solved the first while the second remains open: the Verified Human Signature that Nametag produces is an attestation record proving a biometrically-verified human authorized an AI action, but that record is not embedded in the action artifact, so the biometric proof does not travel with the agent to the point of consequence; as EU AI Act auditability requirements move from governance-log satisfaction to artifact-level non-repudiation, Okta faces a binary choice: acquire Nametag and integrate VHS into the signed action record, or remain the governance layer above a biometric supplier that holds the only piece Okta cannot replicate.
+      </blockquote>
+    </div>
+
+    <!-- Lanes -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">02</span>
+        <h2 class="player-section__title">Lanes</h2>
+      </div>
+      <div class="lanes-grid">
+        <div class="lane-card">
+          <div class="lane-card__header"><div><div class="lane-card__name">FIDO2 Passkeys (Relying Party)</div><div class="lane-card__id">P04-L1 · Layer 2 · Platform issuing authority · Non-agentic</div></div><span class="bq bq--hard bq--lg">hard</span></div>
+          <p class="lane-card__note">Hard at device level — signed FIDO2 assertion is independently verifiable. Okta is verifier/RP, not the hardware root. Apple SE / TPM / Android StrongBox are the actual roots.</p>
+          <div class="lane-card__pills"><span class="pill pill--artifact">fido2_assertion</span><span class="pill">device / hardware binding (partnership)</span><span class="pill">Face ID / Touch ID / Windows Hello</span></div>
+          <div class="coverage-wrap"><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span><span class="pill" style="border-color:#475569;color:#94a3b8;">device: <strong style="color:var(--hard-text);">partnership_hard</strong></span></div>
+        </div>
+        <div class="lane-card">
+          <div class="lane-card__header"><div><div class="lane-card__name">OIDC Access Tokens / Workforce IAM</div><div class="lane-card__id">P04-L2 · Layer 2 · Enterprise issuing authority · Non-agentic</div></div><span class="bq bq--soft bq--lg">soft</span></div>
+          <p class="lane-card__note">JWT contains no cryptographic reference to biometric proof; software-key-based token signing (not HSM-backed); confirming biometric underlies a specific token requires Okta audit log query.</p>
+          <div class="lane-card__pills"><span class="pill pill--artifact">oidc_jwt</span><span class="pill">software signing keys</span><span class="pill">audit-log binding only</span></div>
+        </div>
+        <div class="lane-card">
+          <div class="lane-card__header"><div><div class="lane-card__name">Okta Agent Identity</div><div class="lane-card__id">P04-L3 · Layer 2 · Enterprise issuing authority · Agentic ★</div></div><span class="bq bq--soft bq--lg">soft</span></div>
+          <p class="lane-card__note">OAuth service principals and FGA; mirrors Entra Agent ID structure exactly; no biometric proof in agent credential; Nametag Signa is the upgrade path (action-level re-verification) but not natively integrated to artifact signing chain.</p>
+          <div class="lane-card__pills"><span class="pill pill--artifact">oidc_jwt</span><span class="pill pill--agentic">agentic</span><span class="pill">XAA access control</span><span class="pill">Nametag Signa (partner)</span></div>
+          <div class="coverage-wrap"><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span><span class="pill" style="border-color:#475569;color:#94a3b8;">agent: <strong style="color:var(--soft-text);">soft</strong></span><span class="pill" style="border-color:#475569;color:#94a3b8;">action: <strong style="color:var(--soft-text);">partnership_soft</strong></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Architecture -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">03</span>
+        <h2 class="player-section__title">Architecture</h2>
+      </div>
+      <div class="prose">
+        <h4>Soft Binding — The Core Structural Constraint</h4>
+        <p>Okta is a binding actor. It takes biometric verification results from Layer 1 suppliers and conditions access token issuance, agent credential provisioning, and audit records on those results. The binding is soft because no cryptographic chain links the biometric proof to the artifact — the session token, the agent OAuth credential, or the access decision.</p>
+        <p>The mechanism: Okta's policy engine receives a biometric verification result from a Layer 1 supplier; Okta issues an access token or provisions an agent credential conditioned on that result; the issued token is an OIDC JWT signed with Okta's cloud-managed software key. The token contains no cryptographic reference to the biometric proof.</p>
+        <h4>Nametag Signa — The Path to Hard Binding (Not Yet Arrived)</h4>
+        <p>Nametag Signa (shipped Sept 2025) is Okta's current path toward hard binding for agent actions. The output is a Verified Human Signature (VHS) — described as "cryptographically-attested proof that a legitimate person authorized an AI action." However, the VHS is described in all public documentation as an "auditable record" and "auditable connection" — language consistent with a governance-logged attestation, not a biometric proof cryptographically embedded in the action artifact. Until VHS is embedded in the signed agent action record, the binding quality remains soft at the artifact layer.</p>
+      </div>
+    </div>
+
+    <!-- Strategic Position -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">04</span>
+        <h2 class="player-section__title">Strategic Position</h2>
+      </div>
+      <div class="prose">
+        <p>Okta is a publicly traded enterprise SaaS company (~$3.0B ARR, FY2026) operating as a general-purpose IAM orchestrator in the workforce identity lane and as a consumer application orchestrator in the CIAM lane (Customer Identity Cloud / Auth0, acquired 2021). As a Layer 2 binding authority, Okta has no native Layer 1 capability (no biometric sensor, algorithm, liveness engine, or matching engine). The path to hard binding requires VHS integration into the signed action artifact, or native W3C VC issuance with embedded biometric proof (VDC platform, FY2027 roadmap).</p>
+      </div>
+    </div>
+
+    <!-- Gaps -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">05</span>
+        <h2 class="player-section__title">Gaps &amp; Regulatory Exposure</h2>
+      </div>
+      <div class="gap-callout">
+        <div class="gap-callout__label">Critical Gap</div>
+        <p class="gap-callout__text">No native hard-binding mechanism anywhere in the stack; software-only token signing; soft→hard binding transition requires acquiring Nametag or executing deep third-party integration — most exposed player in enterprise IAM to regulatory pressure on this gap.</p>
+      </div>
+      <div class="prose" style="margin-top:1rem;">
+        <p><strong>EU AI Act human-in-the-loop provisions:</strong> Okta's current soft binding satisfies organizational governance logging but does not produce artifact-level non-repudiable evidence of human authorization. <strong>eIDAS 2.0 / EUDIW:</strong> Relying parties must accept EUDIW-presented credentials via OpenID4VP by 2026. Okta must implement OpenID4VP/SIOP2 acceptance to remain the identity middleware layer for EU enterprise applications. <strong>NIS2 / DORA:</strong> FIDO2/passkeys are the primary compliant MFA mechanism.</p>
+        <p><strong>Key partnership risk:</strong> Nametag acquisition signal is high — deepening partnership timeline (Oct 2024 → Sept 2025 → April 2026 showcase) without acquisition is increasingly notable.</p>
+      </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="player-section">
+      <div class="player-section__header">
+        <span class="player-section__label">06</span>
+        <h2 class="player-section__title">Sources</h2>
+      </div>
+      <ul class="sources-list">
+        <li><a href="https://www.okta.com/newsroom/press-releases/showcase-2026/">Okta Showcase 2026 — Blueprint for the Secure Agentic Enterprise</a></li>
+        <li><a href="https://www.okta.com/products/govern-ai-agent-identity/">Okta for AI Agents product page</a></li>
+        <li><a href="https://www.okta.com/newsroom/press-releases/okta-introduces-cross-app-access-to-help-secure-ai-agents-in-the/">Okta introduces Cross App Access (XAA) — June 2025</a></li>
+        <li><a href="https://www.globenewswire.com/news-release/2025/09/24/3155394/0/en/Nametag-Introduces-Verified-Human-Signatures-for-Agentic-AI-Actions-Expanded-Okta-Integration.html">Nametag Signa / Verified Human Signatures announcement (Sept 2025)</a></li>
+        <li>Sources verified via live web research, April 2026.</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================
+       SECTION 5 — World / World ID (P05)
+       ============================================================ -->
+  <section class="report-player-section index-section">
+    <div class="index-section-header" style="margin-bottom:1.5rem;">
+      <h2 style="font-size:1.3rem;">Section 5: World / World ID (P05)</h2>
+      <span class="section-subtitle">Proof-of-Personhood Protocol · Layer 1 · Sovereign/Personal</span>
+    </div>
+
+    <div class="flex-wrap mt-1" style="margin-bottom:1.5rem;">
+      <span class="tag">Protocol-company hybrid</span>
+      <span class="tag">WLD token</span>
+      <span class="tag">~18M Orb-verified (est.) — apply skepticism</span>
+      <span class="tag">2 lanes (1 agentic)</span>
+    </div>
+
+    <!-- Key Finding -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">01</span>
+        <h2 class="player-section__title">Key Finding</h2>
+      </div>
+      <blockquote class="pull-quote">
+        World ID occupies a structurally distinct position in the biometric anchoring landscape: it is the only large-scale deployed system that produces genuinely hard-binding, pseudonymous proof-of-personhood credentials — independently verifiable on-chain without an institutional intermediary — but its architectural design deliberately and irrevocably excludes legal non-repudiation, limiting it to the "unique human" use case. The AgentKit launch positions World as the first actor to extend this pseudonymous hard binding into AI agent delegation chains, but the absence of interoperability with IETF WIMSE, W3C VCs, and OpenID4VP means World's agent identity layer is a proprietary silo that enterprise orchestrators and standards-compliant systems cannot natively consume.
+      </blockquote>
+    </div>
+
+    <!-- Lanes -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">02</span>
+        <h2 class="player-section__title">Lanes</h2>
+      </div>
+      <div class="lanes-grid">
+        <div class="lane-card">
+          <div class="lane-card__header"><div><div class="lane-card__name">World ID — ZK Proof of Personhood</div><div class="lane-card__id">P05-L1 · Layer 1 · Protocol network issuing authority · Non-agentic</div></div><span class="bq bq--hard bq--lg">hard</span></div>
+          <p class="lane-card__note">Iris scan via Orb (IR hardware, inherently liveness-detecting); ZK-SNARK Groth16/Semaphore; per-application nullifier prevents cross-app tracking; identity commitment in on-chain WorldIDRegistry; independently verifiable against Merkle root without querying TFH servers. Issuance-side centralized (TFH controls Orb + deduplication); presentation-side decentralizing.</p>
+          <div class="lane-card__pills"><span class="pill pill--artifact">zk_credential</span><span class="pill">iris biometric (hardware liveness)</span><span class="pill">ZK-SNARK Groth16</span><span class="pill">pseudonymous — no legal identity</span></div>
+          <div class="coverage-wrap"><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span><span class="pill" style="border-color:#475569;color:#94a3b8;">pop: <strong style="color:var(--hard-text);">hard</strong></span><span class="pill" style="border-color:#475569;color:#94a3b8;">cred: <strong style="color:var(--hard-text);">hard</strong></span></div>
+        </div>
+        <div class="lane-card">
+          <div class="lane-card__header"><div><div class="lane-card__name">AgentKit — Pseudonymous PoP for AI Agents</div><div class="lane-card__id">P05-L2 · Layer 1 · Protocol network · Agentic ★</div></div><span class="bq bq--hard_path_native bq--lg">hard path native</span></div>
+          <p class="lane-card__note">March 17, 2026 AgentKit: verified human delegates pseudonymous PoP to AI agent via World ID; x402 micropayment integration. Launched as explicit limited beta — developer-access only, in-memory storage not production-ready; production-grade 1.0 deferred to World ID 4.0 generation.</p>
+          <div class="lane-card__pills"><span class="pill pill--artifact">zk_credential</span><span class="pill pill--agentic">agentic</span><span class="pill">pseudonymous delegation</span><span class="pill">x402 + Coinbase</span></div>
+          <div class="coverage-wrap"><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span><span class="pill" style="border-color:#475569;color:#94a3b8;">agent: <strong style="color:var(--hpn-text);">hard_path_native</strong></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Architecture -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">03</span>
+        <h2 class="player-section__title">Architecture</h2>
+      </div>
+      <div class="prose">
+        <h4>World ID — ZK Proof of Personhood: Hard Binding Chain</h4>
+        <p>At enrollment, an Orb scans the user's iris, generates an IrisCode on-device, verifies uniqueness against the existing Merkle tree (centralized deduplication check), and inserts an identity commitment (EdDSA public key hash, Baby Jubjub curve, Poseidon hash function) as a new leaf in the on-chain WorldIDRegistry.</p>
+        <p>At presentation, the user's device generates a ZK-SNARK proof (Groth16, Semaphore protocol) of Merkle tree membership — proving "I am a leaf in the registry" without revealing which leaf. A per-application nullifier prevents cross-application tracking while enforcing one-credential-per-person within each application.</p>
+        <p><strong>Why this is hard binding:</strong> The ZK proof is verifiable against the on-chain Merkle root without querying TFH or the World Foundation. However, pseudonymity is by design — the chain terminates at "unique human in registry," not at a legal identity. Non-repudiation is architecturally excluded: World ID's hard binding does not and cannot support legal non-repudiation.</p>
+        <h4>AgentKit — Pseudonymous Delegation Chain (Architecture Emerging)</h4>
+        <p>AgentKit (March 2026) extends World ID's pseudonymous PoP into AI agent delegation chains via World ID; the agent can then present to services with x402 micropayment integration. The architecture creates a ZK proof chain from human World ID to agent credential — carrying the "unique real human backs this agent" claim without revealing the human's identity. AgentKit launched March 17, 2026 as an explicit limited beta — developer-access only. The production-grade 1.0 is tied to the World ID 4.0 generation (RFC published December 2025).</p>
+      </div>
+    </div>
+
+    <!-- Strategic Position -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">04</span>
+        <h2 class="player-section__title">Strategic Position</h2>
+      </div>
+      <div class="prose">
+        <p>World (formerly Worldcoin) is a protocol-company hybrid operating in the decentralized proof-of-personhood lane, built on three organizational entities: Tools for Humanity (private company, Orb hardware and World App), World Foundation (non-profit, protocol governance), and World Chain (Optimism Superchain L2 blockchain). As a Layer 1 credential supplier, World uses a purpose-built iris-scanning hardware device (the Orb) and ZK-SNARK proofs against an on-chain WorldIDRegistry Merkle tree to produce hard-binding, pseudonymous, Orb-verified proof-of-personhood credentials that relying parties can verify independently.</p>
+        <p>World ID faces active regulatory bans in ten jurisdictions (Kenya, Spain, Portugal, Germany, Hong Kong, Brazil, Indonesia, Colombia, Philippines, Thailand) on biometric data protection grounds. World ID is a fully proprietary ZK stack — not interoperable with W3C VC, OpenID4VP, or FIDO2. Relying parties must implement World ID's specific SDK. $200M total financing (May 2025 + April 2026).</p>
+        <p><strong>User count warning:</strong> ~12M Orb-verified confirmed as of April 2025 (last primary source); ~18M estimated March 2026 (unconfirmed). All figures include a population that enrolled primarily for WLD token grants. Token-incentivized counts are not equivalent to SaaS adoption.</p>
+      </div>
+    </div>
+
+    <!-- Gaps -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">05</span>
+        <h2 class="player-section__title">Gaps &amp; Regulatory Exposure</h2>
+      </div>
+      <div class="gap-callout">
+        <div class="gap-callout__label">Critical Gap</div>
+        <p class="gap-callout__text">Token-incentivized growth model means user count claims cannot be read equivalently to SaaS adoption; issuance-side is centralized (TFH controls Orb + deduplication algorithm) despite decentralized presentation-side design.</p>
+      </div>
+      <div class="prose" style="margin-top:1rem;">
+        <p><strong>Root cause of all regulatory bans:</strong> The centralized iris data storage required for uniqueness deduplication during enrollment exceeds what GDPR-adjacent biometric data protection laws accept as proportionate retention. The additional use of iris data for AI model training (deduplication algorithm improvement) was specifically cited by Hong Kong and Germany as unjustified secondary purpose.</p>
+        <p><strong>US status:</strong> No federal biometric privacy law. State-level risk (Illinois BIPA; Texas, Washington biometric statutes). US expansion underway with Texas manufacturing, Visa/Tinder/Razer partnerships (2025). No active US regulatory action as of March 2026.</p>
+      </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="player-section">
+      <div class="player-section__header">
+        <span class="player-section__label">06</span>
+        <h2 class="player-section__title">Sources</h2>
+      </div>
+      <ul class="sources-list">
+        <li><a href="https://world.org/blog/announcements/now-available-agentkit-proof-of-human-for-the-agentic-web">Now available: AgentKit, proof of human for the agentic web — world.org</a></li>
+        <li><a href="https://techcrunch.com/2026/03/17/world-launches-tool-to-verify-humans-behind-ai-shopping-agents/">World launches tool to verify humans behind AI shopping agents — TechCrunch</a></li>
+        <li><a href="https://world.org/blog/engineering/introducing-world-id-4.0">Introducing World ID 4.0 — Request for Comments — world.org</a></li>
+        <li><a href="https://bitpinas.com/learn-how-to-guides/list-countries-banned-investigated-worldcoin/">Countries Banned or Investigated — BitPinas</a></li>
+        <li>Sources verified via live web research, April 2026.</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================
+       SECTION 6 — Ping Identity (P23)
+       ============================================================ -->
+  <section class="report-player-section index-section">
+    <div class="index-section-header" style="margin-bottom:1.5rem;">
+      <h2 style="font-size:1.3rem;">Section 6: Ping Identity (P23)</h2>
+      <span class="section-subtitle">Enterprise IAM Orchestrator · Layer 1 + Layer 2 · Institutional</span>
+    </div>
+
+    <div class="flex-wrap mt-1" style="margin-bottom:1.5rem;">
+      <span class="tag">Private (Thoma Bravo)</span>
+      <span class="tag">~$800M ARR</span>
+      <span class="tag">&gt;50% of Fortune 100</span>
+      <span class="tag">3 lanes (1 agentic)</span>
+      <span class="tag">Keyless acq. Jan 2026</span>
+    </div>
+
+    <!-- Key Finding -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">01</span>
+        <h2 class="player-section__title">Key Finding</h2>
+      </div>
+      <blockquote class="pull-quote">
+        Ping Identity's Keyless acquisition is the only executed instance in this research of an enterprise general-purpose IAM orchestrator completing the soft→hard binding quality upgrade that is the strategic open question for the entire enterprise IAM lane: while Okta and Microsoft Entra remain dependent on supplier partnerships or OS-layer hardware for biometric verification, Ping now owns the Layer 1 ZK sMPC biometric technology whose cryptographic key output is the native mechanism for upgrading agent identity binding from governance-logged to credential-embedded — and if Ping integrates that key into its Identity for AI agent authorization chain before the EU AI Act's stronger human-in-the-loop interpretations harden into compliance requirements, it will be the only enterprise IAM orchestrator that can offer artifact-level non-repudiable evidence of human authorization for AI agent actions without acquiring or depending on a third party.
+      </blockquote>
+    </div>
+
+    <!-- Lanes -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">02</span>
+        <h2 class="player-section__title">Lanes</h2>
+      </div>
+      <div class="lanes-grid">
+        <div class="lane-card">
+          <div class="lane-card__header"><div><div class="lane-card__name">PingOne Neo W3C VCs</div><div class="lane-card__id">P23-L1 · Layer 2 · Enterprise issuing authority · Non-agentic</div></div><span class="bq bq--hard bq--lg">hard</span></div>
+          <p class="lane-card__note">Selfie biometric match to government document at issuance; Ping signs W3C VC using Thales Luna HSM-backed keys; VC is independently verifiable without querying Ping — confirmed shipped.</p>
+          <div class="lane-card__pills"><span class="pill pill--artifact">w3c_vc</span><span class="pill">credential binding (hard)</span><span class="pill">Thales Luna HSM signing</span><span class="pill">OpenID4VP / VCI</span></div>
+          <div class="coverage-wrap"><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span><span class="pill" style="border-color:#475569;color:#94a3b8;">cred: <strong style="color:var(--hard-text);">hard</strong></span></div>
+        </div>
+        <div class="lane-card">
+          <div class="lane-card__header"><div><div class="lane-card__name">Universal Services ZK Re-verification (Keyless sMPC)</div><div class="lane-card__id">P23-L2 · Layer 2 · Enterprise issuing authority · Non-agentic</div></div><span class="bq bq--hard_path_native bq--lg">hard path native</span></div>
+          <p class="lane-card__note">Keyless sMPC produces cryptographic key derived from biometric match — not accept/reject. Key can sign or embed in high-risk transaction records. Integration into artifact signing chain not publicly confirmed shipped. No stored biometric template; GDPR Art. 9 exempt.</p>
+          <div class="lane-card__pills"><span class="pill pill--artifact">zk_credential</span><span class="pill">biometric-derived cryptographic key</span><span class="pill">Keyless sMPC (facial)</span><span class="pill">GDPR Article 9 exempt</span></div>
+          <div class="coverage-wrap"><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span><span class="pill" style="border-color:#475569;color:#94a3b8;">cred: <strong style="color:var(--hpn-text);">hard_path_native</strong></span></div>
+        </div>
+        <div class="lane-card">
+          <div class="lane-card__header"><div><div class="lane-card__name">Identity for AI / Agent Gateway</div><div class="lane-card__id">P23-L3 · Layer 2 · Enterprise issuing authority · Agentic ★</div></div><span class="bq bq--hard_path_native bq--lg">hard path native</span></div>
+          <p class="lane-card__note">Each AI agent gets distinct scoped delegated identity (not extension of human credential); MCP-based per-action governance enforcement; current architecture logs governance events (soft); Keyless ZK key output is native path to hard binding — integration pending.</p>
+          <div class="lane-card__pills"><span class="pill pill--artifact">w3c_vc</span><span class="pill pill--agentic">agentic</span><span class="pill">Agent IAM Core + Gateway + Detection</span><span class="pill">MCP enforcement</span></div>
+          <div class="coverage-wrap"><span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span><span class="pill" style="border-color:#475569;color:#94a3b8;">agent: <strong style="color:var(--hpn-text);">hard_path_native</strong></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Architecture -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">03</span>
+        <h2 class="player-section__title">Architecture</h2>
+      </div>
+      <div class="prose">
+        <h4>The Keyless sMPC Distinction — Why This Matters</h4>
+        <p>During authentication, Keyless's sMPC protocol produces not merely an accept/reject verification result, but a <strong>cryptographic key</strong> derived from the biometric match — a key established at enrollment and regenerated at each authentication using the same biometric. This cryptographic key is the output of the biometric matching protocol.</p>
+        <p>Compared to Okta's model (iProov returns an accept/reject → Okta issues an OIDC JWT conditioned on that result → no cryptographic material from the biometric enters the token), Ping's Keyless model produces a biometric-derived cryptographic key that can be embedded in or used to sign downstream credentials. This is the structural distinction that makes Ping's path to hard binding a product integration question rather than an acquisition question.</p>
+        <h4>PingOne Neo W3C VCs — Confirmed Hard Binding</h4>
+        <p>W3C VCs issued by PingOne Neo with government document + selfie biometric matching at issuance. Hard binding is confirmed: the VC is cryptographically signed by Ping as issuer using Thales Luna HSM-backed keys; the biometric verification is part of the issuance proof chain. Independently verifiable by any relying party accepting W3C VCs without querying Ping's records.</p>
+        <h4>Identity for AI — Current Architecture (Governance-Logged)</h4>
+        <p>Agent IAM Core issues scoped, delegated tokens to AI agents as a distinct identity type. Agent Gateway provides MCP-integrated runtime enforcement and continuous authorization evaluation. The current architecture is governance-logged (type b) — biometric proof at the human provisioning event is logged; the agent credential that travels to downstream resources does not embed the biometric proof chain.</p>
+        <p><strong>The path to credential-embedded agent identity binding</strong> is shorter for Ping than for Okta: the Keyless ZK cryptographic key output could, architecturally, be embedded in the agent authorization record at provisioning. This upgrade does not require a new acquisition — it is a product integration decision within Ping's own technology stack.</p>
+      </div>
+    </div>
+
+    <!-- Strategic Position -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">04</span>
+        <h2 class="player-section__title">Strategic Position</h2>
+      </div>
+      <div class="prose">
+        <p>Ping Identity is a private enterprise SaaS company (~$800M ARR, >30% SaaS growth, Thoma Bravo-owned) operating as a general-purpose IAM orchestrator in the workforce identity lane (PingOne, PingFederate, PingAccess, PingID, PingDirectory) and as a consumer application orchestrator in the CIAM lane, with a minor decentralized identity lane (PingOne Neo, issuing W3C VCs with OpenID4VP/VCI).</p>
+        <p>Following the January 2026 close of its Keyless acquisition, Ping is the only enterprise general-purpose IAM orchestrator in this research that owns both Layer 1 biometric verification (Keyless sMPC facial biometrics, FIDO2-certified, cryptographic key output from biometric match) and Layer 2 binding. Ping has the strongest trust substrate position among enterprise IAM orchestrators: (1) Thales HSM-backed credential signing, (2) native Keyless sMPC distributed biometric verification, (3) W3C VC issuance with same HSM-backed signing infrastructure. GDPR Article 9 advantage: Keyless sMPC-transformed templates are not classified as biometric data by EU regulators.</p>
+      </div>
+    </div>
+
+    <!-- Gaps -->
+    <div class="player-section" style="margin-bottom:2rem;">
+      <div class="player-section__header">
+        <span class="player-section__label">05</span>
+        <h2 class="player-section__title">Gaps &amp; Regulatory Exposure</h2>
+      </div>
+      <div class="gap-callout">
+        <div class="gap-callout__label">Critical Gap</div>
+        <p class="gap-callout__text">Gap between owning the Keyless ZK mechanism and having it integrated into the agent credential artifact signing chain — hard binding path is native but integration not confirmed shipped as of March 2026.</p>
+      </div>
+      <div class="prose" style="margin-top:1rem;">
+        <p><strong>Financial note:</strong> October 2025: Thoma Bravo arranged a $1.8B broadly syndicated loan to refinance Ping's $792M private credit facility and fund a <strong>$1.12 billion dividend payment to Thoma Bravo</strong>. This is a value-extraction event; dividend recaps in PE typically precede exits by 1–3 years. No confirmed IPO timeline as of April 2026.</p>
+        <p><strong>EU AI Act human-in-the-loop:</strong> Identity for AI (GA March 2026) is Ping's direct response. Current architecture is governance-logged (soft) — satisfies audit log requirements. The path to the stronger interpretation (artifact-level evidence) runs through the Keyless ZK key output. <strong>GDPR Art. 9:</strong> Keyless sMPC-transformed templates are not classified as biometric data — a unique regulatory compliance advantage. <strong>IETF WIMSE:</strong> Brian Campbell (Ping Identity) is named co-author on draft-ietf-wimse-s2s-protocol (Feb 2026, standards track). Ping is shaping the specification.</p>
+      </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="player-section">
+      <div class="player-section__header">
+        <span class="player-section__label">06</span>
+        <h2 class="player-section__title">Sources</h2>
+      </div>
+      <ul class="sources-list">
+        <li><a href="https://www.prnewswire.com/news-releases/keyless-to-be-acquired-by-ping-identity-to-drive-global-adoption-of-privacy-preserving-biometric-authentication-302599815.html">Ping Identity + Keyless acquisition announcement (October 2025)</a></li>
+        <li><a href="https://press.pingidentity.com/2026-01-07-Ping-Identity-Marks-Digital-Trust-Milestone-with-Zero-Knowledge-Biometrics-in-the-Age-of-AI">Ping Identity ZK biometrics milestone press release (January 7, 2026)</a></li>
+        <li><a href="https://press.pingidentity.com/2026-03-24-Ping-Identity-Defines-the-Runtime-Identity-Standard-for-Autonomous-AI">Ping Identity Identity for AI GA / Runtime Identity Standard (March 24, 2026)</a></li>
+        <li><a href="https://keyless.io/technology/zero-knowledge-biometrics">Keyless ZK biometrics technology page</a></li>
+        <li><a href="https://docs.keyless.io/why-keyless/keyless-protocol">Keyless protocol documentation</a></li>
+        <li>Sources verified via live web research, April 2026.</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================
+       BACK MATTER — Full glossary
+       ============================================================ -->
+  <section class="index-section">
+    <div class="index-section-header">
+      <h2 style="font-size:1.2rem;">Back Matter: Full Glossary</h2>
+    </div>
+
+    <dl class="glossary">
+      <dt>Layer 0</dt><dd>Hardware substrate: the chip, HSM, or purpose-built sensor that provides a hardware root of trust. Examples: TPM 2.0, Apple Secure Enclave, Android StrongBox, World Orb, Thales Luna HSM.</dd>
+      <dt>Layer 1</dt><dd>IDV / biometric verification supplier / credential issuer. The actor that converts a physical biometric event into a digital verification result or signed credential.</dd>
+      <dt>Layer 2</dt><dd>Binding authority / IAM orchestrator. The actor that receives Layer 1 results and issues the downstream credential — token, JWT, W3C VC — that relying parties accept.</dd>
+      <dt>Hard binding</dt><dd>A cryptographic chain from biometric proof to credential artifact. Independently verifiable without querying the issuer. Supports non-repudiation.</dd>
+      <dt>Soft binding</dt><dd>Audit log or policy signal only. The artifact carries no cryptographic proof of the biometric event. Confirming the connection requires querying the issuer's records.</dd>
+      <dt>Hard path native</dt><dd>The player owns the cryptographic mechanism that enables hard binding, but integration into the artifact signing chain is not yet publicly confirmed as shipped.</dd>
+      <dt>PoP — Proof of Personhood</dt><dd>A credential attesting a human is unique and real, without necessarily revealing legal identity. World ID's ZK-SNARK credential is the primary PoP example in this research.</dd>
+      <dt>IAM — Identity and Access Management</dt><dd>Systems for managing digital identities and controlling access to resources.</dd>
+      <dt>ZK — Zero-Knowledge Proof</dt><dd>A cryptographic proof that demonstrates knowledge of a fact without revealing the underlying data.</dd>
+      <dt>VC — Verifiable Credential</dt><dd>A W3C-standard tamper-evident credential with a cryptographic proof. Issuer signs; holder presents; verifier confirms without querying the issuer.</dd>
+      <dt>Agentic</dt><dd>Covers AI agent identity — not only human identity. An agentic lane issues credentials to AI agents operating on behalf of humans.</dd>
+      <dt>Agentic type (a) vs type (b)</dt><dd>Type (a) biometric-anchored agent credential: biometric proof cryptographically embedded in agent identity record. Type (b) biometric-provisioned agent governance: provisioning admin may have been biometrically verified but proof does not transfer to agent credential. All players in this research are currently type (b).</dd>
+      <dt>sMPC — Secure Multi-Party Computation</dt><dd>Cryptographic protocol distributed across multiple parties with no single party holding all inputs. Keyless uses sMPC to produce a biometric-derived key without storing raw biometric data.</dd>
+      <dt>MCP — Model Context Protocol</dt><dd>Anthropic's open protocol for AI tool and resource access. Used by Microsoft and Ping Identity for agent authorization enforcement.</dd>
+      <dt>XAA — Cross App Access</dt><dd>Okta's proprietary open protocol (published June 2025) extending OAuth via the Identity Assertion Authorization Grant to shift agent-to-app access control to Okta as central IdP.</dd>
+      <dt>WIMSE — Workload Identity in Multi-System Environments</dt><dd>IETF working group defining standards for AI agent workload identity. Ping Identity (Brian Campbell) is a co-author of the core specification.</dd>
+    </dl>
+  </section>
+
+</div><!-- /page-wrap -->
+
+<footer class="site-footer">
+  <p>Biometric Anchoring Landscape · Research corpus April 2026 · Microsoft (P03) · Okta (P04) · World (P05) · Ping Identity (P23)</p>
+  <p><a href="index.html">← Comparison</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

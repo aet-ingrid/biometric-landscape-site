@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Framework Primer — Biometric Anchoring Landscape</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="global-nav" role="navigation" aria-label="Site navigation">
+  <div class="global-nav__inner">
+    <span class="global-nav__brand"><strong>Biometric Anchoring</strong> — Research Dashboard</span>
+    <span class="global-nav__sep">|</span>
+    <div class="global-nav__links">
+      <a href="index.html">Comparison</a>
+      <a href="about.html" class="active">Primer</a>
+      <a href="players/microsoft.html">Microsoft</a>
+      <a href="players/okta.html">Okta</a>
+      <a href="players/world.html">World</a>
+      <a href="players/ping.html">Ping Identity</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrap" style="max-width:900px;">
+
+  <header class="page-header">
+    <div class="page-header__label">Framework reference · April 2026</div>
+    <h1 class="page-header__title">Framework Primer</h1>
+    <p class="page-header__sub">Read this once before engaging with the comparison data, or return to it when a term is unclear. Covers the layer model, binding quality taxonomy, key concepts, and how to read a player brief.</p>
+  </header>
+
+  <!-- ============================================================
+       SECTION 1 — What is biometric anchoring?
+       ============================================================ -->
+  <section class="primer-section">
+    <div class="primer-section__heading">
+      <span class="primer-section__num">01</span>
+      What is biometric anchoring?
+    </div>
+
+    <div class="prose">
+      <p>Biometric anchoring is the cryptographic linkage of a biometric proof event to a credential artifact that travels with the identity claim. A biometrically-anchored credential carries within itself — or in a cryptographically-linked signed record — evidence that a specific biometric event occurred at issuance or at the moment of consequence. A relying party receiving the credential can verify that evidence independently, without querying a separate audit system or trusting the issuer's word after the fact.</p>
+      <p>This distinguishes biometric anchoring from conventional password-based or assertion-based identity models. A password-based system proves knowledge of a secret; an assertion-based system proves the issuer vouched for an identity at some point. Neither model creates a cryptographic chain from a physical fact about a specific human body to the artifact a downstream system accepts. Biometric anchoring does. The policy consequence: under regulatory frameworks that require artifact-level non-repudiation — such as EU AI Act Article 14 human-in-the-loop requirements for high-risk AI — the difference between anchored and unanchored credentials is not cosmetic. It determines whether an audit can be resolved from the credential artifact alone or whether it requires the issuer's cooperation to reconstruct.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2 — The layer model
+       ============================================================ -->
+  <section class="primer-section">
+    <div class="primer-section__heading">
+      <span class="primer-section__num">02</span>
+      The layer model
+    </div>
+
+    <p class="prose" style="margin-bottom:1.25rem;">The research uses a three-layer model to place each player's role in the identity stack. A player may occupy one, two, or all three layers.</p>
+
+    <div class="layer-diagram">
+      <div class="layer-box">
+        <div class="layer-box__label">Layer 2 — top of stack</div>
+        <div class="layer-box__name">Binding Authority / IAM Orchestrator</div>
+        <div class="layer-box__def">The actor that receives Layer 1 results and issues the downstream credential — the session token, OAuth JWT, W3C VC, or agent identity — that travels to relying parties. This is the policy and orchestration layer.</div>
+        <div class="layer-box__examples">Example actors from this research: Microsoft Entra ID; Okta; Ping Identity (PingOne, PingFederate)</div>
+      </div>
+      <div class="layer-arrow">↑ verification results and signed credentials flow up from Layer 1</div>
+      <div class="layer-box">
+        <div class="layer-box__label">Layer 1</div>
+        <div class="layer-box__name">Biometric Verification / IDV Supplier / Credential Issuer</div>
+        <div class="layer-box__def">The actor that captures a biometric, verifies liveness, matches the biometric to a claimed identity, and produces a verification result or signed credential. Converts a physical event into a digital claim.</div>
+        <div class="layer-box__examples">Example actors from this research: World / Tools for Humanity (Orb + ZK credential issuance); Keyless sMPC (Ping Identity, acq. Jan 2026); iProov (Okta partner); Nametag (Okta partner)</div>
+      </div>
+      <div class="layer-arrow">↑ hardware-attested biometric events flow up from Layer 0</div>
+      <div class="layer-box">
+        <div class="layer-box__label">Layer 0 — hardware foundation</div>
+        <div class="layer-box__name">Hardware Substrate</div>
+        <div class="layer-box__def">The physical root of trust: the chip, secure enclave, or sensor that hardware-enforces liveness or key storage. No software can impersonate hardware physics at this layer.</div>
+        <div class="layer-box__examples">Example actors: Intel PTT / AMD fTPM / Infineon (TPM 2.0); Apple Secure Enclave; Android StrongBox; World Orb (iris hardware); Thales Luna HSM</div>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:1rem;">
+      <p><strong>Why layer position matters for binding quality:</strong> A Layer 2 orchestrator that does not own Layer 1 cannot guarantee the biometric proof enters the artifact it issues — it can only condition token issuance on a result it receives from a supplier. A player that owns both Layer 1 and Layer 2 has native control of the full chain from biometric event to signed credential. Ping Identity is the only enterprise IAM orchestrator in this research that owns both layers following the Keyless acquisition.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3 — Binding quality explained
+       ============================================================ -->
+  <section class="primer-section">
+    <div class="primer-section__heading">
+      <span class="primer-section__num">03</span>
+      Binding quality explained
+    </div>
+
+    <p class="prose" style="margin-bottom:1.25rem;">Binding quality is the primary analytical dimension in this research. Three values are used:</p>
+
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+
+      <div class="lane-card">
+        <div class="lane-card__header">
+          <div>
+            <div class="lane-card__name">Hard</div>
+          </div>
+          <span class="bq bq--hard bq--lg">hard</span>
+        </div>
+        <p class="lane-card__note"><strong>Cryptographic chain from biometric proof to artifact; independently verifiable.</strong> The biometric event is not merely recorded — its proof is embedded in or cryptographically linked to the artifact a relying party accepts. A verifier can confirm the biometric proof without querying the issuer.</p>
+        <div class="lane-card__pills">
+          <span class="pill">cryptographic chain</span>
+          <span class="pill">independently verifiable</span>
+          <span class="pill">no issuer query needed</span>
+        </div>
+        <div style="margin-top:0.85rem;font-size:0.85rem;color:var(--text-3);">
+          <strong style="color:var(--text-2);">In practice:</strong> Windows Hello for Business — the biometric gesture unlocks a TPM key that signs the authentication assertion. The Entra-issued PRT is bound to the TPM session key. The AIK certificate lets any verifier confirm the key is hardware-bound. World ID — a ZK-SNARK proof of Merkle tree membership is verifiable on-chain without querying Tools for Humanity.
+        </div>
+      </div>
+
+      <div class="lane-card">
+        <div class="lane-card__header">
+          <div>
+            <div class="lane-card__name">Hard Path Native</div>
+          </div>
+          <span class="bq bq--hard_path_native bq--lg">hard path native</span>
+        </div>
+        <p class="lane-card__note"><strong>Player owns the cryptographic mechanism; integration into the artifact signing chain not confirmed shipped.</strong> The player controls the technology that would produce hard binding — a biometric-derived key, a ZK proof system — but public documentation does not confirm that mechanism has been wired into the issued credential artifact.</p>
+        <div class="lane-card__pills">
+          <span class="pill">mechanism owned</span>
+          <span class="pill">integration pending</span>
+          <span class="pill">not yet confirmed shipped</span>
+        </div>
+        <div style="margin-top:0.85rem;font-size:0.85rem;color:var(--text-3);">
+          <strong style="color:var(--text-2);">In practice:</strong> Ping Identity Universal Services — Keyless sMPC produces a biometric-derived cryptographic key (not just accept/reject), which is the native mechanism for hard binding. Whether that key is currently embedded in the artifact signing chain is not publicly confirmed. Entra Verified ID Face Check — both artifacts are signed and the FaceCheck receipt JWT binds the comparison outcome, but the face match is probabilistic rather than cryptographic identity equivalence.
+        </div>
+      </div>
+
+      <div class="lane-card">
+        <div class="lane-card__header">
+          <div>
+            <div class="lane-card__name">Soft</div>
+          </div>
+          <span class="bq bq--soft bq--lg">soft</span>
+        </div>
+        <p class="lane-card__note"><strong>Audit log or policy signal only; no cryptographic proof on the artifact.</strong> The biometric event happened — and was recorded — but the credential artifact a relying party receives contains no cryptographic reference to it. Confirming the biometric underlies a specific token or agent action requires querying a separate audit system.</p>
+        <div class="lane-card__pills">
+          <span class="pill">audit-log binding only</span>
+          <span class="pill">issuer query required</span>
+          <span class="pill">no biometric proof on artifact</span>
+        </div>
+        <div style="margin-top:0.85rem;font-size:0.85rem;color:var(--text-3);">
+          <strong style="color:var(--text-2);">In practice:</strong> Entra Agent ID / Okta Agent Identity — an AI agent gets an OAuth service principal. Even if the provisioning administrator was authenticated via Windows Hello (a hard-binding event for that person), the biometric proof does not transfer to the agent credential. The agent's OIDC JWT carries no cryptographic reference to any biometric event.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="prose" style="margin-top:1.25rem;">
+      <p><strong>The agentic distinction:</strong> These three values apply to AI agent credentials as well as human credentials. A biometric-provisioned agent governance model (type b) — where the human administrator was biometrically verified at provisioning but the proof does not transfer — is still soft binding. A biometric-anchored agent credential (type a) — where the biometric proof is cryptographically embedded in the agent identity record — would be hard binding. No player in this research has shipped a type (a) agent credential as of April 2026.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4 — Key concepts glossary
+       ============================================================ -->
+  <section class="primer-section">
+    <div class="primer-section__heading">
+      <span class="primer-section__num">04</span>
+      Key concepts glossary
+    </div>
+
+    <dl class="glossary">
+      <dt>Layer 0</dt>
+      <dd>Hardware substrate: the chip, HSM, or purpose-built sensor that provides a hardware root of trust. Examples: TPM 2.0, Apple Secure Enclave, Thales Luna HSM, World Orb.</dd>
+
+      <dt>Layer 1</dt>
+      <dd>IDV / biometric verification supplier / credential issuer. The actor that converts a physical biometric event into a digital verification result or signed credential.</dd>
+
+      <dt>Layer 2</dt>
+      <dd>Binding authority / IAM orchestrator. The actor that receives Layer 1 results and issues the downstream credential — token, JWT, W3C VC — that relying parties accept.</dd>
+
+      <dt>Hard binding</dt>
+      <dd>A cryptographic chain from biometric proof to credential artifact. Independently verifiable without querying the issuer. Supports non-repudiation.</dd>
+
+      <dt>Soft binding</dt>
+      <dd>Audit log or policy signal only. The biometric event was recorded; the artifact contains no cryptographic proof of it. Confirming the connection requires querying the issuer's records.</dd>
+
+      <dt>Hard path native</dt>
+      <dd>The player owns the cryptographic mechanism that enables hard binding (e.g., a biometric-derived key, a ZK proof system), but integration into the artifact signing chain is not yet publicly confirmed as shipped.</dd>
+
+      <dt>PoP — Proof of Personhood</dt>
+      <dd>A credential that attests a human is unique and real, without necessarily revealing legal identity. World ID's ZK-SNARK credential is the primary PoP example in this research.</dd>
+
+      <dt>IAM — Identity and Access Management</dt>
+      <dd>Systems for managing digital identities and controlling access to resources. Enterprise IAM orchestrators (Microsoft Entra, Okta, Ping Identity) are Layer 2 actors in this model.</dd>
+
+      <dt>ZK — Zero-Knowledge Proof</dt>
+      <dd>A cryptographic proof that demonstrates knowledge of a fact without revealing the underlying data. World ID uses ZK-SNARKs (Groth16, Semaphore protocol) to prove Merkle tree membership without revealing which identity committed to which leaf.</dd>
+
+      <dt>VC — Verifiable Credential</dt>
+      <dd>A W3C-standard tamper-evident credential with a cryptographic proof. The issuer signs the VC; the holder presents it; the verifier confirms the issuer's signature without querying the issuer. Used by Microsoft (Entra Verified ID) and Ping Identity (PingOne Neo).</dd>
+
+      <dt>Agentic</dt>
+      <dd>Covers AI agent identity — not only human identity. An agentic lane issues credentials to AI agents operating on behalf of humans. Binding quality determines whether those agent credentials carry cryptographic proof of human authorization or only governance-log evidence.</dd>
+
+      <dt>Agentic distinction: type (a) vs type (b)</dt>
+      <dd><strong>Type (a) — biometric-anchored agent credential:</strong> biometric proof is cryptographically embedded in the agent identity record at provisioning; independently verifiable at point of consequence. <strong>Type (b) — biometric-provisioned agent governance:</strong> the provisioning administrator may have been biometrically verified, but the proof does not transfer to the agent credential. All four players in this research are currently type (b) for agentic lanes.</dd>
+
+      <dt>sMPC — Secure Multi-Party Computation</dt>
+      <dd>A cryptographic protocol where computation is distributed across multiple parties with no single party holding all inputs. Keyless (acquired by Ping Identity, Jan 2026) uses sMPC to produce a biometric-derived cryptographic key without any node storing the raw biometric.</dd>
+
+      <dt>MCP — Model Context Protocol</dt>
+      <dd>Anthropic's open protocol for AI tool and resource access. Used by Microsoft and Ping Identity for agent authorization enforcement at the tool/resource level.</dd>
+
+      <dt>XAA — Cross App Access</dt>
+      <dd>Okta's proprietary open protocol (published June 2025) extending OAuth via the Identity Assertion Authorization Grant to shift agent-to-app access control to Okta as central identity provider.</dd>
+
+      <dt>WIMSE — Workload Identity in Multi-System Environments</dt>
+      <dd>IETF working group defining standards for AI agent workload identity across system boundaries. Ping Identity (Brian Campbell) is a co-author of the core WIMSE specification.</dd>
+    </dl>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5 — How to read a player brief
+       ============================================================ -->
+  <section class="primer-section">
+    <div class="primer-section__heading">
+      <span class="primer-section__num">05</span>
+      How to read a player brief
+    </div>
+
+    <p class="prose" style="margin-bottom:1.25rem;">Each player brief is organized as six sections. The lane card is the primary data element — here is an annotated example using a simplified version of the actual component:</p>
+
+    <!-- Annotated lane card example -->
+    <div class="annotated-lane">
+      <div class="lane-card" style="max-width:600px;">
+        <div class="lane-card__header">
+          <div>
+            <div class="lane-card__name">Example Lane — Biometric Credential</div>
+            <div class="lane-card__id">P03-L2 · Layer 2 · Enterprise · Non-agentic</div>
+          </div>
+          <span class="bq bq--hard_path_native bq--lg">hard path native</span>
+        </div>
+        <p class="lane-card__note">One sentence explaining exactly why this binding quality value was assigned — the specific architectural detail that determines the classification.</p>
+        <div class="lane-card__pills">
+          <span class="pill pill--artifact">w3c_vc</span>
+          <span class="pill">credential binding</span>
+        </div>
+        <div class="coverage-wrap">
+          <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span>
+          <span class="pill" style="border-color:#475569;color:#94a3b8;">cred: <strong style="color:var(--hpn-text);">hard_path_native</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:1rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <div style="display:flex;gap:0.75rem;align-items:flex-start;font-size:0.875rem;color:var(--text-2);">
+        <span class="callout-label" style="flex-shrink:0;">Binding quality badge</span>
+        <span>The green/amber/slate badge in the top-right corner. This is the primary classification: <code>hard</code>, <code>hard path native</code>, or <code>soft</code>. Read the note below it to understand why.</span>
+      </div>
+      <div style="display:flex;gap:0.75rem;align-items:flex-start;font-size:0.875rem;color:var(--text-2);">
+        <span class="callout-label" style="flex-shrink:0;">Lane ID + role</span>
+        <span>The small text below the lane name: player ID, layer (1 or 2), issuing authority context, and whether the lane covers agentic (AI agent) identity.</span>
+      </div>
+      <div style="display:flex;gap:0.75rem;align-items:flex-start;font-size:0.875rem;color:var(--text-2);">
+        <span class="callout-label" style="flex-shrink:0;">Binding quality note</span>
+        <span>The paragraph under the header. One sentence of authoritative explanation — do not paraphrase this when citing the research.</span>
+      </div>
+      <div style="display:flex;gap:0.75rem;align-items:flex-start;font-size:0.875rem;color:var(--text-2);">
+        <span class="callout-label" style="flex-shrink:0;">Artifact type pill</span>
+        <span>The blue pill (<code>w3c_vc</code>, <code>fido2_assertion</code>, <code>oidc_jwt</code>, <code>zk_credential</code>) — what gets issued. This determines what a relying party receives and what it can independently verify.</span>
+      </div>
+      <div style="display:flex;gap:0.75rem;align-items:flex-start;font-size:0.875rem;color:var(--text-2);">
+        <span class="callout-label" style="flex-shrink:0;">Coverage pills</span>
+        <span>Bottom row: which binding type dimensions this lane covers (PoP, agent, action, credential, device) and at what quality level. A lane may cover multiple dimensions at different quality levels.</span>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:1.5rem;">
+      <p><strong>The six sections of each player brief:</strong></p>
+      <ul>
+        <li><strong>01 Key Finding</strong> — the most important analytical claim about this player; the one thing to carry forward</li>
+        <li><strong>02 Lanes</strong> — each lane card with binding quality, artifact type, agentic flag, and coverage</li>
+        <li><strong>03 Architecture</strong> — how the binding chain works technically; why each binding quality value was assigned</li>
+        <li><strong>04 Strategic Position</strong> — entity type, revenue model, scale, competitive context</li>
+        <li><strong>05 Gaps &amp; Regulatory Exposure</strong> — critical gap, regulatory forcing functions, protocol adoption table</li>
+        <li><strong>06 Sources</strong> — all primary and secondary sources, verified via live web research April 2026</li>
+      </ul>
+    </div>
+  </section>
+
+</div><!-- /page-wrap -->
+
+<footer class="site-footer">
+  <p>Biometric Anchoring Landscape · Research corpus April 2026 · Four players: Microsoft (P03), Okta (P04), World (P05), Ping Identity (P23)</p>
+  <p><a href="index.html">Comparison</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
