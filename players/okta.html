@@ -91,6 +91,25 @@
     </div>
   </div>
 
+  <!-- Layer position context -->
+  <div class="layer-position-bar">
+    <div class="layer-position-bar__stack">
+      <div class="layer-position-bar__layer">
+        <span class="layer-badge layer-badge--owned">L2</span>
+        <span class="layer-position-bar__layer-label">Binding authority · owned</span>
+      </div>
+      <div class="layer-position-bar__layer">
+        <span class="layer-badge layer-badge--absent">L1</span>
+        <span class="layer-position-bar__layer-label">Biometric verification · absent</span>
+      </div>
+      <div class="layer-position-bar__layer">
+        <span class="layer-badge layer-badge--absent">L0</span>
+        <span class="layer-position-bar__layer-label">Hardware substrate · absent</span>
+      </div>
+    </div>
+    <p class="layer-position-bar__text">Okta occupies Layer 2 exclusively: binding authority and session orchestration, with no native biometric capability. Every biometric signal it processes originates from a third-party supplier (iProov, Nametag, Persona). This is a structural constraint, not a product gap — hard credential binding is not achievable without acquiring or deeply integrating a Layer 1 capability. That constraint is the direct cause of the <span class="bq bq--soft">soft</span> credential issuance rating.</p>
+  </div>
+
   <div class="player-page">
 
     <!-- Sidebar -->

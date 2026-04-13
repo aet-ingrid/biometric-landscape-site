@@ -634,6 +634,78 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 }
 
 /* ============================================================
+   LAYER POSITION BAR
+   ============================================================ */
+.layer-position-bar {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 2rem;
+}
+
+.layer-position-bar__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.layer-position-bar__layer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.layer-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  min-width: 2rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.layer-badge--owned {
+  background: var(--hard-bg);
+  border: 1px solid var(--hard-border);
+  color: var(--hard-text);
+}
+
+.layer-badge--partial {
+  background: var(--hpn-bg);
+  border: 1px dashed var(--hpn-border);
+  color: var(--hpn-text);
+}
+
+.layer-badge--absent {
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--text-4);
+  opacity: 0.4;
+}
+
+.layer-position-bar__layer-label {
+  font-size: 0.7rem;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+}
+
+.layer-position-bar__text {
+  font-size: 0.875rem;
+  color: var(--text-2);
+  line-height: 1.65;
+  border-left: 2px solid var(--border-2);
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+/* ============================================================
    PLAYER PAGE LAYOUT
    ============================================================ */
 .player-page {
