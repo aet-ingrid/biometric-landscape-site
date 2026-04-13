@@ -1,0 +1,24 @@
+{
+  "name": "biometric-landscape-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "export-pdf": "node export-pdf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aet-ingrid/biometric-landscape-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/aet-ingrid/biometric-landscape-site/issues"
+  },
+  "homepage": "https://github.com/aet-ingrid/biometric-landscape-site#readme",
+  "dependencies": {
+    "puppeteer": "^24.40.0"
+  }
+}
