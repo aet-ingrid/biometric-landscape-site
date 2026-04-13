@@ -195,18 +195,19 @@
           <div id="lane-p23-l3" class="lane-card">
             <div class="lane-card__header">
               <div>
-                <div class="lane-card__name">Identity for AI / Agent Gateway</div>
+                <div class="lane-card__name"><a href="https://www.pingidentity.com/en/solution/agentic-ai-identity.html" target="_blank" rel="noopener">Identity for AI / Agent Gateway</a></div>
                 <div class="lane-card__id">P23-L3 · Layer 2 · Enterprise issuing authority · <span style="color:var(--accent-2);">Agentic ★</span></div>
               </div>
               <span class="bq bq--hard_path_native bq--lg">hard path native</span>
             </div>
-            <p class="lane-card__note">Each AI agent gets distinct scoped delegated identity (not extension of human credential); <span data-tooltip="Model Context Protocol — Anthropic's open protocol for AI tool/resource access">MCP</span>-based per-action governance enforcement; current architecture logs governance events (soft); Keyless ZK key output is native path to hard binding — integration pending.</p>
+            <p class="lane-card__note">Ping's <strong>Runtime Identity</strong> platform: each AI agent receives distinct scoped delegated identity (not an extension of the human credential); Agent Gateway enforces per-action policy at the moment of execution via <span data-tooltip="Model Context Protocol — Anthropic's open protocol for AI tool/resource access">MCP</span>-integrated runtime evaluation — not only at token issuance; Agent Detection (PingOne Protect) classifies AI agents via behavioral signals. Current architecture is governance-logged (soft binding) — per-action enforcement is real but biometric proof is not embedded in the action artifact. Keyless ZK key output is the native path to credential-embedded binding; integration pending.</p>
             <div class="lane-card__pills">
               <span class="pill pill--artifact">w3c_vc</span>
               <span class="pill pill--agentic">agentic</span>
               <span class="pill">Agent IAM Core + Gateway + Detection</span>
-              <span class="pill">MCP enforcement</span>
+              <span class="pill">runtime enforcement</span>
               <span class="pill">GA March 31, 2026</span>
+              <a href="https://developer.pingidentity.com/identity-for-ai/index.html" target="_blank" rel="noopener" class="pill" style="color:var(--accent);border-color:var(--accent);">Developer docs ↗</a>
             </div>
             <div class="coverage-wrap">
               <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span>
@@ -235,8 +236,8 @@
           <h4>Universal Services ZK Re-verification — Approaching Hard Binding</h4>
           <p>Keyless ZK biometric re-verification triggered at high-risk transaction events — large transfers, legal agreements, restricted health record access. The Keyless sMPC-derived key output creates an architectural path to hard binding that is native to Ping's platform. If this key signs or is embedded in the re-verification event record, this constitutes hard binding — biometric proof cryptographically embedded in the signed record, independently verifiable. Classified as hard path native because integration into the artifact signing chain is architecturally plausible but not yet publicly confirmed as shipped.</p>
 
-          <h4>Identity for AI — Current Architecture (Governance-Logged)</h4>
-          <p>Agent IAM Core issues scoped, delegated tokens to AI agents as a distinct identity type — not an extension of the human credential. Agent Gateway provides MCP-integrated runtime enforcement and continuous authorization evaluation at agent-resource interaction points. The current architecture is governance-logged (type b) — biometric proof at the human provisioning event is logged; the agent credential (OAuth/OIDC scoped token) that travels to downstream resources does not embed the biometric proof chain.</p>
+          <h4>Identity for AI — Runtime Identity (Governance-Logged)</h4>
+          <p>Ping brands this platform under the concept of <strong>Runtime Identity</strong>: the claim that continuous, contextual authorization at the moment of action — not just access control at login — is the operative security primitive for autonomous AI. CEO Andre Durand: "AI agents are not features. They are actors requiring identity, authority, and accountability." Agent IAM Core issues scoped, delegated tokens to AI agents as a distinct identity type — not an extension of the human credential. Agent Gateway provides MCP-integrated runtime enforcement and per-action policy evaluation at agent-resource interaction points, including human-in-the-loop controls for high-risk tasks. The current architecture is governance-logged (soft binding) — per-action enforcement is real and distinguishes Ping from Okta's XAA (which evaluates at token issuance only); but biometric proof at the human provisioning event is not embedded in the agent credential that travels to downstream resources.</p>
           <p>A <strong>Secretless Agentic Identity</strong> sub-feature (part of Identity for AI) injects dynamic, ephemeral OAuth tokens at runtime rather than relying on static credentials embedded at provisioning — agents receive short-lived, scoped tokens from PingGateway's token injection layer. This is architecturally consistent with the soft binding classification: the ephemeral token is not cryptographically derived from the original human biometric proof.</p>
           <p><strong>The path to credential-embedded agent identity binding</strong> is shorter for Ping than for Okta: the Keyless ZK cryptographic key output could, architecturally, be embedded in the agent authorization record or used to sign it at provisioning. This upgrade does not require a new acquisition — it is a product integration decision within Ping's own technology stack.</p>
         </div>
@@ -286,7 +287,9 @@
 
           <p>Following the January 2026 close of its Keyless acquisition, Ping is the only enterprise general-purpose IAM orchestrator in this research that owns both Layer 1 biometric verification (Keyless sMPC facial biometrics, FIDO2-certified, cryptographic key output from biometric match) and Layer 2 binding (PingOne/PingFederate policy engine, credential issuance, with Thales Luna HSM-backed credential signing). All other enterprise IAM orchestrators (Okta, Microsoft Entra for most workflows) are Layer 2 only for biometric purposes.</p>
 
-          <p>Binding quality: soft for standard OIDC access tokens; <strong>approaching hard binding</strong> in Universal Services ZK re-verification contexts (Keyless cryptographic key output from biometric match); <strong>hard binding confirmed</strong> for PingOne Neo W3C VCs; agent identity binding is governance-logged (type b, same structural category as Okta) but with a materially shorter path to credential-embedded (type a) due to native Keyless capability. The binding quality upgrade requires product integration work; Okta's equivalent requires either acquisition or sustained supplier dependency.</p>
+          <p>Ping and Okta are pursuing the same strategic goal — the Layer 2 control plane for agentic enterprise identity — through different mechanisms. Okta's approach is protocol authorship: Aaron Parecki authored the IETF ID-JAG draft and embedded XAA into the MCP specification, positioning the IdP as the delegation gate at token issuance. Ping's approach is runtime enforcement: Agent Gateway evaluates policy at the moment of agent-resource interaction, not only at token issuance. The distinction is operationally meaningful — Ping's model addresses the gap where Okta's scoped tokens can be used for any action within scope without further evaluation. Neither approach embeds biometric proof in the action artifact; both remain governance-logged at the credential binding layer.</p>
+
+          <p>Binding quality: soft for standard OIDC access tokens; <strong>approaching hard binding</strong> in Universal Services ZK re-verification contexts (Keyless cryptographic key output from biometric match); <strong>hard binding confirmed</strong> for PingOne Neo W3C VCs; agent identity binding is governance-logged (type b, same structural category as Okta) but with a materially shorter path to credential-embedded (type a) due to native Keyless capability. The binding quality transition requires product integration work; Okta's equivalent requires either acquisition or sustained supplier dependency.</p>
 
           <p>Biometric modality is facial (Keyless sMPC, software deepfake detection, FIDO2-certified, GDPR-exempt from Article 9 special category treatment), with structured-light 3D facial and fingerprint modalities available via device-resident FIDO2 authenticators where Ping is the relying party. Revenue is SaaS subscription; more than half the Fortune 100 are customers.</p>
         </div>
@@ -360,6 +363,7 @@
           <li><a href="https://press.pingidentity.com/2026-03-24-Ping-Identity-Defines-the-Runtime-Identity-Standard-for-Autonomous-AI">Ping Identity Identity for AI GA / Runtime Identity Standard (March 24, 2026)</a></li>
           <li><a href="https://press.pingidentity.com/2025-11-06-Ping-Identity-Launches-Identity-for-AI-Solution-to-Power-Innovation-and-Trust-in-the-Agent-Economy">Ping Identity Identity for AI launch (November 6, 2025)</a></li>
           <li><a href="https://www.pingidentity.com/en/solution/agentic-ai-identity.html">Ping Identity agentic AI identity solution page</a></li>
+          <li><a href="https://developer.pingidentity.com/identity-for-ai/index.html">Ping Identity — Identity for AI developer documentation (MCP, A2A, token exchange, AWS Bedrock + Cloudflare integration guides)</a></li>
           <li><a href="https://keyless.io/technology/zero-knowledge-biometrics">Keyless ZK biometrics technology page</a></li>
           <li><a href="https://docs.keyless.io/why-keyless/keyless-protocol">Keyless protocol documentation (cryptographic key output from biometric match)</a></li>
           <li><a href="https://www.biometricupdate.com/202203/keyless-opens-doors-for-software-biometrics-with-fido2-certification-says-co-founder">Keyless FIDO2 and FIDO Biometric certification (first vendor, 2022)</a></li>
