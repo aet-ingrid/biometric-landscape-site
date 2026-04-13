@@ -113,6 +113,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
   letter-spacing: 0.02em;
   white-space: nowrap;
   flex-shrink: 0;
+  text-decoration: none;
 }
 
 .global-nav__brand strong {
@@ -1215,6 +1216,191 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
   margin-top: 0.35rem;
   white-space: nowrap;
 }
+
+/* =====================================================
+   Stack architecture diagram (index.html)
+   ===================================================== */
+.stack-diagram {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 0 2rem;
+}
+
+.stack-diagram__grid {
+  display: grid;
+  grid-template-columns: 13rem repeat(4, 1fr);
+  min-width: 660px;
+}
+
+.stack-header-spacer {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  padding: 0.6rem 0.875rem;
+}
+
+.stack-player-header {
+  border: 1px solid var(--border);
+  margin-left: -1px;
+  background: var(--surface);
+  padding: 0.6rem 0.875rem;
+}
+
+.stack-player-header__name {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.stack-player-header__sub {
+  font-size: 0.68rem;
+  color: var(--text-4);
+  margin-top: 0.15rem;
+}
+
+.stack-layer-label {
+  border: 1px solid var(--border);
+  margin-top: -1px;
+  background: var(--bg);
+  padding: 0.875rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stack-layer-label__badge {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-4);
+  margin-bottom: 0.3rem;
+}
+
+.stack-layer-label__name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 0.2rem;
+}
+
+.stack-layer-label__desc {
+  font-size: 0.7rem;
+  color: var(--text-4);
+  line-height: 1.45;
+}
+
+.stack-cell {
+  border: 1px solid var(--border);
+  margin: -1px 0 0 -1px;
+  padding: 0.875rem;
+  min-height: 5.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.stack-cell--owned { background: var(--surface); }
+
+.stack-cell--partial {
+  background: var(--bg);
+  border-style: dashed;
+  border-color: var(--border-2);
+}
+
+.stack-cell--absent {
+  background: transparent;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-4);
+  font-size: 1rem;
+  opacity: 0.35;
+}
+
+.stack-cell__product {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.stack-cell__note {
+  font-size: 0.68rem;
+  color: var(--text-4);
+  margin-top: 0.3rem;
+  line-height: 1.45;
+}
+
+.stack-cell__tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.1em 0.45em;
+  border-radius: 3px;
+  margin-top: 0.35rem;
+  width: fit-content;
+}
+
+.stack-cell__tag--owned {
+  background: var(--hard-bg);
+  border: 1px solid var(--hard-border);
+  color: var(--hard-text);
+}
+
+.stack-cell__tag--partial {
+  background: var(--hpn-bg);
+  border: 1px solid var(--hpn-border);
+  color: var(--hpn-text);
+}
+
+.stack-summary-label {
+  border: 1px solid var(--border);
+  margin-top: -1px;
+  background: var(--bg);
+  padding: 0.55rem 1rem;
+  font-size: 0.65rem;
+  color: var(--text-4);
+  text-transform: uppercase;
+  font-family: var(--mono);
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+}
+
+.stack-summary-cell {
+  border: 1px solid var(--border);
+  margin: -1px 0 0 -1px;
+  padding: 0.55rem 0.875rem;
+  background: var(--bg);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-3);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.stack-summary-cell--highlight {
+  background: var(--surface);
+  color: var(--hpn-text);
+}
+
+.stack-insight {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 0.875rem;
+  color: var(--text-2);
+  line-height: 1.65;
+}
+
+.stack-insight strong { color: var(--text); }
 
 .callout-label::before {
   content: '▸';
