@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Okta (P04) — Biometric Anchoring Landscape</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="global-nav" role="navigation" aria-label="Site navigation">
+  <div class="global-nav__inner">
+    <span class="global-nav__brand"><strong>Biometric Anchoring</strong> — Research Dashboard</span>
+    <span class="global-nav__sep">|</span>
+    <div class="global-nav__links">
+      <a href="../index.html">Comparison</a>
+      <a href="microsoft.html">Microsoft</a>
+      <a href="okta.html" class="active">Okta</a>
+      <a href="world.html">World</a>
+      <a href="ping.html">Ping Identity</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <a href="../index.html" class="back-link">← Back to comparison</a>
+
+  <!-- Player switcher -->
+  <div class="player-switcher">
+    <a href="microsoft.html" class="switcher-item">
+      <span class="switcher-item__name">Microsoft</span>
+      <div class="switcher-item__lanes">
+        <span class="bq bq--hard">hard</span>
+        <span class="bq bq--hard_path_native">hard path</span>
+        <span class="bq bq--soft">soft</span>
+      </div>
+    </a>
+    <a href="okta.html" class="switcher-item current">
+      <span class="switcher-item__name">Okta</span>
+      <div class="switcher-item__lanes">
+        <span class="bq bq--hard">hard</span>
+        <span class="bq bq--soft">soft</span>
+        <span class="bq bq--soft">soft</span>
+      </div>
+    </a>
+    <a href="world.html" class="switcher-item">
+      <span class="switcher-item__name">World</span>
+      <div class="switcher-item__lanes">
+        <span class="bq bq--hard">hard</span>
+        <span class="bq bq--hard_path_native">hard path</span>
+      </div>
+    </a>
+    <a href="ping.html" class="switcher-item">
+      <span class="switcher-item__name">Ping Identity</span>
+      <div class="switcher-item__lanes">
+        <span class="bq bq--hard">hard</span>
+        <span class="bq bq--hard_path_native">hard path</span>
+        <span class="bq bq--hard_path_native">hard path</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Mobile section nav -->
+  <nav class="mobile-section-nav" aria-label="Page sections">
+    <a href="#key-finding">Key Finding</a>
+    <a href="#lanes">Lanes</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#position">Strategic Position</a>
+    <a href="#gaps">Gaps &amp; Exposure</a>
+    <a href="#sources">Sources</a>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header__label">P04 · Public company · Institutional authority</div>
+    <h1 class="page-header__title">Okta</h1>
+    <div class="flex-wrap mt-1">
+      <span class="tag">Enterprise IAM Orchestrator</span>
+      <span class="tag">Layer 2 only</span>
+      <span class="tag tag--agentic">Agentic (Okta for AI Agents)</span>
+      <span class="tag">OKTA · ~$3.0B ARR</span>
+    </div>
+  </div>
+
+  <div class="player-page">
+
+    <!-- Sidebar -->
+    <aside class="player-sidebar">
+      <div class="classification-card">
+        <div class="classification-card__title">Classification</div>
+        <div class="classification-row">
+          <div class="classification-row__label">Entity Type</div>
+          <div class="classification-row__value"><strong>Public company</strong> (NASDAQ: OKTA)</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Tier</div>
+          <div class="classification-row__value">Primary</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Authority Model</div>
+          <div class="classification-row__value">Institutional</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Decision Role</div>
+          <div class="classification-row__value"><strong>Layer 2 only.</strong> No native biometric capability. Layer 1 entirely partner-supplied (iProov, Nametag, Persona).</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Lanes</div>
+          <div class="classification-row__value">3 (1 agentic)</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Scale</div>
+          <div class="classification-row__value">~19,300+ customers; ~$3.0B ARR FY2026</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Revenue</div>
+          <div class="classification-row__value">SaaS subscription; ~12% YoY growth; NRR ~106%. No token model.</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Trust Substrate</div>
+          <div class="classification-row__value">Software-only for Okta-native artifacts. Third-party hardware roots (Apple SE, Android StrongBox, TPM 2.0) accessed via FIDO2.</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Key Partners</div>
+          <div class="classification-row__value">Nametag (action-level biometric + VHS), iProov (enrollment liveness), Persona (IDV orchestration)</div>
+        </div>
+      </div>
+
+      <nav class="section-nav" aria-label="Page sections">
+        <a href="#key-finding">Key Finding</a>
+        <a href="#lanes">Lanes</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#position">Strategic Position</a>
+        <a href="#gaps">Gaps &amp; Exposure</a>
+        <a href="#sources">Sources</a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="player-main">
+
+      <!-- Key Finding -->
+      <section id="key-finding" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">01</span>
+          <h2 class="player-section__title">Key Finding</h2>
+        </div>
+        <blockquote class="pull-quote">
+          Okta has built the most complete enterprise governance shell for agentic AI in the market — agent discovery, registration, <span data-tooltip="Cross App Access — Okta's own open protocol (announced June 2025) extending OAuth via the Identity Assertion Authorization Grant to shift agent-to-app access control to Okta as central IdP">XAA</span> access control, lifecycle management, and human-in-the-loop re-verification via Nametag Signa — yet the governance shell and the cryptographic binding question are distinct problems, and Okta has solved the first while the second remains open: the <span data-tooltip="Verified Human Signature — Nametag's cryptographically-attested record of human authorization for an AI action, using hardware-backed keystore and Spatial Selfie 3D mapping">Verified Human Signature</span> that Nametag produces is an attestation record proving a biometrically-verified human authorized an AI action, but that record is not embedded in the action artifact, so the biometric proof does not travel with the agent to the point of consequence; as <span data-tooltip="EU AI Act Article 14: human oversight requirements for high-risk AI systems">EU AI Act</span> auditability requirements move from governance-log satisfaction to artifact-level non-repudiation, Okta faces a binary choice: acquire Nametag and integrate VHS into the signed action record to natively close the hard binding gap, or remain the governance layer above a biometric supplier that holds the only piece Okta cannot replicate — and watch that supplier become the strategic chokepoint instead.
+        </blockquote>
+      </section>
+
+      <!-- Lanes -->
+      <section id="lanes" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">02</span>
+          <h2 class="player-section__title">Lanes</h2>
+        </div>
+
+        <div class="lanes-grid">
+
+          <!-- Lane 1 -->
+          <div id="lane-p04-l1" class="lane-card">
+            <div class="lane-card__header">
+              <div>
+                <div class="lane-card__name">FIDO2 Passkeys (Relying Party)</div>
+                <div class="lane-card__id">P04-L1 · Layer 2 · Platform issuing authority · Non-agentic</div>
+              </div>
+              <span class="bq bq--hard bq--lg">hard</span>
+            </div>
+            <p class="lane-card__note">Hard at device level — signed FIDO2 assertion is independently verifiable. Okta is verifier/RP, not the hardware root. Apple SE / <span data-tooltip="Trusted Platform Module — hardware chip storing cryptographic keys">TPM</span> / Android StrongBox are the actual roots.</p>
+            <div class="lane-card__pills">
+              <span class="pill pill--artifact">fido2_assertion</span>
+              <span class="pill">device / hardware binding (partnership)</span>
+              <span class="pill">Face ID / Touch ID / Windows Hello</span>
+              <span class="pill">session binding</span>
+            </div>
+            <div class="coverage-wrap">
+              <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span>
+              <span class="pill" style="border-color:#475569;color:#94a3b8;">device: <strong style="color:var(--hard-text);">partnership_hard</strong></span>
+            </div>
+          </div>
+
+          <!-- Lane 2 -->
+          <div id="lane-p04-l2" class="lane-card">
+            <div class="lane-card__header">
+              <div>
+                <div class="lane-card__name">OIDC Access Tokens / Workforce IAM</div>
+                <div class="lane-card__id">P04-L2 · Layer 2 · Enterprise issuing authority · Non-agentic</div>
+              </div>
+              <span class="bq bq--soft bq--lg">soft</span>
+            </div>
+            <p class="lane-card__note"><span data-tooltip="JSON Web Token — signed token format used in OAuth and OIDC flows">JWT</span> contains no cryptographic reference to biometric proof; software-key-based token signing (not HSM-backed); confirming biometric underlies a specific token requires Okta audit log query.</p>
+            <div class="lane-card__pills">
+              <span class="pill pill--artifact">oidc_jwt</span>
+              <span class="pill">software signing keys</span>
+              <span class="pill">audit-log binding only</span>
+            </div>
+          </div>
+
+          <!-- Lane 3 -->
+          <div id="lane-p04-l3" class="lane-card">
+            <div class="lane-card__header">
+              <div>
+                <div class="lane-card__name">Okta Agent Identity</div>
+                <div class="lane-card__id">P04-L3 · Layer 2 · Enterprise issuing authority · <span style="color:var(--accent-2);">Agentic ★</span></div>
+              </div>
+              <span class="bq bq--soft bq--lg">soft</span>
+            </div>
+            <p class="lane-card__note">OAuth service principals and <span data-tooltip="Fine-Grained Authorization — granular permission management for agent actions">FGA</span>; mirrors Entra Agent ID structure exactly; no biometric proof in agent credential; Nametag Signa is the upgrade path (action-level re-verification) but not natively integrated to artifact signing chain.</p>
+            <div class="lane-card__pills">
+              <span class="pill pill--artifact">oidc_jwt</span>
+              <span class="pill pill--agentic">agentic</span>
+              <span class="pill">XAA access control</span>
+              <span class="pill">Nametag Signa (partner)</span>
+            </div>
+            <div class="coverage-wrap">
+              <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span>
+              <span class="pill" style="border-color:#475569;color:#94a3b8;">agent: <strong style="color:var(--soft-text);">soft</strong></span>
+              <span class="pill" style="border-color:#475569;color:#94a3b8;">action: <strong style="color:var(--soft-text);">partnership_soft</strong></span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Architecture -->
+      <section id="architecture" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">03</span>
+          <h2 class="player-section__title">Architecture — How the Binding Works</h2>
+        </div>
+
+        <div class="prose">
+          <h4>Soft Binding — The Core Structural Constraint</h4>
+          <p>Okta IS a binding actor. It takes biometric verification results from Layer 1 suppliers and conditions access token issuance, agent credential provisioning, and audit records on those results. The binding is soft because no cryptographic chain links the biometric proof to the artifact — the session token, the agent OAuth credential, or the access decision.</p>
+          <p>The mechanism: Okta's policy engine receives a biometric verification result from a Layer 1 supplier (e.g., iProov returns "genuine presence confirmed, face matches document"); Okta issues an access token or provisions an agent credential conditioned on that result; the issued token is an OIDC JWT signed with Okta's cloud-managed software key. The token contains no cryptographic reference to the biometric proof. Verifying that a specific biometric check underlies the token requires querying Okta's audit log — not independently verifying the token itself.</p>
+
+          <h4>FIDO2 Passkeys — Hard Binding via Hardware (Relying Party Role)</h4>
+          <p>For FIDO2/passkeys, Okta functions as the relying party. The binding sequence is: issuance-time (passkey enrollment — device SE/TPM key generated, biometric bound to device key) and presentation-time (biometric unlocks device key at each authentication; Okta verifies the signed assertion). Okta does not control the binding at either point; it is the verification endpoint. The hard binding is real and independently verifiable — but Okta is not the hardware root operator.</p>
+
+          <h4>Nametag Signa — The Path to Hard Binding (Not Yet Arrived)</h4>
+          <p>Nametag Signa (shipped Sept 2025) is Okta's current path toward hard binding for agent actions. The architecture: Okta provides the policy engine (XAA + AI agent governance — when to require human authorization); Nametag provides the biometric and cryptographic attestation layer (selfie + government-issued photo ID verified via Deepfake Defense™ — hardware-backed keystore + Spatial Selfie™ 3D mapping against 2D ID photo). The output is a <strong>Verified Human Signature (VHS)</strong> — described as "cryptographically-attested proof that a legitimate person authorized an AI action."</p>
+          <p>However, the VHS is described in all public documentation as an "auditable record" and "auditable connection" between the AI action and the authorizing human — language consistent with a governance-logged attestation, not a biometric proof cryptographically embedded in the action artifact. <strong>The VHS does not yet appear to travel with the action artifact as an embedded cryptographic proof.</strong> Until VHS is embedded in the signed agent action record (not stored separately as an audit event), the binding quality remains soft at the artifact layer despite the cryptographic strength of the verification event itself.</p>
+        </div>
+
+        <!-- Full technical detail disclosure -->
+        <div class="disclosure">
+          <button class="disclosure-trigger"
+                  aria-expanded="false"
+                  aria-controls="arch-detail-okta"
+                  data-closed-text="Show full technical detail (biometric modality, trust substrate, agentic platform)"
+                  data-open-text="Hide full technical detail">
+            <span class="disclosure-trigger__icon" aria-hidden="true">▾</span>
+            <span class="disclosure-trigger__text">Show full technical detail (biometric modality, trust substrate, agentic platform)</span>
+          </button>
+          <div id="arch-detail-okta" class="disclosure-body">
+            <div class="prose">
+              <h4>Biometric Modality (All Partner-Supplied)</h4>
+              <p><strong>No native biometric modality.</strong> Okta does not own or operate any biometric sensor, algorithm, or matching system.</p>
+              <p><strong>Via FIDO2 device stack (passkeys):</strong> Facial (Apple Face ID TrueDepth structured-light; Windows Hello IR camera) and fingerprint (Apple Touch ID; Windows Hello fingerprint). Liveness enforcement is hardware-level at the device. Okta receives only the signed FIDO2 assertion.</p>
+              <p><strong>Via Nametag integration:</strong> Face biometric (document + selfie matching with active liveness challenge). Software liveness algorithm — not hardware-inherent. Nametag's liveness approach requires active user interaction.</p>
+              <p><strong>Via iProov integration:</strong> Face biometric. iProov's Genuine Presence Assurance (GPA) uses randomized color illumination to assess liveness — a proprietary software liveness method. ISO 30107-3 PAD Level 2 certified.</p>
+
+              <h4>Trust Substrate</h4>
+              <p>Software-only for Okta-native artifacts. Okta does not own a hardware root of trust. OIDC tokens and session cookies are signed with cloud-managed software keys. For FIDO2/passkeys: third-party hardware roots (Apple Secure Enclave, Android Keystore/StrongBox, Windows TPM 2.0). Okta's binding authority ceiling is consequently set by the weakest link among its hardware root dependencies — a structural constraint on the binding quality upgrade path.</p>
+
+              <h4>Okta for AI Agents Platform (GA April 30, 2026)</h4>
+              <p>Three organizing questions: <strong>(1) Where are my agents?</strong> Shadow AI discovery via ISPM; agent registration as first-class Universal Directory identities with human owner assignment and lifecycle management. <strong>(2) What can they connect to?</strong> XAA (Cross App Access) open protocol extending OAuth via the Identity Assertion Authorization Grant; Agent Gateway (virtual MCP server aggregating tools from Okta's MCP registry). <strong>(3) What can they do?</strong> Nametag Signa human-in-the-loop re-verification at moment of consequence; governance workflows with certification reviews; Universal Logout kill switch.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Strategic Position -->
+      <section id="position" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">04</span>
+          <h2 class="player-section__title">Strategic Position</h2>
+        </div>
+
+        <div class="prose">
+          <p>Okta is a publicly traded enterprise SaaS company (~$3.0B ARR, FY2026) operating as a general-purpose <span data-tooltip="Identity and Access Management">IAM</span> orchestrator in the workforce identity lane (Workforce Identity Cloud) and as a consumer application orchestrator in the CIAM lane (Customer Identity Cloud / Auth0, acquired 2021). As a Layer 2 binding authority, Okta takes biometric verification results from Layer 1 suppliers and binds them to session tokens, agent credentials, and audit records; it has no native Layer 1 capability (no biometric sensor, algorithm, liveness engine, or matching engine).</p>
+
+          <p>Relational contexts served: person→enterprise resource (primary), person→digital access (CIAM), and agent→resource on behalf of person (GA April 30, 2026 via <strong>Okta for AI Agents</strong> platform: agent discovery/ISPM, Universal Directory registration with human ownership, XAA open protocol, Agent Gateway virtual MCP server, API Access Management, Privileged Credential Management, governance workflows, and Nametag Signa partner integration for human-in-the-loop biometric re-verification).</p>
+
+          <p>Binding type is agent identity binding in the agentic sub-lane and device/hardware binding (relying-party role) via FIDO2/passkeys; binding quality is <strong>soft</strong> — Nametag Signa's Verified Human Signature adds cryptographically-attested governance-log evidence of human authorization, but the VHS is not embedded in the agent action artifact; independently verifying that a specific biometric check underlies a specific agent action still requires querying records.</p>
+
+          <p>The path to hard binding requires VHS integration into the signed action artifact, or native W3C VC issuance with embedded biometric proof (VDC platform, FY2027 roadmap). Revenue model is SaaS subscription (~19,300+ customers, ~12% YoY growth, net revenue retention ~106%).</p>
+        </div>
+      </section>
+
+      <!-- Gaps & Exposure -->
+      <section id="gaps" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">05</span>
+          <h2 class="player-section__title">Gaps &amp; Regulatory Exposure</h2>
+        </div>
+
+        <div class="gap-callout">
+          <div class="gap-callout__label">Critical Gap</div>
+          <p class="gap-callout__text">No native hard-binding mechanism anywhere in the stack; software-only token signing; soft→hard binding transition requires acquiring Nametag or executing deep third-party integration — most exposed player in enterprise IAM to regulatory pressure on this gap.</p>
+        </div>
+
+        <div class="prose">
+          <h4>Regulatory Forcing Functions</h4>
+          <ul>
+            <li><strong>EU AI Act human-in-the-loop provisions (in force Phase 2, February 2025):</strong> The most consequential near-term forcing function for Okta's agentic AI lane. Okta's current soft binding satisfies organizational governance logging but does not produce artifact-level non-repudiable evidence of human authorization — the stronger interpretation of what EU AI Act auditability may require.</li>
+            <li><strong>NIST SP 800-63-3/4 (IAL2/AAL2, in force):</strong> Okta's IDV integrations (iProov, Nametag, Persona) are positioned to satisfy IAL2 remote proofing requirements. FIDO2/passkeys satisfy AAL2. Direct forcing function for Okta's biometric supplier partnerships — organizations subject to IAL2 requirements must use a biometric verification partner through Okta; the requirement cannot be satisfied natively.</li>
+            <li><strong>NIS2 / DORA (in force Oct 2024 / Jan 2025):</strong> Phishing-resistant MFA mandatory. FIDO2/passkeys are the primary compliant MFA mechanism. Strong adoption forcing function for Okta FIDO2 deployment among EU-regulated customers.</li>
+            <li><strong>eIDAS 2.0 / EUDIW (implementation 2024–2026):</strong> Relying parties must accept EUDIW-presented credentials via OpenID4VP by 2026. Okta must implement OpenID4VP/SIOP2 acceptance to remain the identity middleware layer for EU enterprise applications.</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <div class="section-title">Key Partnership Gaps</div>
+          <table class="proto-table">
+            <thead>
+              <tr><th>Partner</th><th>Capability</th><th>Gap Type</th><th>Acquisition Signal</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Nametag</strong></td>
+                <td>Nametag Signa™ — Verified Human Signature; action-level biometric re-verification at moment of consequence; hardware-backed keystore + Spatial Selfie™</td>
+                <td>Layer 1 gap (action-level biometric) + binding quality upgrade (VHS not yet artifact-embedded)</td>
+                <td><strong style="color:#fcd34d;">High.</strong> Deepening partnership timeline (Oct 2024 → Sept 2025 → April 2026 showcase) without acquisition is increasingly notable.</td>
+              </tr>
+              <tr>
+                <td><strong>iProov</strong></td>
+                <td>Server-side face biometric; Genuine Presence Assurance; ISO 30107-3 PAD Level 2 certified</td>
+                <td>Layer 1 gap: no native liveness detection</td>
+                <td>Moderate. Non-exclusive; broad enterprise IAM partnerships.</td>
+              </tr>
+              <tr>
+                <td><strong>Persona</strong></td>
+                <td>IDV orchestration (document verification, selfie matching, KYC workflow routing)</td>
+                <td>Layer 1 gap: no native IDV workflow at IAL2</td>
+                <td>Moderate. Stronger in CIC/Auth0 consumer contexts.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <div class="section-title">Protocol Adoption</div>
+          <table class="proto-table">
+            <thead>
+              <tr><th>Protocol</th><th>Status</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>FIDO2 / WebAuthn</td><td><span class="status-badge status-badge--production">production</span></td><td>Both WIC and CIC; passkeys with platform and hardware security keys. FIDO Alliance member.</td></tr>
+              <tr><td>XAA (own protocol)</td><td><span class="status-badge status-badge--production">production</span></td><td>Okta's own open protocol (June 2025); extends OAuth via Identity Assertion Authorization Grant (IETF). Governs agent-to-app access control. xaa.dev</td></tr>
+              <tr><td>OpenID4VP / VCI</td><td><span class="status-badge status-badge--announced">in progress</span></td><td>eIDAS 2.0 alignment stated; mDL acceptance beta Jan 2026. Full W3C VC issuance: FY2027 roadmap.</td></tr>
+              <tr><td>W3C VC Data Model</td><td><span class="status-badge status-badge--announced">FY2027</span></td><td>Verifiable Digital Credentials (VDC) platform announced Sept 2025.</td></tr>
+              <tr><td>MCP</td><td><span class="status-badge status-badge--announced">announced</span></td><td>Agent Gateway as virtual MCP server; coming soon post-April 30 GA.</td></tr>
+              <tr><td>IETF WIMSE</td><td><span class="status-badge status-badge--announced">engaged</span></td><td>Early 2025 working group participation confirmed. Implementation status not confirmed.</td></tr>
+              <tr><td>SCIM</td><td><span class="status-badge status-badge--production">production</span></td><td>Core Okta Lifecycle Management integration protocol. Reference SCIM implementation.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <div class="section-title">Framework Gap Analysis</div>
+          <div class="prose">
+            <p>The existing binding type taxonomy does not distinguish between <strong>(a)</strong> biometric proof cryptographically embedded in an agent credential that travels with the agent at execution, and <strong>(b)</strong> biometric proof recorded in a governance audit trail at provisioning but absent from the agent credential itself. Okta implements type (b). Type (a) satisfies EU AI Act human-in-the-loop auditability at the artifact level; type (b) satisfies organizational governance logging requirements only. The strategic question for Okta is whether it moves to type (a) — and whether it does so by building, partnering, or acquiring.</p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Sources -->
+      <section id="sources" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">06</span>
+          <h2 class="player-section__title">Sources</h2>
+        </div>
+        <ul class="sources-list">
+          <li><a href="https://www.okta.com/newsroom/press-releases/showcase-2026/">Okta Showcase 2026 — Blueprint for the Secure Agentic Enterprise</a></li>
+          <li><a href="https://www.okta.com/products/govern-ai-agent-identity/">Okta for AI Agents product page</a></li>
+          <li><a href="https://www.okta.com/newsroom/press-releases/okta-introduces-cross-app-access-to-help-secure-ai-agents-in-the/">Okta introduces Cross App Access (XAA) — June 2025</a></li>
+          <li><a href="https://xaa.dev/">XAA developer playground</a></li>
+          <li><a href="https://www.globenewswire.com/news-release/2025/09/24/3155394/0/en/Nametag-Introduces-Verified-Human-Signatures-for-Agentic-AI-Actions-Expanded-Okta-Integration.html">Nametag Signa / Verified Human Signatures announcement (Sept 24, 2025)</a></li>
+          <li><a href="https://getnametag.com/newsroom/agentic-ai-security-verified-human-signatures">Nametag Signa blog</a></li>
+          <li><a href="https://www.okta.com/blog/product-innovation/okta-digital-id-verification-beta/">Okta Digital ID Verification beta (mDL, Jan 2026)</a></li>
+          <li><a href="https://oktacredentials.dev/">Okta Verifiable Digital Credentials platform</a></li>
+          <li><a href="https://www.okta.com/newsroom/press-releases/okta-secures-the-agentic-enterprise-with-new-tools-for-discovering-and-mitigating-shadow-ai-risks/">Okta Shadow AI / ISPM agent discovery</a></li>
+          <li>Sources verified via live web research, April 2026.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div><!-- /player-page -->
+
+</div><!-- /page-wrap -->
+
+<footer class="site-footer">
+  <p>Biometric Anchoring Landscape · Research corpus April 2026</p>
+  <p><a href="../index.html">← Comparison</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

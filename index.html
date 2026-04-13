@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biometric Anchoring Landscape — Research Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="global-nav" role="navigation" aria-label="Site navigation">
+  <div class="global-nav__inner">
+    <span class="global-nav__brand"><strong>Biometric Anchoring</strong> — Research Dashboard</span>
+    <span class="global-nav__sep">|</span>
+    <div class="global-nav__links">
+      <a href="index.html" class="active">Comparison</a>
+      <a href="players/microsoft.html">Microsoft</a>
+      <a href="players/okta.html">Okta</a>
+      <a href="players/world.html">World</a>
+      <a href="players/ping.html">Ping Identity</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <header class="page-header">
+    <div class="page-header__label">Research corpus · April 2026</div>
+    <h1 class="page-header__title">Biometric Anchoring Landscape</h1>
+    <p class="page-header__sub">Four players in the enterprise and decentralized biometric identity space, analyzed across binding quality, agentic coverage, authority model, and regulatory exposure. Audience: technical and policy stakeholders.</p>
+  </header>
+
+  <!-- ======================================================
+       SECTION 1 — Player summary strip
+       ====================================================== -->
+  <section class="index-section" aria-labelledby="s1-heading">
+    <div class="index-section-header">
+      <div class="section-title" id="s1-heading">Player Overview</div>
+      <span class="section-subtitle">Four players — 11 lanes total — annotated by binding quality</span>
+    </div>
+
+    <div class="player-strip">
+
+      <!-- Microsoft -->
+      <div class="player-card">
+        <div class="player-card__header">
+          <div>
+            <div class="player-card__id">P03 · Public · Institutional</div>
+            <div class="player-card__name">Microsoft</div>
+          </div>
+        </div>
+        <div class="player-card__meta">
+          <span class="tag">Enterprise IAM</span>
+          <span class="tag">Layer 2</span>
+          <span class="tag tag--agentic">Agentic</span>
+          <span class="bq bq--hard">hard</span>
+        </div>
+        <p class="player-card__position">Dominant enterprise IAM orchestrator (Entra ID, 600M+ users). Governance shell for agentic AI is complete; agent credential binding remains soft — the biometric proof from Windows Hello provisioning never transfers to the agent credential.</p>
+        <div class="player-card__footer">
+          <a href="players/microsoft.html">→ Full brief</a>
+        </div>
+      </div>
+
+      <!-- Okta -->
+      <div class="player-card">
+        <div class="player-card__header">
+          <div>
+            <div class="player-card__id">P04 · Public · Institutional</div>
+            <div class="player-card__name">Okta</div>
+          </div>
+        </div>
+        <div class="player-card__meta">
+          <span class="tag">Enterprise IAM</span>
+          <span class="tag">Layer 2 only</span>
+          <span class="tag tag--agentic">Agentic</span>
+          <span class="bq bq--hard">hard</span>
+        </div>
+        <p class="player-card__position">Most complete agentic governance shell in market (XAA, Nametag Signa, Agent Gateway). No native hard-binding mechanism — Verified Human Signature is an attestation record, not an artifact-embedded proof. Most regulatory exposure in enterprise IAM.</p>
+        <div class="player-card__footer">
+          <a href="players/okta.html">→ Full brief</a>
+        </div>
+      </div>
+
+      <!-- World -->
+      <div class="player-card">
+        <div class="player-card__header">
+          <div>
+            <div class="player-card__id">P05 · Protocol · Sovereign/Personal</div>
+            <div class="player-card__name">World (World ID)</div>
+          </div>
+        </div>
+        <div class="player-card__meta">
+          <span class="tag">Proof-of-Personhood</span>
+          <span class="tag">Layer 1</span>
+          <span class="tag tag--agentic">Agentic</span>
+          <span class="bq bq--hard">hard</span>
+        </div>
+        <p class="player-card__position">Only large-scale deployed system producing genuinely hard-binding, pseudonymous proof-of-personhood credentials verifiable on-chain without an intermediary. Legal non-repudiation is architecturally excluded by design. Active regulatory bans in 8 jurisdictions.</p>
+        <div class="player-card__footer">
+          <a href="players/world.html">→ Full brief</a>
+        </div>
+      </div>
+
+      <!-- Ping -->
+      <div class="player-card">
+        <div class="player-card__header">
+          <div>
+            <div class="player-card__id">P23 · Private · Institutional</div>
+            <div class="player-card__name">Ping Identity</div>
+          </div>
+        </div>
+        <div class="player-card__meta">
+          <span class="tag">Enterprise IAM</span>
+          <span class="tag">Layer 1+2</span>
+          <span class="tag tag--agentic">Agentic</span>
+          <span class="bq bq--hard">hard</span>
+        </div>
+        <p class="player-card__position">Only enterprise IAM orchestrator that owns both Layer 1 biometric verification (Keyless ZK sMPC, acq. Jan 2026) and Layer 2 binding. Native path to hard agent binding exists; integration into artifact signing chain not yet confirmed shipped.</p>
+        <div class="player-card__footer">
+          <a href="players/ping.html">→ Full brief</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================
+       SECTION 2 — Binding quality matrix
+       ====================================================== -->
+  <section class="index-section" aria-labelledby="s2-heading">
+    <div class="index-section-header">
+      <div class="section-title" id="s2-heading">Binding Quality Matrix</div>
+      <span class="section-subtitle">All 11 lanes · click a cell to navigate to that player's lane section</span>
+    </div>
+
+    <div class="matrix-wrap">
+      <table class="binding-matrix" role="grid">
+        <thead>
+          <tr>
+            <th scope="col">Player</th>
+            <th scope="col">Lane 1</th>
+            <th scope="col">Lane 2</th>
+            <th scope="col">Lane 3</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- Microsoft -->
+          <tr>
+            <td>
+              <a href="players/microsoft.html" class="player-link">Microsoft</a>
+              <span class="player-tier">P03 · Enterprise IAM</span>
+            </td>
+            <td>
+              <div class="lane-cell">
+                <a href="players/microsoft.html#lane-p03-l1">
+                  <span class="bq bq--hard">hard</span>
+                  <div class="lane-cell__name">Windows Hello for Business</div>
+                </a>
+                <div class="flex-wrap mt-1">
+                  <span class="pill">FIDO2</span>
+                  <span class="pill pill--artifact">fido2_assertion</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="lane-cell">
+                <a href="players/microsoft.html#lane-p03-l2">
+                  <span class="bq bq--hard_path_native">hard path native</span>
+                  <div class="lane-cell__name">Entra Verified ID + Face Check</div>
+                </a>
+                <div class="flex-wrap mt-1">
+                  <span class="pill pill--artifact">w3c_vc</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="lane-cell">
+                <a href="players/microsoft.html#lane-p03-l3">
+                  <span class="bq bq--soft">soft</span>
+                  <div class="lane-cell__name">Entra Agent ID</div>
+                </a>
+                <div class="flex-wrap mt-1">
+                  <span class="pill pill--artifact">oidc_jwt</span>
+                  <span class="pill pill--agentic">agentic</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Okta -->
+          <tr>
+            <td>
+              <a href="players/okta.html" class="player-link">Okta</a>
+              <span class="player-tier">P04 · Enterprise IAM</span>
+            </td>
+            <td>
+              <div class="lane-cell">
+                <a href="players/okta.html#lane-p04-l1">
+                  <span class="bq bq--hard">hard</span>
+                  <div class="lane-cell__name">FIDO2 Passkeys (Relying Party)</div>
+                </a>
+                <div class="flex-wrap mt-1">
+                  <span class="pill">FIDO2</span>
+                  <span class="pill pill--artifact">fido2_assertion</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="lane-cell">
+                <a href="players/okta.html#lane-p04-l2">
+                  <span class="bq bq--soft">soft</span>
+                  <div class="lane-cell__name">OIDC Access Tokens / Workforce IAM</div>
+                </a>
+                <div class="flex-wrap mt-1">
+                  <span class="pill pill--artifact">oidc_jwt</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="lane-cell">
+                <a href="players/okta.html#lane-p04-l3">
+                  <span class="bq bq--soft">soft</span>
+                  <div class="lane-cell__name">Okta Agent Identity</div>
+                </a>
+                <div class="flex-wrap mt-1">
+                  <span class="pill pill--artifact">oidc_jwt</span>
+                  <span class="pill pill--agentic">agentic</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- World -->
+          <tr>
+            <td>
+              <a href="players/world.html" class="player-link">World (World ID)</a>
+              <span class="player-tier">P05 · PoP Protocol</span>
+            </td>
+            <td>
+              <div class="lane-cell">
+                <a href="players/world.html#lane-p05-l1">
+                  <span class="bq bq--hard">hard</span>
+                  <div class="lane-cell__name">World ID — ZK Proof of Personhood</div>
+                </a>
+                <div class="flex-wrap mt-1">
+                  <span class="pill">ZK-SNARK</span>
+                  <span class="pill pill--artifact">zk_credential</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="lane-cell">
+                <a href="players/world.html#lane-p05-l2">
+                  <span class="bq bq--hard_path_native">hard path native</span>
+                  <div class="lane-cell__name">AgentKit — Pseudonymous PoP for AI Agents</div>
+                </a>
+                <div class="flex-wrap mt-1">
+                  <span class="pill pill--artifact">zk_credential</span>
+                  <span class="pill pill--agentic">agentic</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="lane-cell lane-cell--empty">—</div>
+            </td>
+          </tr>
+
+          <!-- Ping -->
+          <tr>
+            <td>
+              <a href="players/ping.html" class="player-link">Ping Identity</a>
+              <span class="player-tier">P23 · Enterprise IAM</span>
+            </td>
+            <td>
+              <div class="lane-cell">
+                <a href="players/ping.html#lane-p23-l1">
+                  <span class="bq bq--hard">hard</span>
+                  <div class="lane-cell__name">PingOne Neo W3C VCs</div>
+                </a>
+                <div class="flex-wrap mt-1">
+                  <span class="pill pill--artifact">w3c_vc</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="lane-cell">
+                <a href="players/ping.html#lane-p23-l2">
+                  <span class="bq bq--hard_path_native">hard path native</span>
+                  <div class="lane-cell__name">Universal Services ZK Re-verification</div>
+                </a>
+                <div class="flex-wrap mt-1">
+                  <span class="pill">Keyless sMPC</span>
+                  <span class="pill pill--artifact">zk_credential</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="lane-cell">
+                <a href="players/ping.html#lane-p23-l3">
+                  <span class="bq bq--hard_path_native">hard path native</span>
+                  <div class="lane-cell__name">Identity for AI / Agent Gateway</div>
+                </a>
+                <div class="flex-wrap mt-1">
+                  <span class="pill pill--artifact">w3c_vc</span>
+                  <span class="pill pill--agentic">agentic</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Binding quality legend -->
+    <div class="flex-wrap" style="gap:1rem; margin-top:-1.5rem; margin-bottom:2rem;">
+      <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--text-3);">
+        <span class="bq bq--hard">hard</span> Cryptographic chain from biometric proof to artifact; independently verifiable
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--text-3);">
+        <span class="bq bq--hard_path_native">hard path native</span> Player owns the mechanism; integration not confirmed shipped
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--text-3);">
+        <span class="bq bq--soft">soft</span> Audit log / policy signal only; no cryptographic proof on the artifact
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ======================================================
+       SECTION 3 — Comparison axes (accordion)
+       ====================================================== -->
+  <section class="index-section" aria-labelledby="s3-heading">
+    <div class="index-section-header">
+      <div class="section-title" id="s3-heading">Comparison Axes</div>
+    </div>
+
+    <div class="accordion">
+
+      <!-- Panel 1: Strategic open questions — open by default -->
+      <div class="accordion-item">
+        <button class="accordion-trigger"
+                aria-expanded="true"
+                aria-controls="acc-gaps">
+          <span>Strategic Open Questions</span>
+          <span class="accordion-trigger__icon" aria-hidden="true">▾</span>
+        </button>
+        <div id="acc-gaps" class="accordion-body is-open">
+          <div class="gap-cards">
+            <div class="gap-card">
+              <div class="gap-card__player">Microsoft (P03)</div>
+              <p class="gap-card__text">Entra Agent ID produces soft binding — biometric proof from WHFB provisioning event does not travel to the agent credential; upgrade path (Face Check receipt model extended to agent credentials) architecturally understood but not shipped.</p>
+            </div>
+            <div class="gap-card">
+              <div class="gap-card__player">Okta (P04)</div>
+              <p class="gap-card__text">No native hard-binding mechanism anywhere in the stack; software-only token signing; soft→hard binding transition requires acquiring Nametag or executing deep third-party integration — most exposed player in enterprise IAM to regulatory pressure on this gap.</p>
+            </div>
+            <div class="gap-card">
+              <div class="gap-card__player">World (P05)</div>
+              <p class="gap-card__text">Token-incentivized growth model means user count claims cannot be read equivalently to SaaS adoption; issuance-side is centralized (TFH controls Orb + deduplication algorithm) despite decentralized presentation-side design.</p>
+            </div>
+            <div class="gap-card">
+              <div class="gap-card__player">Ping Identity (P23)</div>
+              <p class="gap-card__text">Gap between owning the Keyless ZK mechanism and having it integrated into the agent credential artifact signing chain — hard binding path is native but integration not confirmed shipped as of March 2026.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2: Decision role & authority model -->
+      <div class="accordion-item">
+        <button class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="acc-roles">
+          <span>Decision Role &amp; Authority Model</span>
+          <span class="accordion-trigger__icon" aria-hidden="true">▾</span>
+        </button>
+        <div id="acc-roles" class="accordion-body">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Player</th>
+                <th>Decision Role</th>
+                <th>Authority Model</th>
+                <th>Vertical Integration</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Microsoft</strong></td>
+                <td>Layer 1 (partial, OEM-dependent sensors + Azure AI Face API) + Layer 2 (dominant enterprise binding authority)</td>
+                <td>Institutional — enterprise-bounded identity</td>
+                <td>Strong Layer 2; Layer 1 OEM/cloud-dependent</td>
+              </tr>
+              <tr>
+                <td><strong>Okta</strong></td>
+                <td>Layer 2 only — relying party for FIDO2; policy engine for biometric partner results</td>
+                <td>Institutional — enterprise-bounded identity</td>
+                <td>Layer 2 only. No native biometric capability</td>
+              </tr>
+              <tr>
+                <td><strong>World</strong></td>
+                <td>Layer 1 — biometric verification and ZK credential issuance; no Layer 2 downstream binding</td>
+                <td>Sovereign/personal — pseudonymous, protocol-issued; not institution-bounded</td>
+                <td>Strongly integrated on issuance side (Orb + registry); presentation decentralizing</td>
+              </tr>
+              <tr>
+                <td><strong>Ping Identity</strong></td>
+                <td>Layer 1 (Keyless ZK sMPC, acq. Jan 2026) + Layer 2 (PingOne/PingFederate binding authority)</td>
+                <td>Institutional — enterprise-bounded identity</td>
+                <td>Layer 1 + Layer 2. Only enterprise IAM with native ZK biometrics</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Panel 3: Agentic coverage -->
+      <div class="accordion-item">
+        <button class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="acc-agentic">
+          <span>Agentic Coverage</span>
+          <span class="accordion-trigger__icon" aria-hidden="true">▾</span>
+        </button>
+        <div id="acc-agentic" class="accordion-body">
+          <p style="font-size:0.875rem;color:var(--text-3);margin-bottom:1rem;">5 of 11 lanes across these four players are agentic (AI agent identity). All four players have shipped or announced an agentic lane as of Q1 2026.</p>
+          <div class="agentic-grid">
+            <div class="agentic-card">
+              <div class="agentic-card__player">Microsoft</div>
+              <div class="agentic-card__lanes">
+                <div class="agentic-lane">
+                  <span class="bq bq--soft">soft</span><br>
+                  <span>Entra Agent ID</span><br>
+                  <small style="color:var(--text-4);">OAuth service principals; blueprint-based provisioning; governance-logged, no biometric anchor on agent credential</small>
+                </div>
+              </div>
+            </div>
+            <div class="agentic-card">
+              <div class="agentic-card__player">Okta</div>
+              <div class="agentic-card__lanes">
+                <div class="agentic-lane">
+                  <span class="bq bq--soft">soft</span><br>
+                  <span>Okta Agent Identity</span><br>
+                  <small style="color:var(--text-4);">OAuth service principals; XAA access control; Nametag Signa VHS is governance-logged attestation, not artifact-embedded</small>
+                </div>
+              </div>
+            </div>
+            <div class="agentic-card">
+              <div class="agentic-card__player">World</div>
+              <div class="agentic-card__lanes">
+                <div class="agentic-lane">
+                  <span class="bq bq--hard_path_native">hard path native</span><br>
+                  <span>AgentKit</span><br>
+                  <small style="color:var(--text-4);">Pseudonymous PoP delegation via World ID; ZK proof chain human → agent; x402 payment integration. <strong>Limited beta only</strong> — production-grade 1.0 deferred to World ID 4.0 generation</small>
+                </div>
+              </div>
+            </div>
+            <div class="agentic-card">
+              <div class="agentic-card__player">Ping Identity</div>
+              <div class="agentic-card__lanes">
+                <div class="agentic-lane">
+                  <span class="bq bq--hard_path_native">hard path native</span><br>
+                  <span>Identity for AI / Agent Gateway</span><br>
+                  <small style="color:var(--text-4);">Scoped delegated identity per agent; MCP-based enforcement; Keyless ZK key is native path to hard binding — integration pending</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 4: Regulatory exposure -->
+      <div class="accordion-item">
+        <button class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="acc-reg">
+          <span>Regulatory Exposure</span>
+          <span class="accordion-trigger__icon" aria-hidden="true">▾</span>
+        </button>
+        <div id="acc-reg" class="accordion-body">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Framework</th>
+                <th>Microsoft</th>
+                <th>Okta</th>
+                <th>World</th>
+                <th>Ping Identity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span data-tooltip="EU AI Act Article 14: human oversight requirements for high-risk AI systems. Agent credential soft binding may be insufficient for strongest interpretations.">EU AI Act Art. 14</span></td>
+                <td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ gap</span></td>
+                <td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ gap</span></td>
+                <td>—</td>
+                <td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td>
+              </tr>
+              <tr>
+                <td><span data-tooltip="EU Digital Identity Wallet / eIDAS 2.0: OpenID4VP credential acceptance required for relying parties by 2026.">eIDAS / EUDIW</span></td>
+                <td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td>
+                <td><span style="color:#fcd34d;font-family:var(--mono);font-size:0.78rem;">~ in progress</span></td>
+                <td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ proprietary format</span></td>
+                <td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td>
+              </tr>
+              <tr>
+                <td><span data-tooltip="NIST SP 800-63 Identity Assurance Level 2: remote identity proofing and biometric binding requirements for US federal and high-assurance contexts.">NIST IAL2 / AAL2</span></td>
+                <td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td>
+                <td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td>
+                <td>—</td>
+                <td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td>
+              </tr>
+              <tr>
+                <td><span data-tooltip="GDPR Article 9: biometric data as special category requiring explicit consent. World ID's centralized iris storage has triggered bans in 10 jurisdictions as of April 2026.">GDPR Art. 9</span></td>
+                <td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ no gap</span></td>
+                <td>—</td>
+                <td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ active bans (10 jurisdictions)</span></td>
+                <td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ Keyless sMPC GDPR-exempt</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Panel 5: Protocol adoption -->
+      <div class="accordion-item">
+        <button class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="acc-proto">
+          <span>Protocol Adoption</span>
+          <span class="accordion-trigger__icon" aria-hidden="true">▾</span>
+        </button>
+        <div id="acc-proto" class="accordion-body">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Protocol</th>
+                <th>Microsoft</th>
+                <th>Okta</th>
+                <th>World</th>
+                <th>Ping Identity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>FIDO2 / WebAuthn</td>
+                <td><span class="status-badge status-badge--production">production</span></td>
+                <td><span class="status-badge status-badge--production">production</span></td>
+                <td><span class="status-badge status-badge--partial">not adopted</span></td>
+                <td><span class="status-badge status-badge--production">production</span></td>
+              </tr>
+              <tr>
+                <td>W3C VC Data Model</td>
+                <td><span class="status-badge status-badge--production">production</span></td>
+                <td><span class="status-badge status-badge--announced">FY2027 roadmap</span></td>
+                <td><span class="status-badge status-badge--partial">not adopted</span></td>
+                <td><span class="status-badge status-badge--production">production</span></td>
+              </tr>
+              <tr>
+                <td>OpenID4VP / VCI</td>
+                <td><span class="status-badge status-badge--production">production</span></td>
+                <td><span class="status-badge status-badge--announced">in progress</span></td>
+                <td><span class="status-badge status-badge--partial">not adopted</span></td>
+                <td><span class="status-badge status-badge--production">production</span></td>
+              </tr>
+              <tr>
+                <td>MCP</td>
+                <td><span class="status-badge status-badge--production">production</span></td>
+                <td><span class="status-badge status-badge--announced">announced</span></td>
+                <td><span class="status-badge status-badge--partial">not referenced</span></td>
+                <td><span class="status-badge status-badge--production">production</span></td>
+              </tr>
+              <tr>
+                <td>A2A (Agent-to-Agent)</td>
+                <td><span class="status-badge status-badge--production">production</span></td>
+                <td><span class="status-badge status-badge--partial">via OAuth/XAA</span></td>
+                <td><span class="status-badge status-badge--partial">not referenced</span></td>
+                <td><span class="status-badge status-badge--partial">not documented</span></td>
+              </tr>
+              <tr>
+                <td>IETF WIMSE</td>
+                <td><span class="status-badge status-badge--announced">announced</span></td>
+                <td><span class="status-badge status-badge--announced">engaged</span></td>
+                <td><span class="status-badge status-badge--partial">not referenced</span></td>
+                <td><span class="status-badge status-badge--announced">announced</span></td>
+              </tr>
+              <tr>
+                <td>XAA (Okta proprietary)</td>
+                <td><span class="status-badge status-badge--partial">not adopted</span></td>
+                <td><span class="status-badge status-badge--production">production (own protocol)</span></td>
+                <td><span class="status-badge status-badge--partial">not referenced</span></td>
+                <td><span class="status-badge status-badge--partial">not adopted</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /page-wrap -->
+
+<footer class="site-footer">
+  <p>Biometric Anchoring Landscape · Research corpus April 2026 · Four players: Microsoft (P03), Okta (P04), World (P05), Ping Identity (P23)</p>
+  <p><a href="index.html">Comparison</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

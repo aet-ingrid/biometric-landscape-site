@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsoft (P03) — Biometric Anchoring Landscape</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="global-nav" role="navigation" aria-label="Site navigation">
+  <div class="global-nav__inner">
+    <span class="global-nav__brand"><strong>Biometric Anchoring</strong> — Research Dashboard</span>
+    <span class="global-nav__sep">|</span>
+    <div class="global-nav__links">
+      <a href="../index.html">Comparison</a>
+      <a href="microsoft.html" class="active">Microsoft</a>
+      <a href="okta.html">Okta</a>
+      <a href="world.html">World</a>
+      <a href="ping.html">Ping Identity</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <a href="../index.html" class="back-link">← Back to comparison</a>
+
+  <!-- Player switcher -->
+  <div class="player-switcher">
+    <a href="microsoft.html" class="switcher-item current">
+      <span class="switcher-item__name">Microsoft</span>
+      <div class="switcher-item__lanes">
+        <span class="bq bq--hard">hard</span>
+        <span class="bq bq--hard_path_native">hard path</span>
+        <span class="bq bq--soft">soft</span>
+      </div>
+    </a>
+    <a href="okta.html" class="switcher-item">
+      <span class="switcher-item__name">Okta</span>
+      <div class="switcher-item__lanes">
+        <span class="bq bq--hard">hard</span>
+        <span class="bq bq--soft">soft</span>
+        <span class="bq bq--soft">soft</span>
+      </div>
+    </a>
+    <a href="world.html" class="switcher-item">
+      <span class="switcher-item__name">World</span>
+      <div class="switcher-item__lanes">
+        <span class="bq bq--hard">hard</span>
+        <span class="bq bq--hard_path_native">hard path</span>
+      </div>
+    </a>
+    <a href="ping.html" class="switcher-item">
+      <span class="switcher-item__name">Ping Identity</span>
+      <div class="switcher-item__lanes">
+        <span class="bq bq--hard">hard</span>
+        <span class="bq bq--hard_path_native">hard path</span>
+        <span class="bq bq--hard_path_native">hard path</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Mobile section nav -->
+  <nav class="mobile-section-nav" aria-label="Page sections">
+    <a href="#key-finding">Key Finding</a>
+    <a href="#lanes">Lanes</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#position">Strategic Position</a>
+    <a href="#gaps">Gaps &amp; Exposure</a>
+    <a href="#sources">Sources</a>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header__label">P03 · Public company · Institutional authority</div>
+    <h1 class="page-header__title">Microsoft</h1>
+    <div class="flex-wrap mt-1">
+      <span class="tag">Enterprise IAM Orchestrator</span>
+      <span class="tag">Layer 1 (partial) + Layer 2</span>
+      <span class="tag tag--agentic">Agentic (Entra Agent ID)</span>
+      <span class="tag">MSFT · $245B revenue</span>
+    </div>
+  </div>
+
+  <div class="player-page">
+
+    <!-- Sidebar -->
+    <aside class="player-sidebar">
+      <div class="classification-card">
+        <div class="classification-card__title">Classification</div>
+        <div class="classification-row">
+          <div class="classification-row__label">Entity Type</div>
+          <div class="classification-row__value"><strong>Public company</strong> (NASDAQ: MSFT)</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Tier</div>
+          <div class="classification-row__value">Primary</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Authority Model</div>
+          <div class="classification-row__value">Institutional</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Decision Role</div>
+          <div class="classification-row__value"><strong>Layer 2</strong> dominant; Layer 1 partial (OEM-dependent hardware sensors, Azure AI Face API for software liveness)</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Lanes</div>
+          <div class="classification-row__value">3 (1 agentic)</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Scale</div>
+          <div class="classification-row__value">600M+ Entra ID users; 345M+ M365 paid seats</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Revenue</div>
+          <div class="classification-row__value">Enterprise SaaS subscription; Entra embedded in M365 E3/E5. No token incentives.</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Trust Substrate</div>
+          <div class="classification-row__value">Third-party TPM (Intel PTT, AMD fTPM, Infineon, STMicro, NXP); Apple SE / Android Keystore (mobile); Microsoft controls the attestation protocol</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Competes with</div>
+          <div class="classification-row__value">Okta (P04), Ping Identity (P23) in enterprise IAM</div>
+        </div>
+      </div>
+
+      <nav class="section-nav" aria-label="Page sections">
+        <a href="#key-finding">Key Finding</a>
+        <a href="#lanes">Lanes</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#position">Strategic Position</a>
+        <a href="#gaps">Gaps &amp; Exposure</a>
+        <a href="#sources">Sources</a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="player-main">
+
+      <!-- Key Finding -->
+      <section id="key-finding" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">01</span>
+          <h2 class="player-section__title">Key Finding</h2>
+        </div>
+        <blockquote class="pull-quote">
+          Microsoft has built the most complete governance shell for enterprise agentic AI identity in the market — agent blueprints, agent registry, Conditional Access for agents, Identity Protection, shadow AI detection, sponsor accountability, and lifecycle governance across <span data-tooltip="Model Context Protocol — Anthropic's open protocol for AI tool/resource access">MCP</span> and <span data-tooltip="Agent-to-Agent protocol — agent interoperability standard">A2A</span> — yet the governance shell and cryptographic binding are distinct problems, and Microsoft has solved the first while the second remains open exactly as it was: the biometric proof that authenticated the provisioning administrator via Windows Hello never transfers to the agent identity or to any token the agent acquires; as <span data-tooltip="EU AI Act Article 14 (high-risk AI): requires demonstrable human oversight and accountability for AI system deployments">EU AI Act</span> high-risk AI obligations move from organizational governance logging to artifact-level non-repudiation, the unchanged soft binding gap at the agent credential layer is Microsoft's most significant remaining liability in the agentic AI era, and closing it requires either a Nametag Signa-type integration that embeds the biometric attestation in the agent identity record, or a native Microsoft product that does the same.
+        </blockquote>
+      </section>
+
+      <!-- Lanes -->
+      <section id="lanes" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">02</span>
+          <h2 class="player-section__title">Lanes</h2>
+        </div>
+
+        <div class="lanes-grid">
+
+          <!-- Lane 1 -->
+          <div id="lane-p03-l1" class="lane-card">
+            <div class="lane-card__header">
+              <div>
+                <div class="lane-card__name">Windows Hello for Business</div>
+                <div class="lane-card__id">P03-L1 · Layer 2 · Enterprise · Non-agentic</div>
+              </div>
+              <span class="bq bq--hard bq--lg">hard</span>
+            </div>
+            <p class="lane-card__note">Biometric gesture unlocks <span data-tooltip="Trusted Platform Module — hardware chip that stores cryptographic keys in a tamper-resistant environment">TPM</span>-protected private key; TPM signs authentication assertion; Entra ID issues <span data-tooltip="Primary Refresh Token — Entra's master session token bound to the TPM session key">PRT</span> bound to TPM session key; <span data-tooltip="Attestation Identity Key — certificate that allows Entra to verify the private key is hardware-bound and never exported">AIK</span> certificate enables cryptographic hardware residency verification.</p>
+            <div class="lane-card__pills">
+              <span class="pill pill--artifact">fido2_assertion</span>
+              <span class="pill">device / hardware binding</span>
+              <span class="pill">IR facial + fingerprint</span>
+              <span class="pill">session binding</span>
+            </div>
+            <div class="coverage-wrap">
+              <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span>
+              <span class="pill" style="border-color:#475569;color:#94a3b8;">device: <strong style="color:var(--hard-text);">hard</strong></span>
+            </div>
+          </div>
+
+          <!-- Lane 2 -->
+          <div id="lane-p03-l2" class="lane-card">
+            <div class="lane-card__header">
+              <div>
+                <div class="lane-card__name">Entra Verified ID + Face Check</div>
+                <div class="lane-card__id">P03-L2 · Layer 2 · Enterprise · Non-agentic</div>
+              </div>
+              <span class="bq bq--hard_path_native bq--lg">hard path native</span>
+            </div>
+            <p class="lane-card__note">Holder presents <span data-tooltip="W3C Verifiable Credential — a tamper-evident credential with cryptographic proof, following the W3C VC Data Model standard">W3C VC</span>; Azure AI Face API compares live selfie to portrait; <code>MicrosoftFaceCheckReceipt</code> is a signed JWT — both artifacts are signed. Gap: face match is probabilistic, not cryptographic identity equivalence. Biometric proof is off-artifact.</p>
+            <div class="lane-card__pills">
+              <span class="pill pill--artifact">w3c_vc</span>
+              <span class="pill">credential binding</span>
+              <span class="pill">Azure AI Face API (software liveness)</span>
+              <span class="pill">provisioning + presentation-time</span>
+            </div>
+            <div class="coverage-wrap">
+              <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span>
+              <span class="pill" style="border-color:#475569;color:#94a3b8;">cred: <strong style="color:var(--hpn-text);">hard_path_native</strong></span>
+            </div>
+          </div>
+
+          <!-- Lane 3 -->
+          <div id="lane-p03-l3" class="lane-card">
+            <div class="lane-card__header">
+              <div>
+                <div class="lane-card__name">Entra Agent ID</div>
+                <div class="lane-card__id">P03-L3 · Layer 2 · Enterprise · <span style="color:var(--accent-2);">Agentic ★</span></div>
+              </div>
+              <span class="bq bq--soft bq--lg">soft</span>
+            </div>
+            <p class="lane-card__note"><span data-tooltip="AI agent types: Copilot Studio, Azure AI Foundry agents that get Entra managed identity or service principal">AI agents</span> get Entra managed identity or service principal; <span data-tooltip="OAuth 2.0 client credentials flow — machine-to-machine authentication without user interaction">OAuth 2.0 client credentials</span> flow; provisioning-time biometric proof (<span data-tooltip="Windows Hello for Business — Microsoft's hardware-backed passwordless authentication system">WHFB</span>) does not transfer to agent credential; confirmation requires Entra audit log query.</p>
+            <div class="lane-card__pills">
+              <span class="pill pill--artifact">oidc_jwt</span>
+              <span class="pill pill--agentic">agentic</span>
+              <span class="pill">agent identity binding</span>
+              <span class="pill">OAuth 2.0 / MCP / A2A</span>
+            </div>
+            <div class="coverage-wrap">
+              <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span>
+              <span class="pill" style="border-color:#475569;color:#94a3b8;">agent: <strong style="color:var(--soft-text);">soft</strong></span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Architecture -->
+      <section id="architecture" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">03</span>
+          <h2 class="player-section__title">Architecture — How the Binding Works</h2>
+        </div>
+
+        <div class="prose">
+
+          <h4>Windows Hello for Business — Hard Binding Chain</h4>
+          <p>The biometric gesture (IR face or fingerprint) unlocks a TPM-protected private key. That private key signs the authentication assertion. Entra ID then issues a Primary Refresh Token (PRT) bound to the TPM session key, so every subsequent token request is signed with the PRT session key — which cannot be used without the TPM. The AIK (Attestation Identity Key) certificate produced during WHFB enrollment allows Entra to cryptographically verify that the private key is hardware-bound and has never been exported. The chain is independently verifiable against the AIK cert without querying a separate audit system.</p>
+          <p><strong>Why this is hard binding:</strong> the biometric proof activates the TPM key that signs the authentication request. The cryptographic chain runs from biometric unlock through TPM key through signed assertion to Entra-issued token. Supports non-repudiation. Caveat: TPM chip is third-party manufactured (Intel PTT, AMD fTPM, Infineon, STMicro, NXP). Microsoft designs the attestation protocol; it does not own the hardware root.</p>
+
+          <h4>Entra Verified ID Face Check — Approaching Hard Binding</h4>
+          <p>The holder presents a W3C Verifiable Credential signed by the organizational issuer's DID. At presentation, Azure AI Face API compares a live selfie to the portrait embedded in the VC. If the confidence score exceeds the configured threshold, Entra Verified ID issues a <code>MicrosoftFaceCheckReceipt</code> signed JWT encoding the comparison event, credential reference, timestamp, verifier context, and outcome. The verifier receives both: the signed VC presentation and the signed Face Check receipt JWT.</p>
+          <p><strong>Why this approaches but does not reach hard binding:</strong> both artifacts are cryptographically signed, and the Face Check receipt JWT binds the face comparison outcome, identity credential, and temporal context in a single signed document — no need to query a separate audit log. However, the confidence score produced by Azure AI Face API is probabilistic, not deterministic. The match is a statistical comparison, not a cryptographic proof of identity equivalence. This gap is structural — no face comparison algorithm can eliminate it.</p>
+
+          <h4>Entra Agent ID — Soft Binding and the Strategic Gap</h4>
+          <p>An agent is provisioned using an <strong>agent identity blueprint</strong> — a reusable template defining the agent type, permission scopes, and metadata. The blueprint creates an agent identity: a special service principal in Entra ID. The blueprint holds credentials (Federated Identity Credentials, certificates, or client secrets) and acquires tokens on behalf of the agent identity; the agent identity itself has no credentials of its own. A human <strong>sponsor</strong> is assigned to the agent identity for accountability. At runtime, the blueprint acquires tokens via OAuth 2.0 flows (autonomous app, on-behalf-of, or user flow depending on context).</p>
+          <p><strong>Why this is soft binding:</strong> the agent identity and its token carry no biometric information and no cryptographic reference to any biometric event. Even if the human administrator who provisioned the blueprint authenticated via WHFB (a hard-binding event for that administrator), the biometric proof does not transfer to the agent identity or to any token the agent acquires. Confirmation that a biometrically-verified human authorized the agent still requires querying Entra audit logs. The addition of Sponsor relationships and Conditional Access policies strengthens governance accountability without changing the binding quality at the artifact level.</p>
+        </div>
+
+        <!-- Full technical detail disclosure -->
+        <div class="disclosure">
+          <button class="disclosure-trigger"
+                  aria-expanded="false"
+                  aria-controls="arch-detail-msft"
+                  data-closed-text="Show full technical detail (biometric modality, trust substrate, binding sequence)"
+                  data-open-text="Hide full technical detail">
+            <span class="disclosure-trigger__icon" aria-hidden="true">▾</span>
+            <span class="disclosure-trigger__text">Show full technical detail (biometric modality, trust substrate, binding sequence)</span>
+          </button>
+          <div id="arch-detail-msft" class="disclosure-body">
+            <div class="prose">
+              <h4>Biometric Modality</h4>
+              <p><strong>Windows Hello — facial (IR):</strong> Near-infrared structured light or time-of-flight camera, OEM-manufactured. Hardware-enforced liveness at sensor level: IR reflectance from a three-dimensional face is structurally different from IR reflectance from a printed photograph or flat screen. Liveness detection is inherent to the IR capture method, not a separate software algorithm applied after capture.</p>
+              <p><strong>Windows Hello — fingerprint (capacitive):</strong> OEM-manufactured capacitive fingerprint readers. Hardware liveness detection quality varies by OEM sensor; Microsoft does not set a hardware specification for liveness at the fingerprint sensor level beyond Windows Hello certification requirements. Less structurally robust than the IR facial path for liveness assurance.</p>
+              <p><strong>Azure AI Face API (used in Face Check):</strong> Facial recognition, cloud-based. Passive liveness algorithm certified to iBeta Level 2 ISO 30107-3. This is <em>software liveness</em> — the liveness claim depends on the algorithm's analysis of the submitted image or video, not on hardware-level sensor physics. Structurally distinct from Windows Hello IR: an attacker who can submit a sufficiently convincing synthetic input to the Azure AI Face API cloud endpoint faces a software algorithm barrier, not a hardware physics barrier.</p>
+
+              <h4>Trust Substrate</h4>
+              <p><strong>Windows Hello / PRT path:</strong> Hardware root of trust via TPM 2.0. Third-party manufactured across the entire Windows device ecosystem (Intel PTT, AMD fTPM, Infineon SLB 9xxx, STMicroelectronics, NXP). Microsoft does not design or manufacture TPM chips. Microsoft designs the attestation protocol — the WHFB enrollment procedure, AIK certificate request, PRT session key binding — that creates the cryptographic chain anchored to the TPM. Split: Microsoft owns the protocol and presentation-side attestation; hardware root is third-party.</p>
+              <p><strong>Verified ID holder keys:</strong> When a holder stores Verified ID credentials in Microsoft Authenticator, credential signing keys are protected by the platform secure enclave of the holder's device — Apple Secure Enclave (iOS), Android Keystore with StrongBox (Android). These are not Microsoft-owned hardware. Microsoft controls the DID/VC protocol layer, the Entra Verified ID service, and the Face Check receipt signing.</p>
+              <p><strong>Azure AI Face API / Face Check receipt signing:</strong> Cloud/software-only. The Face Check receipt JWT is signed by Microsoft's Azure key infrastructure, not by a hardware TPM or secure enclave. No hardware attestation in the face comparison chain itself.</p>
+
+              <h4>Binding Sequence</h4>
+              <p><strong>Windows Hello for Business:</strong> Both issuance-time and presentation-time. Issuance-time: biometric enrollment, template stored in TPM, public key registered with Entra. Presentation-time: biometric unlock required at every authentication event to activate TPM key. This is the strongest sequence position in Microsoft's stack.</p>
+              <p><strong>Verified ID Face Check:</strong> Both — issuance-time (VC originally issued with a biometric reference embedded, typically a portrait photo) and re-verification at moment of consequence (Face Check performs a live comparison at the moment the credential is presented to a relying party). The re-verification step creates the time-bound receipt artifact.</p>
+              <p><strong>Entra Agent ID:</strong> Issuance-time only, and only conditionally. The human administrator may have been WHFB-authenticated at provisioning, but this biometric proof does not travel with the agent credential. There is no presentation-time biometric re-verification for agent actions.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Strategic Position -->
+      <section id="position" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">04</span>
+          <h2 class="player-section__title">Strategic Position</h2>
+        </div>
+
+        <div class="prose">
+          <p>Microsoft Corporation is a Company operating as the dominant general-purpose <span data-tooltip="Identity and Access Management — systems for managing digital identities and controlling access to resources">IAM</span> orchestrator in the enterprise lane, with a now-shipping agentic AI identity product (<strong>Entra Agent ID</strong>, public preview Ignite Nov 2025; <strong>Microsoft Agent 365</strong>, GA May 1, 2026), a decentralized verifiable credentials product (<strong>Entra Verified ID with Face Check</strong>, GA Aug 2024), and a self-service account recovery product (<strong>Self-Service Account Recovery</strong>, public preview Ignite Nov 2025). As a two-layer player, Microsoft holds a partial Layer 1 position — OEM-dependent for Windows Hello IR/fingerprint hardware sensors, Microsoft-controlled for Azure AI Face API software liveness — and a strong Layer 2 binding authority position as the enterprise control plane for 600M+ Entra ID users across effectively all Fortune 500 organizations.</p>
+
+          <p>Binding quality varies sharply by lane: Windows Hello for Business produces <strong>hard binding</strong> (TPM key ceremony → signed assertion → PRT, with TPM attestation providing an independently verifiable cryptographic chain); Entra Verified ID Face Check <strong>approaches hard binding</strong> (signed VC + signed Face Check receipt JWT, with a probabilistic gap from the confidence score); Entra Agent ID produces <strong>soft binding</strong> (full governance shell — blueprint-based provisioning, agent registry, Conditional Access for agents, Identity Protection, Shadow AI detection — but audit-logged delegation chain, no biometric anchor on the agent credential or tokens).</p>
+
+          <p>Trust substrate is split — Microsoft owns the attestation protocol layer; hardware roots are third-party TPM (Windows), Apple Secure Enclave / Android Keystore (mobile), and OEM biometric sensors throughout. Protocol support: FIDO2, W3C VC, OpenID4VP, OAuth/OIDC, MCP, A2A (all confirmed production or preview); synced passkeys (preview) are software-bound, not hardware-bound — binding quality lower than WHFB. Revenue is enterprise SaaS subscription, with Entra P1/P2 embedded in M365 E3/E5; no token incentives.</p>
+        </div>
+      </section>
+
+      <!-- Gaps & Exposure -->
+      <section id="gaps" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">05</span>
+          <h2 class="player-section__title">Gaps &amp; Regulatory Exposure</h2>
+        </div>
+
+        <div class="gap-callout">
+          <div class="gap-callout__label">Critical Gap</div>
+          <p class="gap-callout__text">Entra Agent ID produces soft binding — biometric proof from WHFB provisioning event does not travel to the agent credential; upgrade path (Face Check receipt model extended to agent credentials) architecturally understood but not shipped.</p>
+        </div>
+
+        <div class="prose">
+          <h4>Regulatory Forcing Functions</h4>
+          <ul>
+            <li><strong>EU AI Act Art. 14 (high-risk AI obligations, effective August 2, 2026 — pending Digital Omnibus):</strong> Entra Agent ID's soft binding architecture may not satisfy the strongest interpretations of human-in-the-loop accountability. This is the primary forcing function for the binding quality upgrade. Enterprises deploying AI agents in high-risk contexts (healthcare, HR, critical infrastructure) face this requirement directly.</li>
+            <li><strong>NIS2 / DORA (in force Oct 2024 / Jan 2025):</strong> Both frameworks mandate phishing-resistant MFA. Windows Hello for Business and FIDO2 passkeys are explicitly acceptable mechanisms. Entra Conditional Access with WHFB is a primary compliance pathway.</li>
+            <li><strong>eIDAS 2.0 / EUDIW (member state wallets required by end of 2026):</strong> Entra Verified ID's OpenID4VP/VCI architecture aligns with EUDIW technical architecture. Microsoft has stated alignment intent. No confirmed EUDIW-compliant shipping wallet product as of early 2026.</li>
+            <li><strong>NIST IAL2 / AAL2 (US federal, in force):</strong> WHFB satisfies NIST SP 800-63B AAL2. Combination of WHFB + Entra Verified ID with IDV partner integration approaches NIST SP 800-63A IAL2 for remote identity proofing.</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <div class="section-title">Protocol Adoption</div>
+          <table class="proto-table">
+            <thead>
+              <tr><th>Protocol</th><th>Status</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>FIDO2 / WebAuthn</td><td><span class="status-badge status-badge--production">production</span></td><td>Core to Windows Hello for Business; FIDO Alliance founding member</td></tr>
+              <tr><td>W3C VC Data Model</td><td><span class="status-badge status-badge--production">production</span></td><td>Entra Verified ID using did:web</td></tr>
+              <tr><td>OpenID4VP / VCI</td><td><span class="status-badge status-badge--production">production</span></td><td>Adopted in Entra Verified ID; EUDIW alignment</td></tr>
+              <tr><td>OAuth 2.1 / OIDC</td><td><span class="status-badge status-badge--production">production</span></td><td>Foundational to all Entra token flows; reference enterprise OIDC implementation</td></tr>
+              <tr><td>MCP</td><td><span class="status-badge status-badge--production">production</span></td><td>Explicitly supported in Entra Agent ID for tool/resource access</td></tr>
+              <tr><td>A2A (Agent-to-Agent)</td><td><span class="status-badge status-badge--production">production</span></td><td>Joined A2A working group May 2025; A2A Tool in Azure AI Foundry preview Dec 2025</td></tr>
+              <tr><td>IETF WIMSE</td><td><span class="status-badge status-badge--announced">announced</span></td><td>Engineering participation confirmed; no product commitment documented</td></tr>
+              <tr><td>Synced Passkeys</td><td><span class="status-badge status-badge--announced">preview</span></td><td>Public preview Ignite Nov 2025. Software-bound — binding quality lower than WHFB</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <div class="section-title">Framework Gap Analysis</div>
+          <div class="prose">
+            <p>The schema's "agent identity binding" binding type assumes that biometric proof is cryptographically attached to the agent credential. Microsoft Entra Agent ID occupies a structurally distinct precursor position: the existing taxonomy cannot cleanly represent the difference between <strong>(a) biometric-anchored agent credential</strong> (biometric proof cryptographically attached to the agent credential at provisioning, independently verifiable at point of consequence) and <strong>(b) biometric-provisioned agent governance</strong> (human administrator may have been biometrically authenticated at provisioning, but the biometric proof does not transfer to the agent credential). Entra Agent ID is firmly type (b). The distinction has direct regulatory consequence under EU AI Act human-in-the-loop requirements.</p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Sources -->
+      <section id="sources" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">06</span>
+          <h2 class="player-section__title">Sources</h2>
+        </div>
+        <ul class="sources-list">
+          <li><a href="https://learn.microsoft.com/en-us/entra/agent-id/identity-professional/microsoft-entra-agent-identities-for-ai-agents">What is Microsoft Entra Agent ID — Microsoft Learn (April 2026)</a></li>
+          <li><a href="https://techcommunity.microsoft.com/blog/microsoft-entra-blog/announcing-microsoft-entra-agent-id-secure-and-manage-your-ai-agents/3827392">Announcing Microsoft Entra Agent ID — Build 2025</a></li>
+          <li><a href="https://techcommunity.microsoft.com/blog/microsoft-entra-blog/microsoft-entra-innovations-announced-at-rsac-2026/4502146">Microsoft Entra RSAC 2026 Innovations</a></li>
+          <li><a href="https://learn.microsoft.com/en-us/entra/fundamentals/whats-new-ignite-2025">Microsoft Entra Ignite 2025 — Key Announcements</a></li>
+          <li><a href="https://www.microsoft.com/en-us/security/blog/2024/02/06/microsoft-entra-verified-id-introduces-face-check-in-preview/">Entra Verified ID Face Check (GA Aug 2024)</a></li>
+          <li><a href="https://learn.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/">Windows Hello for Business overview — Microsoft Learn</a></li>
+          <li><a href="https://www.biometricupdate.com/202512/microsoft-entra-synced-passkeys-biometric-account-recovery-reach-public-preview">Microsoft Entra synced passkeys + biometric account recovery — Biometric Update (Dec 2025)</a></li>
+          <li><a href="https://www.biometricupdate.com/202511/idemia-ps-to-be-a-biometric-tech-launch-partner-for-microsoft-entra-verified-id">IDEMIA as Entra Verified ID biometric launch partner — Biometric Update (Nov 2025)</a></li>
+          <li>Sources verified via live web research, April 2026.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div><!-- /player-page -->
+
+</div><!-- /page-wrap -->
+
+<footer class="site-footer">
+  <p>Biometric Anchoring Landscape · Research corpus April 2026</p>
+  <p><a href="../index.html">← Comparison</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

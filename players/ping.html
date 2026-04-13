@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ping Identity (P23) — Biometric Anchoring Landscape</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="global-nav" role="navigation" aria-label="Site navigation">
+  <div class="global-nav__inner">
+    <span class="global-nav__brand"><strong>Biometric Anchoring</strong> — Research Dashboard</span>
+    <span class="global-nav__sep">|</span>
+    <div class="global-nav__links">
+      <a href="../index.html">Comparison</a>
+      <a href="microsoft.html">Microsoft</a>
+      <a href="okta.html">Okta</a>
+      <a href="world.html">World</a>
+      <a href="ping.html" class="active">Ping Identity</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <a href="../index.html" class="back-link">← Back to comparison</a>
+
+  <!-- Player switcher -->
+  <div class="player-switcher">
+    <a href="microsoft.html" class="switcher-item">
+      <span class="switcher-item__name">Microsoft</span>
+      <div class="switcher-item__lanes">
+        <span class="bq bq--hard">hard</span>
+        <span class="bq bq--hard_path_native">hard path</span>
+        <span class="bq bq--soft">soft</span>
+      </div>
+    </a>
+    <a href="okta.html" class="switcher-item">
+      <span class="switcher-item__name">Okta</span>
+      <div class="switcher-item__lanes">
+        <span class="bq bq--hard">hard</span>
+        <span class="bq bq--soft">soft</span>
+        <span class="bq bq--soft">soft</span>
+      </div>
+    </a>
+    <a href="world.html" class="switcher-item">
+      <span class="switcher-item__name">World</span>
+      <div class="switcher-item__lanes">
+        <span class="bq bq--hard">hard</span>
+        <span class="bq bq--hard_path_native">hard path</span>
+      </div>
+    </a>
+    <a href="ping.html" class="switcher-item current">
+      <span class="switcher-item__name">Ping Identity</span>
+      <div class="switcher-item__lanes">
+        <span class="bq bq--hard">hard</span>
+        <span class="bq bq--hard_path_native">hard path</span>
+        <span class="bq bq--hard_path_native">hard path</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Mobile section nav -->
+  <nav class="mobile-section-nav" aria-label="Page sections">
+    <a href="#key-finding">Key Finding</a>
+    <a href="#lanes">Lanes</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#position">Strategic Position</a>
+    <a href="#gaps">Gaps &amp; Exposure</a>
+    <a href="#sources">Sources</a>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header__label">P23 · Private company (Thoma Bravo) · Institutional authority</div>
+    <h1 class="page-header__title">Ping Identity</h1>
+    <div class="flex-wrap mt-1">
+      <span class="tag">Enterprise IAM Orchestrator</span>
+      <span class="tag">Layer 1 (Keyless, acq. Jan 2026) + Layer 2</span>
+      <span class="tag tag--agentic">Agentic (Identity for AI)</span>
+      <span class="tag">~$800M ARR · Fortune 100</span>
+    </div>
+  </div>
+
+  <div class="player-page">
+
+    <!-- Sidebar -->
+    <aside class="player-sidebar">
+      <div class="classification-card">
+        <div class="classification-card__title">Classification</div>
+        <div class="classification-row">
+          <div class="classification-row__label">Entity Type</div>
+          <div class="classification-row__value"><strong>Private company.</strong> Taken private by Thoma Bravo (Oct 2022, ~$2.8B). ForgeRock merged in 2023 (~$2.3B).</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Tier</div>
+          <div class="classification-row__value">Secondary</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Authority Model</div>
+          <div class="classification-row__value">Institutional</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Decision Role</div>
+          <div class="classification-row__value"><strong>Layer 1 + Layer 2.</strong> Only enterprise IAM orchestrator in this research that owns both. Keyless sMPC acquired Jan 2026.</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Lanes</div>
+          <div class="classification-row__value">3 (1 agentic)</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Scale</div>
+          <div class="classification-row__value">~$800M ARR; >30% SaaS YoY growth; >50% of Fortune 100; 8B+ user accounts secured</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Revenue</div>
+          <div class="classification-row__value">Enterprise SaaS subscription. No token model. Private; per-seat pricing undisclosed.</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Trust Substrate</div>
+          <div class="classification-row__value">Thales Luna HSM-backed credential signing (Ping-operated); Keyless distributed sMPC network (Ping-owned); third-party device hardware roots for FIDO2</div>
+        </div>
+        <div class="classification-row">
+          <div class="classification-row__label">Key Acquisition</div>
+          <div class="classification-row__value">Keyless (ZK sMPC biometrics, FIDO2-certified) — closed January 2026</div>
+        </div>
+      </div>
+
+      <nav class="section-nav" aria-label="Page sections">
+        <a href="#key-finding">Key Finding</a>
+        <a href="#lanes">Lanes</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#position">Strategic Position</a>
+        <a href="#gaps">Gaps &amp; Exposure</a>
+        <a href="#sources">Sources</a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="player-main">
+
+      <!-- Key Finding -->
+      <section id="key-finding" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">01</span>
+          <h2 class="player-section__title">Key Finding</h2>
+        </div>
+        <blockquote class="pull-quote">
+          Ping Identity's Keyless acquisition is the only executed instance in this research of an enterprise general-purpose <span data-tooltip="Identity and Access Management — systems for managing digital identities and controlling access to resources">IAM</span> orchestrator completing the soft→hard binding quality upgrade that is the strategic open question for the entire enterprise IAM lane: while Okta and Microsoft Entra remain dependent on supplier partnerships or OS-layer hardware for biometric verification, Ping now owns the Layer 1 <span data-tooltip="Zero-Knowledge Secure Multi-Party Computation — Keyless's biometric architecture where no raw biometric is stored; a cryptographic key is derived from the biometric match across distributed nodes">ZK sMPC</span> biometric technology whose cryptographic key output is the native mechanism for upgrading agent identity binding from governance-logged to credential-embedded — and if Ping integrates that key into its Identity for AI agent authorization chain before the <span data-tooltip="EU AI Act Article 14: human oversight requirements for high-risk AI systems">EU AI Act</span>'s stronger human-in-the-loop interpretations harden into compliance requirements, it will be the only enterprise IAM orchestrator that can offer artifact-level non-repudiable evidence of human authorization for AI agent actions without acquiring or depending on a third party to do so.
+        </blockquote>
+      </section>
+
+      <!-- Lanes -->
+      <section id="lanes" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">02</span>
+          <h2 class="player-section__title">Lanes</h2>
+        </div>
+
+        <div class="lanes-grid">
+
+          <!-- Lane 1 -->
+          <div id="lane-p23-l1" class="lane-card">
+            <div class="lane-card__header">
+              <div>
+                <div class="lane-card__name">PingOne Neo W3C VCs</div>
+                <div class="lane-card__id">P23-L1 · Layer 2 · Enterprise issuing authority · Non-agentic</div>
+              </div>
+              <span class="bq bq--hard bq--lg">hard</span>
+            </div>
+            <p class="lane-card__note">Selfie biometric match to government document at issuance; Ping signs <span data-tooltip="W3C Verifiable Credential — a tamper-evident credential with cryptographic proof">W3C VC</span> using Thales Luna <span data-tooltip="Hardware Security Module — a dedicated hardware device for cryptographic key management and signing operations">HSM</span>-backed keys; VC is independently verifiable without querying Ping — confirmed shipped.</p>
+            <div class="lane-card__pills">
+              <span class="pill pill--artifact">w3c_vc</span>
+              <span class="pill">credential binding (hard)</span>
+              <span class="pill">government document + selfie at issuance</span>
+              <span class="pill">Thales Luna HSM signing</span>
+              <span class="pill">OpenID4VP / VCI</span>
+            </div>
+            <div class="coverage-wrap">
+              <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span>
+              <span class="pill" style="border-color:#475569;color:#94a3b8;">cred: <strong style="color:var(--hard-text);">hard</strong></span>
+            </div>
+          </div>
+
+          <!-- Lane 2 -->
+          <div id="lane-p23-l2" class="lane-card">
+            <div class="lane-card__header">
+              <div>
+                <div class="lane-card__name">Universal Services ZK Re-verification (Keyless sMPC)</div>
+                <div class="lane-card__id">P23-L2 · Layer 2 · Enterprise issuing authority · Non-agentic</div>
+              </div>
+              <span class="bq bq--hard_path_native bq--lg">hard path native</span>
+            </div>
+            <p class="lane-card__note">Keyless <span data-tooltip="Secure Multi-Party Computation — cryptographic technique where computation is distributed across multiple parties with no single party seeing all data">sMPC</span> produces cryptographic key derived from biometric match — not accept/reject. Key can sign or embed in high-risk transaction records. Integration into artifact signing chain not publicly confirmed shipped. No stored biometric template; <span data-tooltip="GDPR Article 9 — special category data protection rules for biometric data">GDPR Art. 9</span> exempt.</p>
+            <div class="lane-card__pills">
+              <span class="pill pill--artifact">zk_credential</span>
+              <span class="pill">biometric-derived cryptographic key</span>
+              <span class="pill">Keyless sMPC (facial)</span>
+              <span class="pill">sub-300ms; FIDO2-certified</span>
+              <span class="pill">GDPR Article 9 exempt</span>
+            </div>
+            <div class="coverage-wrap">
+              <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span>
+              <span class="pill" style="border-color:#475569;color:#94a3b8;">cred: <strong style="color:var(--hpn-text);">hard_path_native</strong></span>
+            </div>
+          </div>
+
+          <!-- Lane 3 -->
+          <div id="lane-p23-l3" class="lane-card">
+            <div class="lane-card__header">
+              <div>
+                <div class="lane-card__name">Identity for AI / Agent Gateway</div>
+                <div class="lane-card__id">P23-L3 · Layer 2 · Enterprise issuing authority · <span style="color:var(--accent-2);">Agentic ★</span></div>
+              </div>
+              <span class="bq bq--hard_path_native bq--lg">hard path native</span>
+            </div>
+            <p class="lane-card__note">Each AI agent gets distinct scoped delegated identity (not extension of human credential); <span data-tooltip="Model Context Protocol — Anthropic's open protocol for AI tool/resource access">MCP</span>-based per-action governance enforcement; current architecture logs governance events (soft); Keyless ZK key output is native path to hard binding — integration pending.</p>
+            <div class="lane-card__pills">
+              <span class="pill pill--artifact">w3c_vc</span>
+              <span class="pill pill--agentic">agentic</span>
+              <span class="pill">Agent IAM Core + Gateway + Detection</span>
+              <span class="pill">MCP enforcement</span>
+              <span class="pill">GA March 31, 2026</span>
+            </div>
+            <div class="coverage-wrap">
+              <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span>
+              <span class="pill" style="border-color:#475569;color:#94a3b8;">agent: <strong style="color:var(--hpn-text);">hard_path_native</strong></span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Architecture -->
+      <section id="architecture" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">03</span>
+          <h2 class="player-section__title">Architecture — How the Binding Works</h2>
+        </div>
+
+        <div class="prose">
+          <h4>The Keyless sMPC Distinction — Why This Matters</h4>
+          <p>During authentication, Keyless's sMPC protocol produces not merely an accept/reject verification result, but a <strong>cryptographic key</strong> derived from the biometric match — a key established at enrollment and regenerated at each authentication using the same biometric. This cryptographic key is the output of the biometric matching protocol.</p>
+          <p>Compared to Okta's model (iProov returns an accept/reject → Okta issues an OIDC JWT conditioned on that result → no cryptographic material from the biometric enters the token), Ping's Keyless model produces a biometric-derived cryptographic key that can be embedded in or used to sign downstream credentials. This is the structural distinction that makes Ping's path to hard binding a product integration question rather than an acquisition question.</p>
+
+          <h4>PingOne Neo W3C VCs — Confirmed Hard Binding</h4>
+          <p>W3C VCs issued by PingOne Neo with government document + selfie biometric matching at issuance. Hard binding is confirmed: the VC is cryptographically signed by Ping as issuer using Thales Luna HSM-backed keys; the biometric verification is part of the issuance proof chain. Independently verifiable by any relying party accepting W3C VCs without querying Ping's records. Binding sequence: both issuance-time (biometric-intensive at credential issuance) and presentation-time (holder presents signed VC from wallet to verifier via OpenID4VP).</p>
+
+          <h4>Universal Services ZK Re-verification — Approaching Hard Binding</h4>
+          <p>Keyless ZK biometric re-verification triggered at high-risk transaction events — large transfers, legal agreements, restricted health record access. The Keyless sMPC-derived key output creates an architectural path to hard binding that is native to Ping's platform. If this key signs or is embedded in the re-verification event record, this constitutes hard binding — biometric proof cryptographically embedded in the signed record, independently verifiable. Classified as hard path native because integration into the artifact signing chain is architecturally plausible but not yet publicly confirmed as shipped.</p>
+
+          <h4>Identity for AI — Current Architecture (Governance-Logged)</h4>
+          <p>Agent IAM Core issues scoped, delegated tokens to AI agents as a distinct identity type — not an extension of the human credential. Agent Gateway provides MCP-integrated runtime enforcement and continuous authorization evaluation at agent-resource interaction points. The current architecture is governance-logged (type b) — biometric proof at the human provisioning event is logged; the agent credential (OAuth/OIDC scoped token) that travels to downstream resources does not embed the biometric proof chain.</p>
+          <p>A <strong>Secretless Agentic Identity</strong> sub-feature (part of Identity for AI) injects dynamic, ephemeral OAuth tokens at runtime rather than relying on static credentials embedded at provisioning — agents receive short-lived, scoped tokens from PingGateway's token injection layer. This is architecturally consistent with the soft binding classification: the ephemeral token is not cryptographically derived from the original human biometric proof.</p>
+          <p><strong>The path to credential-embedded agent identity binding</strong> is shorter for Ping than for Okta: the Keyless ZK cryptographic key output could, architecturally, be embedded in the agent authorization record or used to sign it at provisioning. This upgrade does not require a new acquisition — it is a product integration decision within Ping's own technology stack.</p>
+        </div>
+
+        <!-- Full technical detail disclosure -->
+        <div class="disclosure">
+          <button class="disclosure-trigger"
+                  aria-expanded="false"
+                  aria-controls="arch-detail-ping"
+                  data-closed-text="Show full technical detail (Keyless sMPC, trust substrate, biometric modality)"
+                  data-open-text="Hide full technical detail">
+            <span class="disclosure-trigger__icon" aria-hidden="true">▾</span>
+            <span class="disclosure-trigger__text">Show full technical detail (Keyless sMPC, trust substrate, biometric modality)</span>
+          </button>
+          <div id="arch-detail-ping" class="disclosure-body">
+            <div class="prose">
+              <h4>Keyless sMPC Architecture</h4>
+              <p>Mechanism: Secure Multi-Party Computation (sMPC) across distributed Keyless cloud nodes (now Ping-operated post-acquisition). No raw biometric is stored anywhere — not on device, not in cloud. Output: cryptographic key derived from biometric match. The key is established at enrollment and regenerated identically at each authentication using the same biometric. Performance: sub-300ms authentication and deepfake detection. Certifications: first vendor to achieve both FIDO Biometric and FIDO2 certifications for a server-side/distributed (non-local) biometric architecture.</p>
+
+              <h4>GDPR Advantage</h4>
+              <p>Keyless sMPC-transformed templates are not classified as biometric data under EU regulations — a regulatory compliance advantage specific to Keyless's architecture. Ping can offer biometric authentication to European enterprise customers without triggering GDPR Article 9 special category data obligations. This is a significant product differentiation relative to competitors using traditional biometric template storage (and relative to World ID, which has faced GDPR Article 9 bans in 8 jurisdictions).</p>
+
+              <h4>Trust Substrate — Strongest in Enterprise IAM Research</h4>
+              <p><strong>Credential signing keys:</strong> Thales Luna Network HSMs — Ping contracts Thales HSMs as the hardware root for SAML assertions, OIDC tokens, and W3C VC signing. This is a materially stronger position than Okta's software-only cloud-managed signing keys.</p>
+              <p><strong>Keyless ZK biometric verification:</strong> Distributed sMPC across Ping-operated (post-acquisition) Keyless cloud nodes. Trust derives from sMPC protocol properties — no single party holds the biometric or can reconstruct it.</p>
+              <p><strong>FIDO2/passkeys (relying-party role):</strong> Third-party device hardware roots (Apple SE, Android StrongBox, TPM 2.0). Ping is the verifying relying party; it does not own these hardware roots.</p>
+              <p>Overall: Ping has the strongest trust substrate position among enterprise general-purpose IAM orchestrators in this research: (1) Thales HSM-backed credential signing, (2) native Keyless sMPC distributed biometric verification, (3) W3C VC issuance with same HSM-backed signing infrastructure.</p>
+
+              <h4>Biometric Modality</h4>
+              <p><strong>Primary: Facial (software-based, sMPC/ZK) — Keyless.</strong> Software-based liveness with deepfake detection — not hardware-inherent liveness. Not structured-light 3D like Apple TrueDepth; software-based liveness with active deepfake detection under 300ms.</p>
+              <p><strong>Secondary (via FIDO2 device stack):</strong> Facial (Apple TrueDepth structured-light — hardware-level liveness) and fingerprint (Apple Touch ID, Windows Hello). Ping is the relying party; device platform is the hardware root.</p>
+              <p><strong>PingOne Neo at issuance:</strong> Selfie biometric match to government document; voice verification also supported. Software-based liveness at selfie capture step.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Strategic Position -->
+      <section id="position" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">04</span>
+          <h2 class="player-section__title">Strategic Position</h2>
+        </div>
+
+        <div class="prose">
+          <p>Ping Identity is a private enterprise SaaS company (~$800M ARR, >30% SaaS growth, Thoma Bravo-owned) operating as a general-purpose IAM orchestrator in the workforce identity lane (PingOne, PingFederate, PingAccess, PingID, PingDirectory) and as a consumer application orchestrator in the CIAM lane (PingOne DaVinci, PingOne Advanced Identity Cloud incorporating ForgeRock), with a minor decentralized identity lane (PingOne Neo, issuing W3C VCs with OpenID4VP/VCI).</p>
+
+          <p>Following the January 2026 close of its Keyless acquisition, Ping is the only enterprise general-purpose IAM orchestrator in this research that owns both Layer 1 biometric verification (Keyless sMPC facial biometrics, FIDO2-certified, cryptographic key output from biometric match) and Layer 2 binding (PingOne/PingFederate policy engine, credential issuance, with Thales Luna HSM-backed credential signing). All other enterprise IAM orchestrators (Okta, Microsoft Entra for most workflows) are Layer 2 only for biometric purposes.</p>
+
+          <p>Binding quality: soft for standard OIDC access tokens; <strong>approaching hard binding</strong> in Universal Services ZK re-verification contexts (Keyless cryptographic key output from biometric match); <strong>hard binding confirmed</strong> for PingOne Neo W3C VCs; agent identity binding is governance-logged (type b, same structural category as Okta) but with a materially shorter path to credential-embedded (type a) due to native Keyless capability. The binding quality upgrade requires product integration work; Okta's equivalent requires either acquisition or sustained supplier dependency.</p>
+
+          <p>Biometric modality is facial (Keyless sMPC, software deepfake detection, FIDO2-certified, GDPR-exempt from Article 9 special category treatment), with structured-light 3D facial and fingerprint modalities available via device-resident FIDO2 authenticators where Ping is the relying party. Revenue is SaaS subscription; more than half the Fortune 100 are customers.</p>
+        </div>
+      </section>
+
+      <!-- Gaps & Exposure -->
+      <section id="gaps" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">05</span>
+          <h2 class="player-section__title">Gaps &amp; Regulatory Exposure</h2>
+        </div>
+
+        <div class="gap-callout">
+          <div class="gap-callout__label">Critical Gap</div>
+          <p class="gap-callout__text">Gap between owning the Keyless ZK mechanism and having it integrated into the agent credential artifact signing chain — hard binding path is native but integration not confirmed shipped as of March 2026.</p>
+        </div>
+
+        <div class="prose">
+          <h4>Financial Update</h4>
+          <p>October 2025: Thoma Bravo arranged a $1.8 billion broadly syndicated loan (led by JPMorgan Chase) to refinance Ping's existing $792M private credit facility and fund a <strong>$1.12 billion dividend payment to Thoma Bravo</strong>. This is a value-extraction event, not an imminent exit signal; dividend recaps in PE typically precede exits by 1–3 years. No confirmed IPO timeline as of April 2026.</p>
+          <h4>Regulatory Forcing Functions</h4>
+          <ul>
+            <li><strong>NIST SP 800-63-3/4 (IAL2/AAL2, in force):</strong> Keyless ZK biometric + document verification (Universal Services) positions Ping for IAL2 compliance natively — the first general-purpose IAM orchestrator with native Layer 1 biometric verification in this research.</li>
+            <li><strong>EU AI Act human-in-the-loop provisions (in force Feb 2025):</strong> Identity for AI (GA March 2026) is Ping's direct response. Current architecture is governance-logged (soft) — satisfies audit log requirements. The path to satisfying the stronger interpretation (artifact-level evidence of human authorization) runs through the Keyless ZK key output, which Ping now owns.</li>
+            <li><strong>NIS2 / DORA (in force Oct 2024 / Jan 2025):</strong> Phishing-resistant MFA mandatory. FIDO2/passkeys + Keyless ZK biometric MFA are compliant mechanisms.</li>
+            <li><strong>eIDAS 2.0 / EUDIW (implementation 2024–2026):</strong> PingOne Neo's explicit OpenID4VP/VCI and W3C VC support positions Ping ahead of Okta on this compliance dimension. PingOne Neo can act as both issuer and verifier in eIDAS-compliant architectures.</li>
+            <li><strong>GDPR Art. 9:</strong> Keyless sMPC-transformed templates are not classified as biometric data by EU regulators — a unique regulatory compliance advantage. No GDPR Article 9 special category data obligations for Keyless-based biometric authentication.</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <div class="section-title">Protocol Adoption</div>
+          <table class="proto-table">
+            <thead>
+              <tr><th>Protocol</th><th>Status</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>FIDO2 / WebAuthn</td><td><span class="status-badge status-badge--production">production</span></td><td>Native PingID FIDO2 support; Keyless independently FIDO2-certified (first server-side distributed vendor). FIDO Alliance member.</td></tr>
+              <tr><td>W3C VC Data Model</td><td><span class="status-badge status-badge--production">production</span></td><td>PingOne Neo issues JWT VC and W3C VCs with DID support.</td></tr>
+              <tr><td>OpenID4VP / VCI</td><td><span class="status-badge status-badge--production">production</span></td><td>Confirmed — PingOne Neo explicitly supports OIDC4VP, OPENID4VCI, and SIOPv2. Ahead of Okta.</td></tr>
+              <tr><td>MCP</td><td><span class="status-badge status-badge--production">production</span></td><td>PingGateway 2026.3 ships McpAuditFilter, McpProtectionFilter, and McpValidationFilter. Agent Gateway intercepts MCP requests, authorizes via OAuth 2.0 scopes, enforces per-action authorization, and provides audit trail.</td></tr>
+              <tr><td>OAuth 2.1 / OIDC</td><td><span class="status-badge status-badge--production">production</span></td><td>Core platform. PingFederate and PingOne are OAuth 2.0/OIDC reference implementations.</td></tr>
+              <tr><td>SCIM</td><td><span class="status-badge status-badge--production">production</span></td><td>Core lifecycle management and provisioning protocol across enterprise deployments.</td></tr>
+              <tr><td>IETF WIMSE</td><td><span class="status-badge status-badge--production">active contributor</span></td><td>Brian Campbell (Ping Identity) is named co-author on draft-ietf-wimse-s2s-protocol (Feb 2026, standards track) and draft-ietf-wimse-workload-creds-00. Ping is shaping the specification, not merely implementing downstream. Product implementation not yet publicly documented as shipped.</td></tr>
+              <tr><td>A2A (Agent-to-Agent)</td><td><span class="status-badge status-badge--partial">not documented</span></td><td>Agent-to-agent delegation addressed through OAuth scoped delegation in Identity for AI architecture.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <div class="section-title">Framework Gap Analysis</div>
+          <div class="prose">
+            <p>The framework's "soft binding" / "approaching hard binding" / "hard binding" classification assumes that the distinction between these states is binary and observable from public product documentation. Ping Identity's Keyless architecture introduces a transitional state — <strong>cryptographic key output available but integration into artifact signing chain not publicly confirmed</strong> — that the framework cannot cleanly classify from the outside. Keyless demonstrably produces a biometric-derived cryptographic key; whether that key is embedded in the signed PingOne credential or merely used to authorize its issuance (and thus whether the result is hard or soft binding) depends on product integration decisions that Ping has not fully disclosed as of March 2026.</p>
+            <p>This ambiguity has direct competitive and regulatory implications — for how Ping is positioned against Okta, for whether Ping can credibly claim EU AI Act artifact-level auditability, and for acquisition valuations. The proposed additional framework classification: <strong>Hard binding path native (integration pending)</strong> — the player owns the cryptographic mechanism that enables hard binding, but integration of that mechanism into the artifact signing chain is not yet publicly confirmed as shipped.</p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Sources -->
+      <section id="sources" class="player-section">
+        <div class="player-section__header">
+          <span class="player-section__label">06</span>
+          <h2 class="player-section__title">Sources</h2>
+        </div>
+        <ul class="sources-list">
+          <li><a href="https://www.prnewswire.com/news-releases/keyless-to-be-acquired-by-ping-identity-to-drive-global-adoption-of-privacy-preserving-biometric-authentication-302599815.html">Ping Identity + Keyless acquisition announcement (October 2025)</a></li>
+          <li><a href="https://www.biometricupdate.com/202601/ping-identity-closes-keyless-acquisition-names-new-chief-revenue-officer">Keyless acquisition close + new CRO (January 2026)</a></li>
+          <li><a href="https://press.pingidentity.com/2026-01-07-Ping-Identity-Marks-Digital-Trust-Milestone-with-Zero-Knowledge-Biometrics-in-the-Age-of-AI">Ping Identity ZK biometrics milestone press release (January 7, 2026)</a></li>
+          <li><a href="https://press.pingidentity.com/2026-01-20-Ping-Identity-Advances-Universal-Services-to-Redefine-Trust-in-the-Age-of-AI-Driven-Fraud">Ping Identity Universal Services (January 20, 2026)</a></li>
+          <li><a href="https://press.pingidentity.com/2026-03-24-Ping-Identity-Defines-the-Runtime-Identity-Standard-for-Autonomous-AI">Ping Identity Identity for AI GA / Runtime Identity Standard (March 24, 2026)</a></li>
+          <li><a href="https://press.pingidentity.com/2025-11-06-Ping-Identity-Launches-Identity-for-AI-Solution-to-Power-Innovation-and-Trust-in-the-Agent-Economy">Ping Identity Identity for AI launch (November 6, 2025)</a></li>
+          <li><a href="https://www.pingidentity.com/en/solution/agentic-ai-identity.html">Ping Identity agentic AI identity solution page</a></li>
+          <li><a href="https://keyless.io/technology/zero-knowledge-biometrics">Keyless ZK biometrics technology page</a></li>
+          <li><a href="https://docs.keyless.io/why-keyless/keyless-protocol">Keyless protocol documentation (cryptographic key output from biometric match)</a></li>
+          <li><a href="https://www.biometricupdate.com/202203/keyless-opens-doors-for-software-biometrics-with-fido2-certification-says-co-founder">Keyless FIDO2 and FIDO Biometric certification (first vendor, 2022)</a></li>
+          <li><a href="https://www.pingidentity.com/en/lp/ac/pingone-neo.html">PingOne Neo decentralized identity</a></li>
+          <li><a href="https://press.pingidentity.com/2024-11-14-Ping-Identity-Surpasses-30-Annual-Growth-in-SaaS-Revenue-and-Approaches-800M-ARR-as-an-Enterprise-Identity-Market-Leader">Ping Identity revenue approaching $800M ARR (November 2024)</a></li>
+          <li><a href="https://cpl.thalesgroup.com/partners/ping-identity">Thales Luna HSMs / Ping Identity partner page</a></li>
+          <li>Sources verified via live web research, April 2026.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div><!-- /player-page -->
+
+</div><!-- /page-wrap -->
+
+<footer class="site-footer">
+  <p>Biometric Anchoring Landscape · Research corpus April 2026</p>
+  <p><a href="../index.html">← Comparison</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
