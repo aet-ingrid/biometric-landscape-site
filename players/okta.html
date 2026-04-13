@@ -145,7 +145,24 @@
 
         <div class="lanes-grid">
 
-          <!-- Lane 1 -->
+          <!-- Lane 1 — core Workforce IAM product (credential issuance) -->
+          <div id="lane-p04-l2" class="lane-card">
+            <div class="lane-card__header">
+              <div>
+                <div class="lane-card__name">OIDC Access Tokens / Workforce IAM</div>
+                <div class="lane-card__id">P04-L2 · Layer 2 · Enterprise issuing authority · Non-agentic</div>
+              </div>
+              <span class="bq bq--soft bq--lg">soft</span>
+            </div>
+            <p class="lane-card__note"><span data-tooltip="JSON Web Token — signed token format used in OAuth and OIDC flows">JWT</span> contains no cryptographic reference to biometric proof; software-key-based token signing (not HSM-backed); confirming biometric underlies a specific token requires Okta audit log query.</p>
+            <div class="lane-card__pills">
+              <span class="pill pill--artifact">oidc_jwt</span>
+              <span class="pill">software signing keys</span>
+              <span class="pill">audit-log binding only</span>
+            </div>
+          </div>
+
+          <!-- Lane 2 — FIDO2 passkeys (device & biometric auth, relying party role) -->
           <div id="lane-p04-l1" class="lane-card">
             <div class="lane-card__header">
               <div>
@@ -167,24 +184,7 @@
             </div>
           </div>
 
-          <!-- Lane 2 -->
-          <div id="lane-p04-l2" class="lane-card">
-            <div class="lane-card__header">
-              <div>
-                <div class="lane-card__name">OIDC Access Tokens / Workforce IAM</div>
-                <div class="lane-card__id">P04-L2 · Layer 2 · Enterprise issuing authority · Non-agentic</div>
-              </div>
-              <span class="bq bq--soft bq--lg">soft</span>
-            </div>
-            <p class="lane-card__note"><span data-tooltip="JSON Web Token — signed token format used in OAuth and OIDC flows">JWT</span> contains no cryptographic reference to biometric proof; software-key-based token signing (not HSM-backed); confirming biometric underlies a specific token requires Okta audit log query.</p>
-            <div class="lane-card__pills">
-              <span class="pill pill--artifact">oidc_jwt</span>
-              <span class="pill">software signing keys</span>
-              <span class="pill">audit-log binding only</span>
-            </div>
-          </div>
-
-          <!-- Lane 3 -->
+          <!-- Lane 3 — agentic -->
           <div id="lane-p04-l3" class="lane-card">
             <div class="lane-card__header">
               <div>
