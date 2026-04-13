@@ -599,6 +599,34 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
   color: var(--text);
 }
 
+.switcher-item__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+
+.layer-pill {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  border: 1px solid var(--border-2);
+  color: var(--text-3);
+  background: transparent;
+  letter-spacing: 0.02em;
+}
+
+.layer-pill--partial {
+  border-style: dashed;
+}
+
+.switcher-item__bq {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
 .switcher-item__lanes {
   display: flex;
   flex-wrap: wrap;
