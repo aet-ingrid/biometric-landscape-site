@@ -47,6 +47,15 @@
     </a>
   </div>
 
+  <!-- Page-level tab bar -->
+  <div class="page-tabs" role="tablist">
+    <button class="page-tab is-active" role="tab" aria-selected="true" aria-controls="pane-research">Research</button>
+    <button class="page-tab" role="tab" aria-selected="false" aria-controls="pane-products">Product Families</button>
+    <button class="page-tab" role="tab" aria-selected="false" aria-controls="pane-technical">Technical Details</button>
+  </div>
+
+  <div class="tab-pane is-active" id="pane-research" role="tabpanel">
+
   <!-- Mobile section nav -->
   <nav class="mobile-section-nav" aria-label="Page sections">
     <a href="#key-finding">Key Finding</a>
@@ -92,7 +101,7 @@
         </div>
         <div class="classification-row">
           <div class="classification-row__label">Lanes</div>
-          <div class="classification-row__value">3 (1 agentic)</div>
+          <div class="classification-row__value">4 (1 agentic)</div>
         </div>
         <div class="classification-row">
           <div class="classification-row__label">Scale</div>
@@ -211,6 +220,28 @@
             </div>
           </div>
 
+          <!-- Lane 4 -->
+          <div id="lane-p03-l4" class="lane-card">
+            <div class="lane-card__header">
+              <div>
+                <div class="lane-card__name"><a href="https://techcommunity.microsoft.com/blog/microsoft-entra-blog/synced-passkeys-and-high-assurance-account-recovery/3627343" target="_blank" rel="noopener">Self-Service Account Recovery (IDV)</a></div>
+                <div class="lane-card__id">P03-L4 · Layer 2 · Enterprise · Non-agentic · <span class="status-badge status-badge--preview" style="font-size:0.65rem;vertical-align:middle;">preview</span></div>
+              </div>
+              <span class="bq bq--soft bq--lg">soft</span>
+            </div>
+            <p class="lane-card__note">IDV partner (Idemia, Au10tix, LexisNexis — 192-country coverage) supplies liveness + document-to-face match; Entra Verified ID <span data-tooltip="Face Check — Azure AI Face API compares a live selfie to the portrait in the presented credential">Face Check</span> matches selfie against government ID portrait; verified name/address matched to directory and HR records; result recorded as account security audit event. No cryptographic receipt artifact equivalent to Face Check JWT documented for this recovery flow — binding remains soft.</p>
+            <div class="lane-card__pills">
+              <span class="pill pill--artifact">oidc_jwt</span>
+              <span class="pill">action-level binding (recovery event)</span>
+              <span class="pill">Idemia · Au10tix · LexisNexis</span>
+              <span class="pill">passports · driver's licenses</span>
+            </div>
+            <div class="coverage-wrap">
+              <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span>
+              <span class="pill" style="border-color:#475569;color:#94a3b8;">action: <strong style="color:var(--soft-text);">soft</strong></span>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -232,9 +263,17 @@
           <p><strong>Why this approaches but does not reach hard binding:</strong> both artifacts are cryptographically signed, and the Face Check receipt JWT binds the face comparison outcome, identity credential, and temporal context in a single signed document — no need to query a separate audit log. However, the confidence score produced by Azure AI Face API is probabilistic, not deterministic. The match is a statistical comparison, not a cryptographic proof of identity equivalence. This gap is structural — no face comparison algorithm can eliminate it.</p>
 
           <h4>Entra Agent ID — Soft Binding and the Strategic Gap</h4>
-          <p>An agent is provisioned using an <strong>agent identity blueprint</strong> — a reusable template defining the agent type, permission scopes, and metadata. The blueprint creates an agent identity: a special service principal in Entra ID. The blueprint holds credentials (Federated Identity Credentials, certificates, or client secrets) and acquires tokens on behalf of the agent identity; the agent identity itself has no credentials of its own. A human <strong>sponsor</strong> is assigned to the agent identity for accountability. At runtime, the blueprint acquires tokens via OAuth 2.0 flows (autonomous app, on-behalf-of, or user flow depending on context).</p>
-          <p><strong>Why this is soft binding:</strong> the agent identity and its token carry no biometric information and no cryptographic reference to any biometric event. Even if the human administrator who provisioned the blueprint authenticated via WHFB (a hard-binding event for that administrator), the biometric proof does not transfer to the agent identity or to any token the agent acquires. Confirmation that a biometrically-verified human authorized the agent still requires querying Entra audit logs. The addition of Sponsor relationships and Conditional Access policies strengthens governance accountability without changing the binding quality at the artifact level.</p>
+          <p>Entra Agent ID introduces a <strong>three-object hierarchy</strong>. The <strong>agent identity blueprint</strong> is a reusable template and credential-holding parent — it holds Federated Identity Credentials (and optionally certificates or client secrets) used to acquire tokens on behalf of agent identities, and its OAuth permission scopes are inherited by all agent identities created from it. The <strong>agent identity</strong> is a service principal instantiated from a blueprint; it has no credentials of its own and shares authentication configuration with the blueprint. The <strong>agent user account</strong> is an optional specialized identity type that allows an agent to act with user-level capabilities (e.g., access to mailboxes, HR systems) under governed management controls; each agent identity may have at most one associated agent user account.</p>
+          <p><strong>Inheritable permissions:</strong> agent identities automatically receive OAuth 2.0 delegated scopes from the parent blueprint through a configurable all-scopes or enumerated-scopes inheritance pattern, subject to admin consent granted at the blueprint level. This eliminates per-identity consent prompts during provisioning. <strong>Agent Registry:</strong> an extensible metadata repository of all deployed agents; each agent carries an <em>agent instance record</em> (operational details) and an <em>agent card manifest</em> (JSON digital business card describing capabilities, endpoints, skills, and auth requirements). Registry gating: Entra identity required for active A2A discovery; agents without Entra identity can be registered for passive discoverability only.</p>
+          <p><strong>Governance accountability model:</strong> three roles are defined on every Agent ID object. <strong>Owner</strong> = technical admin responsible for credentials and configuration. <strong>Sponsor</strong> = business-accountable party responsible for the agent's purpose and lifecycle decisions (access reviews, decommissioning); receives specific Lifecycle Workflow tasks (e.g., succession notifications on mover/leaver events). <strong>Manager</strong> = user responsible for the agent within the organizational hierarchy; can request access packages on behalf of reporting agents.</p>
+          <p><strong>Security features (both GA at RSAC 2026):</strong> <strong>Shadow AI detection</strong> — Defender for Cloud Apps actively interrogates OAuth consent telemetry and app registration activity to surface agents operating outside the Entra governance perimeter in real time (not passive logging after the fact). <strong>Prompt injection protection</strong> — defends against adversarial inputs designed to manipulate agent behavior.</p>
+          <p><strong>Ecosystem partners</strong> receiving first-class Entra Agent ID support: Copilot Studio, Azure AI Foundry, Security Copilot, ServiceNow AI Platform, Workday Agent System of Record.</p>
+          <p><strong>Developer integration paths:</strong> (1) <code>Microsoft.Identity.Web.AgentIdentities</code> NuGet package — in-process .NET support via <code>AddAgentIdentities()</code>, <code>WithAgentIdentity</code>, and <code>WithAgentUserIdentity</code> APIs. (2) <strong>auth-sidecar</strong> (<code>mcr.microsoft.com/entra-sdk/auth-sidecar</code>) — containerized companion service exposing HTTP endpoints (<code>/Validate</code>, <code>/AuthorizationHeader/{serviceName}</code>, <code>/AuthorizationHeaderUnauthenticated/{serviceName}</code>) for any-language applications; supports proof-of-possession signed HTTP requests, long-running OBO with token refresh, AKS managed identity. Network-isolated; never publicly accessible.</p>
+          <p><strong>Why this is soft binding:</strong> the agent identity and its token carry no biometric information and no cryptographic reference to any biometric event. Even if the human administrator who provisioned the blueprint authenticated via WHFB (a hard-binding event for that administrator), the biometric proof does not transfer to the agent identity or to any token the agent acquires. Confirmation that a biometrically-verified human authorized the agent still requires querying Entra audit logs. The governance shell — blueprints, registry, Conditional Access, Identity Protection, Shadow AI detection, sponsor accountability — is now substantially complete; the binding quality gap is the sole remaining structural liability.</p>
         </div>
+
+          <h4>Self-Service Account Recovery — Soft Binding via IDV Partners</h4>
+          <p>Users initiate recovery from the sign-in screen, are guided to verify a government-issued ID + selfie via an organization-selected IDV partner (Idemia, Au10tix, or LexisNexis — 192-country coverage; remote verification for driver's licenses and passports). Entra Verified ID Face Check matches the live selfie against the ID document portrait; only match results are shared, not biometric data. Verified name/address is matched to directory and HR system records to restore access. Binding remains soft: no cryptographic receipt artifact equivalent to the Face Check receipt JWT has been documented as output of the recovery flow itself — the result is recorded as an account security audit event.</p>
 
         <!-- Full technical detail disclosure -->
         <div class="disclosure">
@@ -277,7 +316,7 @@
         <div class="prose">
           <p>Microsoft Corporation is a Company operating as the dominant general-purpose <span data-tooltip="Identity and Access Management — systems for managing digital identities and controlling access to resources">IAM</span> orchestrator in the enterprise lane, with a now-shipping agentic AI identity product (<strong>Entra Agent ID</strong>, public preview Ignite Nov 2025; <strong>Microsoft Agent 365</strong>, GA May 1, 2026), a decentralized verifiable credentials product (<strong>Entra Verified ID with Face Check</strong>, GA Aug 2024), and a self-service account recovery product (<strong>Self-Service Account Recovery</strong>, public preview Ignite Nov 2025). As a two-layer player, Microsoft holds a partial Layer 1 position — OEM-dependent for Windows Hello IR/fingerprint hardware sensors, Microsoft-controlled for Azure AI Face API software liveness — and a strong Layer 2 binding authority position as the enterprise control plane for 600M+ Entra ID users across effectively all Fortune 500 organizations.</p>
 
-          <p>Binding quality varies sharply by lane: Windows Hello for Business produces <strong>hard binding</strong> (TPM key ceremony → signed assertion → PRT, with TPM attestation providing an independently verifiable cryptographic chain); Entra Verified ID Face Check <strong>approaches hard binding</strong> (signed VC + signed Face Check receipt JWT, with a probabilistic gap from the confidence score); Entra Agent ID produces <strong>soft binding</strong> (full governance shell — blueprint-based provisioning, agent registry, Conditional Access for agents, Identity Protection, Shadow AI detection — but audit-logged delegation chain, no biometric anchor on the agent credential or tokens).</p>
+          <p>Binding quality varies sharply by lane: Windows Hello for Business produces <strong>hard binding</strong> (TPM key ceremony → signed assertion → PRT, with TPM attestation providing an independently verifiable cryptographic chain); Entra Verified ID Face Check <strong>approaches hard binding</strong> (signed VC + signed Face Check receipt JWT, with a probabilistic gap from the confidence score — software liveness certified to iBeta Level 2 ISO 30107-3, not hardware-physics liveness); Entra Agent ID produces <strong>soft binding</strong> (full governance shell — blueprint-based provisioning, three-object hierarchy, agent registry, Conditional Access, Identity Protection, Shadow AI detection, sponsor/manager accountability — but audit-logged delegation chain, no biometric anchor on the agent credential or tokens); Self-Service Account Recovery (P03-L4) produces <strong>soft binding</strong> (IDV partners supply liveness + document-to-face match; no cryptographic receipt artifact documented for the recovery flow).</p>
 
           <p>Trust substrate is split — Microsoft owns the attestation protocol layer; hardware roots are third-party TPM (Windows), Apple Secure Enclave / Android Keystore (mobile), and OEM biometric sensors throughout. Protocol support: FIDO2, W3C VC, OpenID4VP, OAuth/OIDC, MCP, A2A (all confirmed production or preview); synced passkeys (preview) are software-bound, not hardware-bound — binding quality lower than WHFB. Revenue is enterprise SaaS subscription, with Entra P1/P2 embedded in M365 E3/E5; no token incentives.</p>
         </div>
@@ -298,7 +337,7 @@
         <div class="prose">
           <h4>Regulatory Forcing Functions</h4>
           <ul>
-            <li><strong>EU AI Act Art. 14 (high-risk AI obligations, effective August 2, 2026 — pending Digital Omnibus):</strong> Entra Agent ID's soft binding architecture may not satisfy the strongest interpretations of human-in-the-loop accountability. This is the primary forcing function for the binding quality upgrade. Enterprises deploying AI agents in high-risk contexts (healthcare, HR, critical infrastructure) face this requirement directly.</li>
+            <li><strong>EU AI Act Art. 14 (high-risk AI obligations, effective August 2, 2026 — see caveat):</strong> Entra Agent ID's soft binding architecture may not satisfy the strongest interpretations of human-in-the-loop accountability. This is the primary forcing function for the binding quality upgrade. Enterprises deploying AI agents in high-risk contexts (healthcare, HR, critical infrastructure) face this requirement directly. <em>Caveat: The European Commission's Digital Omnibus proposal (November 19, 2025) proposed linking the August 2, 2026 application date to the availability of harmonised standards and Commission guidelines, in response to delays in standard preparation. As of April 2026, this proposal remains under consideration; the August 2, 2026 date has not been formally changed but faces potential adjustment.</em></li>
             <li><strong>NIS2 / DORA (in force Oct 2024 / Jan 2025):</strong> Both frameworks mandate phishing-resistant MFA. Windows Hello for Business and FIDO2 passkeys are explicitly acceptable mechanisms. Entra Conditional Access with WHFB is a primary compliance pathway.</li>
             <li><strong>eIDAS 2.0 / EUDIW (member state wallets required by end of 2026):</strong> Entra Verified ID's OpenID4VP/VCI architecture aligns with EUDIW technical architecture. Microsoft has stated alignment intent. No confirmed EUDIW-compliant shipping wallet product as of early 2026.</li>
             <li><strong>NIST IAL2 / AAL2 (US federal, in force):</strong> WHFB satisfies NIST SP 800-63B AAL2. Combination of WHFB + Entra Verified ID with IDV partner integration approaches NIST SP 800-63A IAL2 for remote identity proofing.</li>
@@ -317,11 +356,19 @@
               <tr><td>OpenID4VP / VCI</td><td><span class="status-badge status-badge--production">production</span></td><td>Adopted in Entra Verified ID; EUDIW alignment</td></tr>
               <tr><td>OAuth 2.1 / OIDC</td><td><span class="status-badge status-badge--production">production</span></td><td>Foundational to all Entra token flows; reference enterprise OIDC implementation</td></tr>
               <tr><td>MCP</td><td><span class="status-badge status-badge--production">production</span></td><td>Explicitly supported in Entra Agent ID for tool/resource access</td></tr>
-              <tr><td>A2A (Agent-to-Agent)</td><td><span class="status-badge status-badge--production">production</span></td><td>Joined A2A working group May 2025; A2A Tool in Azure AI Foundry preview Dec 2025</td></tr>
-              <tr><td>IETF WIMSE</td><td><span class="status-badge status-badge--announced">announced</span></td><td>Engineering participation confirmed; no product commitment documented</td></tr>
+              <tr><td>A2A (Agent-to-Agent)</td><td><span class="status-badge status-badge--production">production</span></td><td>Joined A2A working group May 2025; A2A Tool in Azure AI Foundry preview Dec 2025; A2A 1.0 adoption: 150+ organizations as of April 2026</td></tr>
+              <tr><td>IETF WIMSE</td><td><span class="status-badge status-badge--announced">announced</span></td><td>Engineering participation confirmed; no product commitment documented. Structural note: Entra Agent ID's design (blueprints as credential-holding workload identity templates, agent service principals, OBO flows, FIC-based federation) is structurally aligned with the WIMSE workload identity model even without an explicit product commitment.</td></tr>
               <tr><td>Synced Passkeys</td><td><span class="status-badge status-badge--announced">preview</span></td><td>Public preview Ignite Nov 2025. Software-bound — binding quality lower than WHFB</td></tr>
             </tbody>
           </table>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <div class="section-title">Partnership Gaps</div>
+          <div class="prose">
+            <p><strong>Layer 1 gap — Account Recovery IDV (P03-L4):</strong> For Self-Service Account Recovery, Microsoft sources the entire Layer 1 capability — liveness detection and document-to-face match — from Idemia, Au10tix, and LexisNexis (192-country coverage). Microsoft has no native equivalent for this context. The partnership model is likely to persist given Microsoft's multi-partner approach and the regulatory complexity of owning biometric data at scale. Binding quality for recovery events remains soft as a consequence: a cryptographic receipt artifact analogous to the Face Check receipt JWT has not been documented for this flow.</p>
+            <p><strong>Binding quality upgrade gap — Entra Agent ID:</strong> The governance shell is now substantially complete (blueprints, registry, Conditional Access, Identity Protection, Shadow AI detection, sponsor/manager accountability). The binding quality gap remains: no current Microsoft product or documented partner integration cryptographically attaches biometric proof to the agent identity or to tokens the agent acquires. A Nametag Signa-type integration remains the reference implementation for this upgrade. Microsoft has not announced such an integration.</p>
+          </div>
         </div>
 
         <div style="margin-top:1.5rem;">
@@ -348,6 +395,8 @@
           <li><a href="https://learn.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/">Windows Hello for Business overview — Microsoft Learn</a></li>
           <li><a href="https://www.biometricupdate.com/202512/microsoft-entra-synced-passkeys-biometric-account-recovery-reach-public-preview">Microsoft Entra synced passkeys + biometric account recovery — Biometric Update (Dec 2025)</a></li>
           <li><a href="https://www.biometricupdate.com/202511/idemia-ps-to-be-a-biometric-tech-launch-partner-for-microsoft-entra-verified-id">IDEMIA as Entra Verified ID biometric launch partner — Biometric Update (Nov 2025)</a></li>
+          <li><a href="https://learn.microsoft.com/en-us/entra/id-governance/agent-id-governance-overview" target="_blank" rel="noopener">Governing Agent Identities (Preview) — Entra ID Governance (Microsoft Learn)</a></li>
+          <li><a href="https://learn.microsoft.com/en-us/entra/agent-id/identity-platform/agent-identities" target="_blank" rel="noopener">Overview of agent identities in Microsoft Entra — three-object hierarchy, blueprints, registry (Microsoft Learn)</a></li>
           <li>Sources verified via live web research, April 2026.</li>
         </ul>
 
@@ -366,6 +415,173 @@
     </main>
   </div><!-- /player-page -->
 
+  </div><!-- /pane-research -->
+
+  <!-- Product Families tab pane -->
+  <div class="tab-pane" id="pane-products" role="tabpanel">
+    <div class="tech-pane">
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart TD
+    EID["Entra ID"]
+    WID["Entra Workload ID"]
+    AID["Entra Agent ID"]
+    VID["Entra Verified ID"]
+    SSAC["Self-Service Account Recovery"]
+    EIP["Entra ID Protection"]
+    ECA["Entra Conditional Access"]
+    EIG["Entra ID Governance"]
+    EEI["Entra External ID"]
+    EPA["Entra Private Access"]
+    EIA["Entra Internet Access"]
+
+    EID --> WID --> AID
+    EID --> VID
+    VID -->|Face Check at recovery| SSAC
+    EID --> EIG
+    EID --> EEI
+    EID --> EPA
+    EID --> EIA
+    EIP -->|risk signals| ECA
+    EIG -.->|governs| AID
+    ECA -.->|enforces on| AID
+
+    click EID href "https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-id" _blank
+    click WID href "https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-workload-id" _blank
+    click AID href "https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-agent-id" _blank
+    click VID href "https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-verified-id" _blank
+    click SSAC href "https://techcommunity.microsoft.com/blog/microsoft-entra-blog/synced-passkeys-and-high-assurance-account-recovery/3627343" _blank
+    click EIP href "https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-id-protection" _blank
+    click ECA href "https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-conditional-access" _blank
+    click EIG href "https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-id-governance" _blank
+    click EEI href "https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-external-id" _blank
+    click EPA href "https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-private-access" _blank
+    click EIA href "https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-internet-access" _blank
+
+    classDef core fill:#1e3a5f,stroke:#6366f1,color:#c7d2fe,font-weight:600
+    classDef agent fill:#052e16,stroke:#16a34a,color:#86efac
+    classDef security fill:#2d1b4e,stroke:#7c3aed,color:#ddd6fe
+    classDef ext fill:#1e293b,stroke:#475569,color:#94a3b8
+
+    class EID core
+    class WID,AID agent
+    class EIP,ECA security
+    class VID,EIG,EEI,EPA,EIA,SSAC ext
+        </pre>
+      </div>
+      <div class="mermaid-legend">
+        <span class="ml-item"><span class="ml-dot ml-dot--core"></span>core platform</span>
+        <span class="ml-item"><span class="ml-dot ml-dot--agent"></span>agent / agentic layer</span>
+        <span class="ml-item"><span class="ml-dot ml-dot--security"></span>security &amp; policy</span>
+        <span class="ml-item"><span class="ml-dot ml-dot--ext"></span>extension products</span>
+        <span class="ml-note">Click any node to open product page ↗</span>
+      </div>
+    </div>
+  </div><!-- /pane-products -->
+
+  <!-- Technical Details tab pane -->
+  <div class="tab-pane" id="pane-technical" role="tabpanel">
+    <div class="tech-pane">
+
+      <div class="tech-section">
+        <div class="tech-section__title">GitHub Repositories</div>
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th style="width:32%">Repository</th>
+              <th style="width:8%">Priority</th>
+              <th>What it covers</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/Azure-Samples/ms-identity-agent-identities" target="_blank" rel="noopener">Azure-Samples/<br>ms-identity-agent-identities</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>Primary Entra Agent ID sample — autonomous + delegated (OBO) OAuth flows; .NET + .NET Aspire; multi-downstream-API Customer Service Agent orchestration</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/AzureAD/microsoft-identity-web" target="_blank" rel="noopener">AzureAD/<br>microsoft-identity-web</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>ASP.NET Core identity middleware; v4.0+ adds <code>Microsoft.Identity.Web.AgentIdentities</code> NuGet package with <code>WithAgentIdentity()</code> and <code>WithAgentUserIdentity()</code> APIs for agent authentication</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/microsoft/agent-framework" target="_blank" rel="noopener">microsoft/<br>agent-framework</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>Microsoft's official agent runtime framework (v1.0 April 2026); multi-agent orchestration with <code>DefaultAzureCredential</code> / <code>ManagedIdentityCredential</code> integration; Python + .NET</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/Azure/azure-workload-identity" target="_blank" rel="noopener">Azure/<br>azure-workload-identity</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>Kubernetes workload identity webhook — enables AKS pods to exchange K8s service account tokens for Entra access tokens via OIDC federation; infrastructure-level token acquisition for agents on AKS</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/AzureAD/microsoft-authentication-library-for-dotnet" target="_blank" rel="noopener">AzureAD/<br>microsoft-authentication-library-for-dotnet</a></td>
+              <td><span class="tech-priority tech-priority--medium">MED</span></td>
+              <td>MSAL.NET — confidential client, client credentials, OBO flow, managed identity; low-level token acquisition library used by agents</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/AzureAD/microsoft-authentication-library-for-python" target="_blank" rel="noopener">AzureAD/<br>microsoft-authentication-library-for-python</a></td>
+              <td><span class="tech-priority tech-priority--medium">MED</span></td>
+              <td>MSAL Python — managed identity support (v1.29.0+), client credentials, workload identity federation; relevant for Python-based agents</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/AzureAD/microsoft-authentication-library-for-js" target="_blank" rel="noopener">AzureAD/<br>microsoft-authentication-library-for-js</a></td>
+              <td><span class="tech-priority tech-priority--medium">MED</span></td>
+              <td>MSAL.js monorepo — <code>msal-node</code> is relevant for confidential client/agent flows; <code>msal-browser</code> is user-auth only</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="tech-note">Note: The auth-sidecar container (<code>mcr.microsoft.com/entra-sdk/auth-sidecar</code>) has no public source repo — documented at learn.microsoft.com/en-us/entra/agent-id/ only.</p>
+      </div>
+
+      <div class="tech-section">
+        <div class="tech-section__title">Developer Documentation</div>
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th style="width:28%">Source</th>
+              <th style="width:8%">Pages</th>
+              <th>Content</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-repo"><a href="https://learn.microsoft.com/en-us/entra/agent-id/" target="_blank" rel="noopener">Entra Agent ID hub</a></td>
+              <td>57</td>
+              <td>Blueprints, OAuth flows, agent registry, governance, SDK — primary developer reference</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://learn.microsoft.com/en-us/entra/msidweb/agent-id-sdk/" target="_blank" rel="noopener">Agent ID SDK</a></td>
+              <td>8</td>
+              <td>Token acquisition and downstream API calls for autonomous + interactive agents; code samples included</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://learn.microsoft.com/en-us/entra/workload-id/" target="_blank" rel="noopener">Workload Identity</a></td>
+              <td>24</td>
+              <td>App and service identity; adaptive access policies; lifecycle management for non-human workloads</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/" target="_blank" rel="noopener">Managed Identity</a></td>
+              <td>37</td>
+              <td>Managed identities for Azure resources — system-assigned and user-assigned; AKS and container scenarios</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://learn.microsoft.com/en-us/entra/identity-platform/" target="_blank" rel="noopener">Identity Platform (protocols)</a></td>
+              <td>13</td>
+              <td>OAuth 2.0 / OIDC protocol reference, OBO flow, client credentials — selective pages</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://www.microsoft.com/en-us/security/business/identity-access/" target="_blank" rel="noopener">Entra product pages</a></td>
+              <td>10</td>
+              <td>Product marketing pages for Entra suite — positioning and feature overviews</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /tech-pane -->
+  </div><!-- /pane-technical -->
+
 </div><!-- /page-wrap -->
 
 <footer class="site-footer">
@@ -373,6 +589,10 @@
   <p><a href="../index.html">← Comparison</a></p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+</script>
 <script src="../js/main.js"></script>
 </body>
 </html>

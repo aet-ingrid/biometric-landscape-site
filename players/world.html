@@ -47,6 +47,15 @@
     </a>
   </div>
 
+  <!-- Page-level tab bar -->
+  <div class="page-tabs" role="tablist">
+    <button class="page-tab is-active" role="tab" aria-selected="true" aria-controls="pane-research">Research</button>
+    <button class="page-tab" role="tab" aria-selected="false" aria-controls="pane-products">Product Families</button>
+    <button class="page-tab" role="tab" aria-selected="false" aria-controls="pane-technical">Technical Details</button>
+  </div>
+
+  <div class="tab-pane is-active" id="pane-research" role="tabpanel">
+
   <!-- Mobile section nav -->
   <nav class="mobile-section-nav" aria-label="Page sections">
     <a href="#key-finding">Key Finding</a>
@@ -154,7 +163,7 @@
               </div>
               <span class="bq bq--hard bq--lg">hard</span>
             </div>
-            <p class="lane-card__note">Iris scan via Orb (IR hardware, inherently liveness-detecting); <span data-tooltip="Zero-Knowledge Succinct Non-Interactive Arguments of Knowledge — a cryptographic proof system that proves knowledge without revealing the underlying data">ZK-SNARK</span> Groth16/<a href="https://world.org/blog/engineering/intro-zero-knowledge-proofs-semaphore-application-world-id" target="_blank" rel="noopener">Semaphore</a>; per-application nullifier prevents cross-app tracking; identity commitment in on-chain WorldIDRegistry; independently verifiable against Merkle root without querying TFH servers. Issuance-side centralized (TFH controls Orb + deduplication); presentation-side decentralizing.</p>
+            <p class="lane-card__note">Iris scan via Orb (IR hardware, inherently liveness-detecting); <span data-tooltip="Zero-Knowledge Succinct Non-Interactive Arguments of Knowledge — a cryptographic proof system that proves knowledge without revealing the underlying data">ZK-SNARK</span> Groth16/<a href="https://world.org/blog/engineering/intro-zero-knowledge-proofs-semaphore-application-world-id" target="_blank" rel="noopener">Semaphore</a>; per-application nullifier prevents cross-app tracking; identity commitment in on-chain WorldIDRegistry; independently verifiable against Merkle root without querying TFH servers. Issuance-side centralized (TFH controls Orb + deduplication via <strong>AMPC</strong>); presentation-side decentralizing. <em>Audit caveat: the Least Authority audit covered the predecessor SMPC system; the updated AMPC architecture deployed from January 2025 onward has not been separately audited by a confirmed primary source.</em></p>
             <div class="lane-card__pills">
               <span class="pill pill--artifact">zk_credential</span>
               <span class="pill">iris biometric (hardware liveness)</span>
@@ -213,8 +222,18 @@
           <p><strong>Why this is hard binding:</strong> The ZK proof is verifiable against the on-chain Merkle root without querying TFH or the World Foundation. The cryptographic chain from iris biometric (at Orb) to on-chain identity commitment to ZK proof is independently verifiable. However, <strong>pseudonymity is by design</strong> — the chain terminates at "unique human in registry," not at a legal identity. Non-repudiation is architecturally excluded: World ID's hard binding does not and cannot support legal non-repudiation without a separate legal identity layer that the protocol deliberately omits.</p>
 
           <h4>AgentKit — Pseudonymous Delegation Chain (Architecture Emerging)</h4>
-          <p>AgentKit (March 2026) extends World ID's pseudonymous proof-of-personhood into AI agent delegation chains. A verified human World ID holder delegates pseudonymous PoP to an AI agent via World ID; the agent can then present to services with x402 micropayment integration (Coinbase partnership). The architecture creates a ZK proof chain from human World ID to agent credential — carrying the "unique real human backs this agent" claim without revealing the human's identity.</p>
-          <p><strong>Hard path native status:</strong> The ZK proof chain architecture is native and owned by TFH/World. AgentKit launched March 17, 2026 as an explicit limited beta — developer-access only, requires a verified World ID holder, uses in-memory storage not suitable for production. The production-grade 1.0 is tied specifically to the World ID 4.0 generation (RFC published December 2025; 3.0 in sunsetting phase as of Q1 2026). Integration with x402 (Coinbase) and Cloudflare is confirmed; full GA not yet reached.</p>
+          <p>AgentKit (March 2026) extends World ID's pseudonymous proof-of-personhood into AI agent delegation chains. A verified human World ID holder delegates pseudonymous PoP to an AI agent via World ID; the agent can then present to services with x402 micropayment integration (Coinbase partnership) and Cloudflare-hosted agent-facing APIs. The architecture creates a ZK proof chain from human World ID to agent credential — carrying the "unique real human backs this agent" claim without revealing the human's identity.</p>
+          <p><strong>Hard path native status:</strong> The ZK proof chain architecture is native and owned by TFH/World. AgentKit launched March 17, 2026 as an explicit limited beta — developer-access only, requires a verified World ID holder, uses in-memory storage not suitable for production. The production-grade 1.0 is tied specifically to the World ID 4.0 generation (RFC published December 2025; 3.0 in sunsetting phase as of Q1 2026). Full GA not yet reached.</p>
+
+          <h4>AgentBook — Cryptographically Decentralized Agent Registry</h4>
+          <p>The delegation mechanism works through the <strong>AgentBook smart contract</strong> — an on-chain registry on World Chain that maps agent wallet addresses to verified humans who authorized them. Registration uses <code>npx @worldcoin/agentkit-cli register</code>, which triggers a World ID proof through World App and submits via a hosted relay (Base mainnet by default; World Chain and manual relay modes also supported). Any server, anywhere, can query AgentBook without institutional intermediary, Okta credentials, or a Microsoft Entra subscription — the lookup result is cryptographically guaranteed by World Chain consensus.</p>
+          <p>This is structurally different from Microsoft Agent Registry, Okta Universal Directory, and Ping Agent IAM Core: those are centralized institutional directories where queries require trusting the operating vendor. AgentBook is a public smart contract. The tradeoff is explicit: AgentBook cannot enforce enterprise governance policies (Conditional Access, FGA, least privilege, lifecycle management) — it attests the link between agent and human; it does not govern what the agent is permitted to do. Usage counters are tracked per human per endpoint — two agents backed by the same person share a single quota, preventing Sybil expansion at the agent layer. Servers implement <code>agentkitResourceServerExtension</code> and <code>createAgentkitHooks</code>; agents authenticate via <span data-tooltip="CAIP-122 — a blockchain account authentication standard for signed challenge/response messages">CAIP-122</span> challenge/response signing. Access modes: free, free-trial (configurable complimentary uses, default 1), and discount.</p>
+
+          <h4>x402 as Payment-Identity Nexus — Structural Differentiation</h4>
+          <p>The AgentKit integration with Coinbase's x402 payment protocol creates a positioning unavailable to enterprise IAM orchestrators. x402 is an HTTP-native micropayment protocol: a resource server returns a 402 Payment Required response with payment instructions; the client pays and presents a receipt; the server verifies and serves. AgentKit's <code>agentkitResourceServerExtension</code> integrates World ID human verification directly into this x402 request/response cycle — the same protocol layer that handles payment authorization also enforces human identity. A resource server can simultaneously require (1) proof the requester is a unique, live human and (2) payment authorization — both cryptographically enforced at the protocol level. Microsoft, Okta, and Ping can gate agent access to enterprise resources; none can cryptographically enforce that a payment transaction was authorized by a verified human within the same protocol handshake. This is a consumer/merchant identity + payment binding layer orthogonal to the enterprise IAM stack.</p>
+
+          <h4>Human-in-the-Loop Package — Mid-Execution Checkpoint</h4>
+          <p>The <code>@worldcoin/human-in-the-loop</code> package extends the trust model by allowing AI agents to pause mid-execution and require explicit World ID proof from the authorizing human before continuing sensitive actions. Built on the Workflow DevKit and Vercel AI SDK; exposes <code>requestHumanAuthorization</code> as a tool that a DurableAgent registers alongside its other capabilities. When invoked, execution suspends and the client-side React package (<code>@worldcoin/human-in-the-loop-react</code>) renders a World ID verification prompt using <code>IDKitRequestWidget</code>. The user completes a World ID proof posted back via webhook; only after proof verification does the workflow resume. This creates a cryptographically enforced checkpoint where human presence and personhood are confirmed at the moment of consequential action, not just at onboarding. <strong>Status: developer preview as of March 2026.</strong> Where Microsoft, Okta, and Ping enforce human authorization through workflow policies and governance configuration, this mechanism is a cryptographically enforced mid-execution checkpoint — architecturally distinct from policy-based human-in-the-loop framing.</p>
         </div>
 
         <!-- Full technical detail disclosure -->
@@ -255,9 +274,17 @@
         <div class="prose">
           <p>World (formerly Worldcoin) is a protocol-company hybrid operating in the decentralized proof-of-personhood lane, built on three organizational entities: Tools for Humanity (private company, Orb hardware and World App), World Foundation (non-profit, protocol governance), and World Chain (Optimism Superchain L2 blockchain). As a Layer 1 credential supplier, World uses a purpose-built iris-scanning hardware device (the Orb) and ZK-SNARK proofs (Groth16, Semaphore protocol) against an on-chain WorldIDRegistry Merkle tree to produce hard-binding, pseudonymous, Orb-verified proof-of-personhood credentials that relying parties can verify independently without querying World's infrastructure.</p>
 
-          <p>As of April 2026, approximately 12 million Orb-verified users are confirmed as of April 2025 (last primary source), growing to ~16.9M by October 2025 (Eightco Holdings, third-party) and an estimated ~18M by March 2026 (unconfirmed primary source) — all figures require maximum skepticism due to WLD token grant incentives. World has launched AgentKit (March 17, 2026, <strong>limited beta</strong> — developer-access only, production-grade 1.0 deferred to World ID 4.0 generation) to extend pseudonymous human identity into AI agent delegation chains via integration with Coinbase's x402 payment protocol.</p>
+          <p>As of April 2026, approximately 12 million Orb-verified users are confirmed as of April 2025 (last primary source), growing to ~16.9M by October 2025 (Eightco Holdings, third-party) and an estimated ~18M by March 2026 (unconfirmed primary source) — all figures require maximum skepticism due to WLD token grant incentives. World has launched AgentKit (March 17, 2026, <strong>limited beta</strong> — developer-access only, production-grade 1.0 deferred to World ID 4.0 generation) to extend pseudonymous human identity into AI agent delegation chains via integration with Coinbase's x402 payment protocol and Cloudflare.</p>
 
-          <p>World ID faces active regulatory bans in ten jurisdictions (Kenya, Spain, Portugal, Germany, Hong Kong, Brazil, Indonesia, Colombia, Philippines, Thailand) on biometric data protection grounds, while simultaneously expanding into the US market with $135M in token-sale financing and partnerships with Visa, Tinder, and Razer. World ID is a fully proprietary ZK stack — not interoperable with W3C VC, OpenID4VP, or FIDO2. Relying parties must implement World ID's specific SDK.</p>
+          <p>World ID faces active regulatory bans in ten jurisdictions (Kenya, Spain, Portugal, Germany, Hong Kong, Brazil, Indonesia, Colombia, Philippines, Thailand) on biometric data protection grounds, while simultaneously expanding into the US market with $200M in total token-based financing ($135M May 2025 + $65M April 2026) and partnerships with Visa, Tinder (Japan pilot, age + identity verification, thousands of users), Razer, and MEDIROM Healthcare Technologies (Japan, 3,000 retail locations — largest single Orb deployment by location count to date). World ID is a fully proprietary ZK stack — not interoperable with W3C VC, OpenID4VP, or FIDO2. Relying parties must implement World ID's specific SDK.</p>
+
+          <h4>MEDIROM Partnership — Institutional Adoption Signal</h4>
+          <p>The MEDIROM Healthcare Technologies partnership (Master Service Agreement effective February 2026) represents the most significant institutional adoption signal in World's history: a publicly-listed company (Tokyo Stock Exchange) signing a revenue-bearing, multi-year agreement to deploy Orb hardware across 3,000 retail locations (Re.Ra.Ku relaxation studio chain) at retail scale — 150+ locations live at launch, 20,000+ cumulative authentications, with MEDIROM projecting ~$39M income before taxes over two years. This is materially different from token-incentivized enrollment: no WLD token grant component. It provides a non-speculative data point on enterprise-scale Orb deployment economics and operator willingness to operate biometric hardware at consumer touchpoints.</p>
+
+          <div class="gap-callout" style="margin-top:1rem;">
+            <div class="gap-callout__label">⚑ Speculative Pipeline — Monitor</div>
+            <p class="gap-callout__text"><strong>OpenAI social network (January 2026, unconfirmed):</strong> Reports indicate OpenAI is in early exploration of a human-only social network, with World's Orb iris verification cited as one potential method. No partnership confirmed. Sam Altman's dual role as OpenAI CEO and World co-founder is the basis for speculation. If realized, would be the largest-reach consumer deployment of World ID by far. No confirmed primary source — monitor only.</p>
+          </div>
         </div>
       </section>
 
@@ -313,6 +340,8 @@
               <tr><td>OpenID4VP / VCI</td><td><span class="status-badge status-badge--partial">not confirmed</span></td><td>World ID uses proprietary verification API; W3C VC format not used</td></tr>
               <tr><td>MCP / A2A</td><td><span class="status-badge status-badge--partial">not referenced</span></td><td>AgentKit uses proprietary delegation architecture</td></tr>
               <tr><td>IETF WIMSE</td><td><span class="status-badge status-badge--partial">not referenced</span></td><td>Structurally significant gap: WIMSE and World AgentKit solve adjacent problems with no confirmed interoperability</td></tr>
+              <tr><td>CAIP-122</td><td><span class="status-badge status-badge--active">adopted</span></td><td>AgentKit uses CAIP-122 challenge/response for agent wallet signing; AgentBook smart contract resolves agent wallets to verified humans</td></tr>
+              <tr><td>x402</td><td><span class="status-badge status-badge--active">adopted</span></td><td>AgentKit is built as an extension to Coinbase's x402 payment protocol; <code>agentkitResourceServerExtension</code> and <code>createAgentkitHooks</code> integrate into x402 resource servers</td></tr>
             </tbody>
           </table>
         </div>
@@ -342,6 +371,7 @@
           <li><a href="https://world.org/blog/engineering/introducing-world-id-4.0">Introducing World ID 4.0 — Request for Comments — world.org</a></li>
           <li><a href="https://world.org/blog/world/intro-zero-knowledge-proofs-semaphore-application-world-id">Intro to zero-knowledge proofs, Semaphore and World ID — world.org</a></li>
           <li><a href="https://techcrunch.com/2025/04/30/world-partners-with-tinder-visa-to-bring-its-id-verifying-tech-to-more-places/">World partners with Tinder, Visa — TechCrunch</a></li>
+          <li><a href="https://www.biometricupdate.com/202604/world-foundation-completes-65m-token-sale-medirom-orb-deal-expands-us-asia-presence" target="_blank" rel="noopener">World Foundation completes $65M token sale; MEDIROM Orb deal — Biometric Update</a></li>
           <li><a href="https://bitpinas.com/learn-how-to-guides/list-countries-banned-investigated-worldcoin/">Countries Banned or Investigated — BitPinas</a></li>
           <li>Sources verified via live web research, April 2026.</li>
         </ul>
@@ -360,6 +390,178 @@
     </main>
   </div><!-- /player-page -->
 
+  </div><!-- /pane-research -->
+
+  <!-- Product Families tab pane -->
+  <div class="tab-pane" id="pane-products" role="tabpanel">
+    <div class="tech-pane">
+
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart TD
+    ORB["Orb (L0 Hardware)"]
+    WID["World ID"]
+    WAPP["World App"]
+    WCHAIN["World Chain"]
+    IDKIT["IDKit SDK"]
+    AGENTKIT["AgentKit"]
+    AGENTBOOK["AgentBook (on-chain registry)"]
+    HITL["Human-in-the-Loop Approval"]
+    ORB -->|iris verify| WID
+    WID --> WAPP
+    WID --> WCHAIN
+    WID --> IDKIT
+    IDKIT --> AGENTKIT
+    AGENTKIT --> AGENTBOOK
+    AGENTKIT --> HITL
+    click ORB href "https://world.org/orb" _blank
+    click WID href "https://world.org/world-id" _blank
+    click WAPP href "https://world.org/world-app" _blank
+    click WCHAIN href "https://world.org/world-chain" _blank
+    click IDKIT href "https://docs.world.org/world-id/id-kit" _blank
+    click AGENTKIT href "https://docs.world.org/agents/agent-kit/integrate" _blank
+    classDef l0 fill:#451a03,stroke:#d97706,color:#fde68a,font-weight:600
+    classDef l1 fill:#052e16,stroke:#16a34a,color:#86efac,font-weight:600
+    classDef infra fill:#1e3a5f,stroke:#6366f1,color:#c7d2fe
+    classDef sdk fill:#1e293b,stroke:#475569,color:#94a3b8
+    classDef agent fill:#052e16,stroke:#16a34a,color:#86efac
+    class ORB l0
+    class WID l1
+    class WAPP,WCHAIN infra
+    class IDKIT sdk
+    class AGENTKIT,AGENTBOOK,HITL agent
+        </pre>
+      </div>
+
+      <div class="mermaid-legend">
+        <span class="ml-item"><span class="ml-dot" style="background:#d97706"></span> L0 hardware (Orb)</span>
+        <span class="ml-item"><span class="ml-dot ml-dot--agent"></span> L1 identity / agent layer</span>
+        <span class="ml-item"><span class="ml-dot ml-dot--core"></span> Infrastructure</span>
+        <span class="ml-item"><span class="ml-dot ml-dot--ext"></span> SDK / integration</span>
+      </div>
+      <p class="tech-note">Solid arrows = verification flow or SDK dependency. Click any node to open the product or docs page.</p>
+
+    </div>
+  </div><!-- /pane-products -->
+
+  <!-- Technical Details tab pane -->
+  <div class="tab-pane" id="pane-technical" role="tabpanel">
+    <div class="tech-pane">
+
+      <div class="tech-section">
+        <div class="tech-section__title">GitHub Repositories</div>
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th style="width:32%">Repository</th>
+              <th style="width:8%">Priority</th>
+              <th>What it covers</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/worldcoin/agentkit" target="_blank" rel="noopener">worldcoin/agentkit</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>AgentKit — TypeScript + Solidity monorepo; AgentBook on-chain registry (links agent wallet addresses to verified humans), x402 micropayment skill, CAIP-122 challenge/response signing, gasless Base mainnet relay</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/worldcoin/human-in-the-loop" target="_blank" rel="noopener">worldcoin/human-in-the-loop</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>Human approval workflows for AI agents gated by World ID proof-of-personhood; pauses agent execution until a verified human approves; uses Workflow DevKit + Vercel AI SDK; <code>requestHumanAuthorization</code> / <code>DurableAgent</code> APIs</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/worldcoin/idkit-js" target="_blank" rel="noopener">worldcoin/idkit-js</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>Primary World ID JavaScript/React SDK (<code>@worldcoin/idkit</code>) — the verification primitive that AgentKit's human-backing proof flows through</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/worldcoin/world-id-protocol" target="_blank" rel="noopener">worldcoin/world-id-protocol</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>World ID 4.0 — Circom ZK circuits, Solidity contracts, Rust libraries; cryptographic foundation for proof-of-humanity (WorldIDRegistry multi-key architecture)</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/worldcoin/world-id-contracts" target="_blank" rel="noopener">worldcoin/world-id-contracts</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>On-chain World ID identity attestation contracts (v3; superseded by world-id-protocol for v4)</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/worldcoin/walletkit" target="_blank" rel="noopener">worldcoin/walletkit</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>Wallet-side ZKP generation for World ID credentials — Rust core with Swift and Kotlin bindings; the wallet component used when registering agents with AgentKit</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/worldcoin/world-chain" target="_blank" rel="noopener">worldcoin/world-chain</a></td>
+              <td><span class="tech-priority tech-priority--medium">MED</span></td>
+              <td>World Chain monorepo — OP Stack blockchain (built on reth) that prioritizes verified humans; natural long-term home for AgentKit wallet registrations</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/worldcoin/minikit-js" target="_blank" rel="noopener">worldcoin/minikit-js</a></td>
+              <td><span class="tech-priority tech-priority--medium">MED</span></td>
+              <td>Mini Apps SDK for World App — agents could surface as Mini Apps to request human approval via World ID</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tech-section">
+        <div class="tech-section__title">IDKit — SDK Platform Support</div>
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th style="width:20%">Language / Platform</th>
+              <th style="width:30%">Package</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>JavaScript</td><td><code>@worldcoin/idkit</code></td><td>Core JS SDK; off-chain verification via POST /v4/verify (<code>developer.world.org</code>); on-chain via WorldIDVerifier contract</td></tr>
+            <tr><td>React</td><td><code>@worldcoin/idkit-react</code></td><td>IDKitWidget component; used in human-in-the-loop client-side approval flows</td></tr>
+            <tr><td>Swift</td><td>Swift Package Manager (SPM)</td><td>Native iOS/macOS integration</td></tr>
+            <tr><td>Kotlin</td><td>Gradle dependency</td><td>Native Android integration</td></tr>
+            <tr><td>Go</td><td>go module</td><td>Server-side verification</td></tr>
+          </tbody>
+        </table>
+        <p class="tech-note" style="margin-top:0.5rem;">IDKit supports both <strong>off-chain verification</strong> (backend POST to developer.world.org/api/v4/verify — requires API key) and <strong>on-chain verification</strong> (WorldIDVerifier smart contract — trustless, no backend dependency; suited for smart contract or high-assurance use cases).</p>
+      </div>
+
+      <div class="tech-section">
+        <div class="tech-section__title">Developer Documentation</div>
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th style="width:28%">Source</th>
+              <th style="width:8%">Pages</th>
+              <th>Content</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-repo"><a href="https://docs.world.org" target="_blank" rel="noopener">docs.world.org</a></td>
+              <td>~125</td>
+              <td>World ID developer documentation — IDKit SDK, verification flows, AgentKit integration, ZK proof integration guides</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://whitepaper.world.org" target="_blank" rel="noopener">whitepaper.world.org</a></td>
+              <td>4</td>
+              <td>Technical whitepapers — World ID protocol specification, ZK-SNARK (Groth16/Semaphore), AMPC architecture</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://world.org" target="_blank" rel="noopener">world.org product pages</a></td>
+              <td>5</td>
+              <td>World product positioning — World ID, World App, World Chain</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://world.org/blog" target="_blank" rel="noopener">world.org/blog</a></td>
+              <td>30</td>
+              <td>Keyword-filtered blog posts on agent identity, proof-of-personhood, AgentKit, World ID 4.0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /tech-pane -->
+  </div><!-- /pane-technical -->
+
 </div><!-- /page-wrap -->
 
 <footer class="site-footer">
@@ -367,6 +569,10 @@
   <p><a href="../index.html">← Comparison</a></p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+</script>
 <script src="../js/main.js"></script>
 </body>
 </html>

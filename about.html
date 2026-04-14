@@ -219,6 +219,21 @@
 
       <dt>Runtime Identity</dt>
       <dd>Ping Identity's framing for per-action enforcement in the Identity for AI / Agent Gateway product: each action an AI agent takes must carry a verified identity signal rather than relying solely on a session-level token issued at provisioning time. Contrasts with session-lifetime token models used by other enterprise IAM players.</dd>
+
+      <dt>AMPC — Anonymized Multi-Party Computation</dt>
+      <dd>World's deduplication mechanism (distinct from the ZK-SNARK Groth16 proof used at presentation time). AMPC encrypts iris codes into anonymous fragments distributed across multiple nodes; the protocol compares a new iris code against these fragments without reconstructing them, revealing only the comparison distance result. Distinct from sMPC (where output is a cryptographic key, used by Keyless/Ping). Audit caveat: Least Authority audited the predecessor SMPC system; the updated AMPC architecture from January 2025 onward has not been separately audited by a confirmed primary source.</dd>
+
+      <dt>CUA — Computer-Using Agent</dt>
+      <dd>An AI agent that operates graphical user interfaces (GUIs) and command-line interfaces (CLIs) rather than structured APIs. CUAs rely on human-style logins, passwords, and shared bot accounts — making fine-grained authorization structurally harder than for API-driven agents. Ping Identity explicitly identifies CUAs as an unsolved problem in the current Identity for AI framework (which is built around OAuth 2.0 token exchange and MCP, tools that apply to API-driven agents).</dd>
+
+      <dt>Pseudonymous delegated authority</dt>
+      <dd>An authority model introduced by World AgentKit that sits orthogonally to the institutional/sovereign distinction. The authorizing principal is cryptographically unique and present at provisioning (their World ID proves they are a unique real human), but is not and cannot be made legally identifiable through the credential chain. Distinct from full delegated authority (which supports legal accountability via an identifiable principal) and from anonymous delegation (which lacks any verifiable chain). The agent carries proof of unique human backing; no jurisdiction can hold that human legally accountable for the agent's actions through the credential chain alone.</dd>
+
+      <dt>x402 (payment-identity nexus)</dt>
+      <dd>Coinbase's HTTP-native micropayment protocol. A resource server returns a 402 Payment Required response; the client pays and presents a receipt; the server verifies and serves. AgentKit integrates World ID human verification into the x402 handshake — the same protocol layer that handles payment authorization also enforces human identity verification. This creates a combined payment + human identity enforcement not available in enterprise IAM stacks.</dd>
+
+      <dt>CIBA — Client-Initiated Backchannel Authentication</dt>
+      <dd>An OIDC extension enabling step-up authorization flows where the user is not present in the browser session. An agent initiates a CIBA request to an IdP; the IdP delivers an approval prompt to the user's device; the user explicitly approves; the agent receives an elevated-scope token. Used by both Ping Identity (PingFederate, for step-up at high-risk agent actions) and Okta Auth0 (for AI agent authorization flows) to enable human-in-the-loop authorization at the moment of consequence.</dd>
     </dl>
   </section>
 

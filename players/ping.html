@@ -47,6 +47,15 @@
     </a>
   </div>
 
+  <!-- Page-level tab bar -->
+  <div class="page-tabs" role="tablist">
+    <button class="page-tab is-active" role="tab" aria-selected="true" aria-controls="pane-research">Research</button>
+    <button class="page-tab" role="tab" aria-selected="false" aria-controls="pane-products">Product Families</button>
+    <button class="page-tab" role="tab" aria-selected="false" aria-controls="pane-technical">Technical Details</button>
+  </div>
+
+  <div class="tab-pane is-active" id="pane-research" role="tabpanel">
+
   <!-- Mobile section nav -->
   <nav class="mobile-section-nav" aria-label="Page sections">
     <a href="#key-finding">Key Finding</a>
@@ -240,6 +249,14 @@
           <p>Ping brands this platform under the concept of <strong>Runtime Identity</strong>: the claim that continuous, contextual authorization at the moment of action — not just access control at login — is the operative security primitive for autonomous AI. CEO Andre Durand: "AI agents are not features. They are actors requiring identity, authority, and accountability." Agent IAM Core issues scoped, delegated tokens to AI agents as a distinct identity type — not an extension of the human credential. Agent Gateway provides MCP-integrated runtime enforcement and per-action policy evaluation at agent-resource interaction points, including human-in-the-loop controls for high-risk tasks. The current architecture is governance-logged (soft binding) — per-action enforcement is real and distinguishes Ping from Okta's XAA (which evaluates at token issuance only); but biometric proof at the human provisioning event is not embedded in the agent credential that travels to downstream resources.</p>
           <p>A <strong>Secretless Agentic Identity</strong> sub-feature (part of Identity for AI) injects dynamic, ephemeral OAuth tokens at runtime rather than relying on static credentials embedded at provisioning — agents receive short-lived, scoped tokens from PingGateway's token injection layer. This is architecturally consistent with the soft binding classification: the ephemeral token is not cryptographically derived from the original human biometric proof.</p>
           <p><strong>The path to credential-embedded agent identity binding</strong> is shorter for Ping than for Okta: the Keyless ZK cryptographic key output could, architecturally, be embedded in the agent authorization record or used to sign it at provisioning. This upgrade does not require a new acquisition — it is a product integration decision within Ping's own technology stack.</p>
+
+          <h4>Agent Type Taxonomy and CUA Gap</h4>
+          <p>Ping categorizes agents into four types: <strong>personal agents</strong> (user-owned, third-party governed, unmanaged — outside the organization's trust boundary); <strong>digital assistants for consumers</strong> (organization-owned, customer-facing managed agents); <strong>digital assistants for the workforce</strong> (organization-owned, employee-facing managed agents); and <strong>digital workers</strong> (fully automated managed agents, no end-user interaction). Agents are further classified as <strong>managed</strong> (within the organization's trust boundary — Ping can monitor activity, enforce policies, grant least-privilege access) or <strong>unmanaged</strong> (outside the trust boundary, such as personal agents).</p>
+          <p><strong>Computer-using agents (CUAs) — explicitly unsolved:</strong> CUAs operate GUIs and CLIs rather than structured APIs. Unlike API-driven agents that authenticate with OAuth 2.0 and receive fine-grained scoped tokens, CUAs rely on human-style logins, passwords, and shared bot accounts. Fine-grained authorization is structurally harder: CUAs receive broad access after sign-on rather than scoped tokens; shared accounts reduce audit clarity and attribution; long-lived sessions create hijacking vulnerabilities that short-lived OAuth tokens avoid. Ping's current Identity for AI architecture — built around OAuth 2.0 token exchange and MCP — addresses API-driven agents; CUAs are an explicitly identified gap in the current framework.</p>
+
+          <h4>Delegation Mechanism — RFC 8693 Token Exchange and CIBA Step-up</h4>
+          <p>The core delegation mechanism across PingOne, PingFederate, and PingOne AIC is <strong>OAuth 2.0 Token Exchange (RFC 8693)</strong>. Rather than allowing an agent to impersonate a user through a broadly scoped token, token exchange produces access tokens carrying explicit delegation claims — expressing that Agent A is performing a specific action requested by Agent B to complete a task for User C. This chain is encoded using nested <code>act</code> (actor) claims within the JWT: each delegation hop appends a new <code>act</code> claim, creating a nested audit trail of agent-to-agent collaboration. Delegation tokens are short-lived (~5-minute TTL), not stored or cached, and each new agent action requires a new exchange.</p>
+          <p>PingFederate additionally supports <strong>CIBA (Client-Initiated Backchannel Authentication) step-up</strong>: when an agent attempts an operation requiring elevated scope (e.g., <code>expenses:approve</code>), the resource server returns a structured error indicating insufficient permissions; the agent initiates a CIBA request to PingFederate; PingFederate delivers an approval prompt to the user's device via webhook or push notification; the user explicitly approves; the agent polls and receives a new elevated-scope token. This ensures sensitive or irreversible agent actions require explicit human-in-the-loop authorization at the moment of consequence. PingFederate also supports <strong>SPIFFE/SPIRE</strong> for on-premises/hybrid deployments — an agent can present a <span data-tooltip="SPIFFE Verifiable Identity Document — a JWT that cryptographically proves a specific workload is running in a specific namespace">JWT-SVID</span> as its actor token, providing cryptographic proof of workload identity (the specific agent running in the specific namespace), validated against the SPIRE OIDC Discovery Provider's JWKS endpoint.</p>
         </div>
 
         <!-- Full technical detail disclosure -->
@@ -283,7 +300,8 @@
         </div>
 
         <div class="prose">
-          <p>Ping Identity is a private enterprise SaaS company (~$800M ARR, >30% SaaS growth, Thoma Bravo-owned) operating as a general-purpose IAM orchestrator in the workforce identity lane (PingOne, PingFederate, PingAccess, PingID, PingDirectory) and as a consumer application orchestrator in the CIAM lane (PingOne DaVinci, PingOne Advanced Identity Cloud incorporating ForgeRock), with a minor decentralized identity lane (PingOne Neo, issuing W3C VCs with OpenID4VP/VCI).</p>
+          <p>Ping Identity is a private enterprise SaaS company (~$800M ARR, >30% SaaS growth, Thoma Bravo-owned) operating as a general-purpose IAM orchestrator in the workforce identity lane (PingOne, PingFederate, PingAccess, PingID, PingDirectory) and as a consumer application orchestrator in the CIAM lane (PingOne DaVinci, PingOne Advanced Identity Cloud incorporating ForgeRock), with a minor decentralized identity lane (PingOne Neo, issuing W3C VCs with OpenID4VP/VCI). The "8B+ user accounts" figure reflects enterprise deployment scale across Ping-governed IAM environments — not direct SaaS seats. Apply proportionate context: this is a deployment scale indicator.</p>
+          <p><strong>PingOne Advanced Identity Cloud (AIC) as forward platform:</strong> The ForgeRock integration is in progress; PingOne AIC is the consolidation target toward which new feature development is directed. Standalone PingFederate remains supported for on-premises and hybrid deployments but is not the target for new enterprise-cloud deployments. Customer migration is available but not forced through 2026. Capabilities described as available across PingOne, PingFederate, and PingOne AIC should be understood as transitionally converging on AIC.</p>
 
           <p>Following the January 2026 close of its Keyless acquisition, Ping is the only enterprise general-purpose IAM orchestrator in this research that owns both Layer 1 biometric verification (Keyless sMPC facial biometrics, FIDO2-certified, cryptographic key output from biometric match) and Layer 2 binding (PingOne/PingFederate policy engine, credential issuance, with Thales Luna HSM-backed credential signing). All other enterprise IAM orchestrators (Okta, Microsoft Entra for most workflows) are Layer 2 only for biometric purposes.</p>
 
@@ -292,6 +310,7 @@
           <p>Binding quality: soft for standard OIDC access tokens; <strong>approaching hard binding</strong> in Universal Services ZK re-verification contexts (Keyless cryptographic key output from biometric match); <strong>hard binding confirmed</strong> for PingOne Neo W3C VCs; agent identity binding is governance-logged (type b, same structural category as Okta) but with a materially shorter path to credential-embedded (type a) due to native Keyless capability. The binding quality transition requires product integration work; Okta's equivalent requires either acquisition or sustained supplier dependency.</p>
 
           <p>Biometric modality is facial (Keyless sMPC, software deepfake detection, FIDO2-certified, GDPR-exempt from Article 9 special category treatment), with structured-light 3D facial and fingerprint modalities available via device-resident FIDO2 authenticators where Ping is the relying party. Revenue is SaaS subscription; more than half the Fortune 100 are customers.</p>
+          <p><strong>AWS Bedrock AgentCore Identity integration:</strong> PingOne, PingOne AIC, and PingFederate can each serve as either an inbound identity provider (authenticating agents and end users via OIDC tokens issued to AgentCore Gateway and Runtime) or an outbound credential provider (enabling agents to securely obtain OIDC access tokens from Ping for downstream API calls) within the AWS Bedrock AgentCore Identity framework. This is an integration pattern documented in Ping developer docs with step-by-step configuration guidance — an emerging ecosystem partnership rather than a deep co-engineered product integration. It signals Ping's positioning as the IdP layer in AWS's agentic AI security architecture.</p>
         </div>
       </section>
 
@@ -317,6 +336,8 @@
             <li><strong>NIS2 / DORA (in force Oct 2024 / Jan 2025):</strong> Phishing-resistant MFA mandatory. FIDO2/passkeys + Keyless ZK biometric MFA are compliant mechanisms.</li>
             <li><strong>eIDAS 2.0 / EUDIW (implementation 2024–2026):</strong> PingOne Neo's explicit OpenID4VP/VCI and W3C VC support positions Ping ahead of Okta on this compliance dimension. PingOne Neo can act as both issuer and verifier in eIDAS-compliant architectures.</li>
             <li><strong>GDPR Art. 9:</strong> Keyless sMPC-transformed templates are not classified as biometric data by EU regulators — a unique regulatory compliance advantage. No GDPR Article 9 special category data obligations for Keyless-based biometric authentication.</li>
+            <li><strong>Illinois BIPA and US state biometric privacy laws (in force):</strong> Keyless's no-storage architecture reduces BIPA exposure relative to traditional biometric systems — no biometric data is stored in reconstructable form. Residual exposure depends on whether sMPC-transformed templates are classified as biometric identifiers under Illinois definitions (a legal question not fully resolved as of this writing). Ping's Keyless architecture provides a structurally stronger BIPA defense than traditional biometric vendors.</li>
+            <li><strong>White House AI Framework age assurance mandate (March 2026 — in force):</strong> Primarily affects Ping's CIAM lane (PingOne DaVinci, PingOne AIC). Likely addressed via identity verification partner integration rather than native Keyless capability, since Keyless is a re-verification/MFA tool, not a document-based age assurance service in its primary use case.</li>
           </ul>
         </div>
 
@@ -330,11 +351,14 @@
               <tr><td>FIDO2 / WebAuthn</td><td><span class="status-badge status-badge--production">production</span></td><td>Native PingID FIDO2 support; Keyless independently FIDO2-certified (first server-side distributed vendor). FIDO Alliance member.</td></tr>
               <tr><td>W3C VC Data Model</td><td><span class="status-badge status-badge--production">production</span></td><td>PingOne Neo issues JWT VC and W3C VCs with DID support.</td></tr>
               <tr><td>OpenID4VP / VCI</td><td><span class="status-badge status-badge--production">production</span></td><td>Confirmed — PingOne Neo explicitly supports OIDC4VP, OPENID4VCI, and SIOPv2. Ahead of Okta.</td></tr>
-              <tr><td>MCP</td><td><span class="status-badge status-badge--production">production</span></td><td>PingGateway 2026.3 ships McpAuditFilter, McpProtectionFilter, and McpValidationFilter. Agent Gateway intercepts MCP requests, authorizes via OAuth 2.0 scopes, enforces per-action authorization, and provides audit trail.</td></tr>
+              <tr><td>MCP</td><td><span class="status-badge status-badge--production">production</span></td><td>PingGateway 2026.3 ships McpAuditFilter, McpProtectionFilter, and McpValidationFilter. Agent Gateway intercepts MCP requests, authorizes via OAuth 2.0 scopes, enforces per-action authorization, and provides audit trail. MCP bridge servers (<code>cloudflare-mcp</code>, <code>aic-mcp-server</code>, <code>pingone-mcp-server</code>) use <strong>Cloudflare Durable Objects</strong> for stateful MCP session management — stateful conversation sessions maintained at the Cloudflare edge without a persistent backend, co-located with the request. Dynamic Client Registration (RFC 7591) and Token Exchange (RFC 8693) applied at each hop. Sets Ping's MCP bridge apart from simpler token-relay implementations and from Okta's Agent Gateway (not yet shipped) and Microsoft's Entra MCP surface.</td></tr>
               <tr><td>OAuth 2.1 / OIDC</td><td><span class="status-badge status-badge--production">production</span></td><td>Core platform. PingFederate and PingOne are OAuth 2.0/OIDC reference implementations.</td></tr>
               <tr><td>SCIM</td><td><span class="status-badge status-badge--production">production</span></td><td>Core lifecycle management and provisioning protocol across enterprise deployments.</td></tr>
               <tr><td>IETF WIMSE</td><td><span class="status-badge status-badge--production">active contributor</span></td><td>Brian Campbell (Ping Identity) is named co-author on draft-ietf-wimse-s2s-protocol (Feb 2026, standards track) and draft-ietf-wimse-workload-creds-00. Ping is shaping the specification, not merely implementing downstream. Product implementation not yet publicly documented as shipped.</td></tr>
-              <tr><td>A2A (Agent-to-Agent)</td><td><span class="status-badge status-badge--partial">not documented</span></td><td>Agent-to-agent delegation addressed through OAuth scoped delegation in Identity for AI architecture.</td></tr>
+              <tr><td>RFC 8693 (Token Exchange)</td><td><span class="status-badge status-badge--production">production</span></td><td>Core delegation mechanism. Produces access tokens with explicit nested <code>act</code> claim chains; enforces least-privilege per hop across multi-agent daisy-chain architectures. Short-lived (~5 min TTL), not stored or cached.</td></tr>
+              <tr><td>CIBA (Backchannel Auth)</td><td><span class="status-badge status-badge--production">production (PingFederate)</span></td><td>Step-up authorization for high-risk agent actions — agent triggers CIBA when elevated scope required; PingFederate pushes approval prompt to user's device; elevated-scope token issued only after explicit user approval. Documented as supported optional configuration alongside token exchange.</td></tr>
+              <tr><td>SPIFFE / SPIRE</td><td><span class="status-badge status-badge--production">production (PingFederate)</span></td><td>On-premises/hybrid deployments. Agent presents JWT-SVID as actor token in token exchange flow; PingFederate validates against SPIRE OIDC Discovery Provider's JWKS endpoint. Cryptographic proof of workload identity (specific agent in specific namespace). Documented as optional "Advanced" configuration path.</td></tr>
+              <tr><td>A2A (Agent-to-Agent)</td><td><span class="status-badge status-badge--partial">not documented</span></td><td>Agent-to-agent delegation addressed through OAuth scoped delegation in Identity for AI architecture. Less developed than Microsoft's at the product level as of Q1 2026.</td></tr>
             </tbody>
           </table>
         </div>
@@ -370,6 +394,10 @@
           <li><a href="https://www.pingidentity.com/en/lp/ac/pingone-neo.html">PingOne Neo decentralized identity</a></li>
           <li><a href="https://press.pingidentity.com/2024-11-14-Ping-Identity-Surpasses-30-Annual-Growth-in-SaaS-Revenue-and-Approaches-800M-ARR-as-an-Enterprise-Identity-Market-Leader">Ping Identity revenue approaching $800M ARR (November 2024)</a></li>
           <li><a href="https://cpl.thalesgroup.com/partners/ping-identity">Thales Luna HSMs / Ping Identity partner page</a></li>
+          <li><a href="https://developer.pingidentity.com/identity-for-ai/agents/idai-computer-using-agents.html" target="_blank" rel="noopener">Computer-Using Agents (CUAs) — explicitly unsolved problem — Ping developer docs</a></li>
+          <li><a href="https://developer.pingidentity.com/identity-for-ai/identity/idai-agent-types.html" target="_blank" rel="noopener">Agent Types — four types taxonomy, managed/unmanaged classification — Ping developer docs</a></li>
+          <li><a href="https://developer.pingidentity.com/identity-for-ai/identity/idai-securing-agents-pingfed.html" target="_blank" rel="noopener">Securing AI agents with PingFederate — RFC 8693, CIBA step-up, SPIFFE/SPIRE — Ping developer docs</a></li>
+          <li><a href="https://developer.pingidentity.com/identity-for-ai/agents/idai-securing-aws-ping.html" target="_blank" rel="noopener">Secure AWS Bedrock AgentCore Identity with the Ping Identity Platform — Ping developer docs</a></li>
           <li>Sources verified via live web research, April 2026.</li>
         </ul>
 
@@ -388,6 +416,156 @@
     </main>
   </div><!-- /player-page -->
 
+  </div><!-- /pane-research -->
+
+  <!-- Product Families tab pane -->
+  <div class="tab-pane" id="pane-products" role="tabpanel">
+    <div class="tech-pane">
+
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart TB
+    subgraph Cloud ["PingOne Cloud Platform (SaaS)"]
+        P1["PingOne"]
+        P1AUTH["PingOne Authorize"]
+        P1MFA["PingOne MFA"]
+        P1DV["PingOne DaVinci"]
+        P1VER["PingOne Verify"]
+        P1PROT["PingOne Protect"]
+        P1CRED["PingOne Credentials"]
+        AIAI["Identity for AI (Agentic AI)"]
+        P1 --> P1AUTH
+        P1 --> P1MFA
+        P1 --> P1VER
+        P1 --> P1PROT
+        P1 --> P1CRED
+        P1DV -->|orchestrates| P1
+        P1DV -->|orchestrates| AIAI
+        P1PROT -.->|threat signals| AIAI
+        P1CRED -.->|VC issuance| AIAI
+    end
+    subgraph Software ["Ping Software (On-Premises / Hybrid)"]
+        PDIR["PingDirectory"]
+        PFED["PingFederate"]
+        PACC["PingAccess"]
+        PAUZ["PingAuthorize"]
+        PGW["PingGateway"]
+        PID["PingID"]
+        EC["Enterprise Connect"]
+        ECP["Enterprise Connect Passwordless"]
+        PDIR --> PFED
+        PFED --> PACC
+        PFED --> PAUZ
+        PGW -->|proxies| PFED
+        EC --> ECP
+    end
+    PGW -.->|bridges to| P1
+    click P1 href "https://www.pingidentity.com/en/platform/pingone.html" _blank
+    click P1AUTH href "https://www.pingidentity.com/en/product/pingone-authorize.html" _blank
+    click P1MFA href "https://www.pingidentity.com/en/product/pingone-mfa.html" _blank
+    click P1DV href "https://www.pingidentity.com/en/product/pingone-davinci.html" _blank
+    click P1VER href "https://www.pingidentity.com/en/product/pingone-verify.html" _blank
+    click P1PROT href "https://www.pingidentity.com/en/product/pingone-protect.html" _blank
+    click P1CRED href "https://www.pingidentity.com/en/product/pingone-credentials.html" _blank
+    click AIAI href "https://www.pingidentity.com/en/solution/agentic-ai-identity.html" _blank
+    click PDIR href "https://www.pingidentity.com/en/product/pingdirectory.html" _blank
+    click PFED href "https://www.pingidentity.com/en/product/pingfederate.html" _blank
+    click PACC href "https://www.pingidentity.com/en/product/pingaccess.html" _blank
+    click PAUZ href "https://www.pingidentity.com/en/product/pingauthorize.html" _blank
+    click PGW href "https://www.pingidentity.com/en/product/pinggateway.html" _blank
+    click PID href "https://www.pingidentity.com/en/product/pingid.html" _blank
+    click EC href "https://www.pingidentity.com/en/product/enterprise-connect.html" _blank
+    click ECP href "https://www.pingidentity.com/en/product/enterprise-connect-passwordless.html" _blank
+    classDef core fill:#1e3a5f,stroke:#6366f1,color:#c7d2fe,font-weight:600
+    classDef agent fill:#052e16,stroke:#16a34a,color:#86efac
+    classDef security fill:#2d1b4e,stroke:#7c3aed,color:#ddd6fe
+    classDef ext fill:#1e293b,stroke:#475569,color:#94a3b8
+    class P1,PFED core
+    class AIAI agent
+    class P1DV,P1PROT,PGW,PDIR security
+    class P1AUTH,P1MFA,P1VER,P1CRED,PACC,PAUZ,PID,EC,ECP ext
+        </pre>
+      </div>
+
+      <div class="mermaid-legend">
+        <span class="ml-item"><span class="ml-dot ml-dot--core"></span> Core platform</span>
+        <span class="ml-item"><span class="ml-dot ml-dot--agent"></span> Agent / agentic layer</span>
+        <span class="ml-item"><span class="ml-dot ml-dot--security"></span> Orchestration &amp; protection</span>
+        <span class="ml-item"><span class="ml-dot ml-dot--ext"></span> Extension / service</span>
+      </div>
+      <p class="tech-note">Solid arrows = direct dependency or data flow. Dashed arrows = signal or bridge integration. Click any node to open the product page.</p>
+
+    </div>
+  </div><!-- /pane-products -->
+
+  <!-- Technical Details tab pane -->
+  <div class="tab-pane" id="pane-technical" role="tabpanel">
+    <div class="tech-pane">
+
+      <div class="tech-section">
+        <div class="tech-section__title">GitHub Repositories</div>
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th style="width:34%">Repository</th>
+              <th style="width:8%">Priority</th>
+              <th>What it covers</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/pingidentity/cloudflare-mcp" target="_blank" rel="noopener">pingidentity/cloudflare-mcp</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>Three MCP server implementations as a secure OAuth bridge between AI agents and enterprise APIs — OAuth 2.0/OIDC via PingOne Multi-Tenant, Dynamic Client Registration + Token Exchange via PingOne AIC, and via PingFederate. TypeScript on Cloudflare Workers.</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/pingidentity/aic-mcp-server" target="_blank" rel="noopener">pingidentity/aic-mcp-server</a></td>
+              <td><span class="tech-priority tech-priority--medium">MED</span></td>
+              <td>MCP server for administering PingOne Advanced Identity Cloud via natural language (user/group CRUD, auth journeys, audit) — shows MCP + Ping AIC auth patterns</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/pingidentity/pingone-mcp-server" target="_blank" rel="noopener">pingidentity/pingone-mcp-server</a></td>
+              <td><span class="tech-priority tech-priority--medium">MED</span></td>
+              <td>MCP server for PingOne tenant management via natural language — Go language implementation</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="tech-note">Note: No public GitHub repos exist for Identity for AI core components (Agent IAM Core, Agent Gateway, Agent Detection) — these are delivered as SaaS within PingOne, not as open SDK.</p>
+      </div>
+
+      <div class="tech-section">
+        <div class="tech-section__title">Developer Documentation</div>
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th style="width:28%">Source</th>
+              <th style="width:8%">Pages</th>
+              <th>Content</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-repo"><a href="https://developer.pingidentity.com/identity-for-ai/" target="_blank" rel="noopener">Identity for AI developer docs</a></td>
+              <td>23</td>
+              <td>Identity for AI developer documentation — Agent IAM Core, Agent Gateway (per-action authorization, RFC 8693 token exchange), Agent Detection, MCP enforcement via PingGateway</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://www.pingidentity.com/en/solution/" target="_blank" rel="noopener">Ping product pages</a></td>
+              <td>31</td>
+              <td>Ping Identity solution pages — PingOne, PingFederate, PingGateway, Identity for AI positioning</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://press.pingidentity.com" target="_blank" rel="noopener">Ping press releases</a></td>
+              <td>8</td>
+              <td>Keyword-filtered press releases — Identity for AI GA (March 2026), Keyless acquisition, agentic AI announcements</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /tech-pane -->
+  </div><!-- /pane-technical -->
+
 </div><!-- /page-wrap -->
 
 <footer class="site-footer">
@@ -395,6 +573,10 @@
   <p><a href="../index.html">← Comparison</a></p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+</script>
 <script src="../js/main.js"></script>
 </body>
 </html>

@@ -47,6 +47,15 @@
     </a>
   </div>
 
+  <!-- Page-level tab bar -->
+  <div class="page-tabs" role="tablist">
+    <button class="page-tab is-active" role="tab" aria-selected="true" aria-controls="pane-research">Research</button>
+    <button class="page-tab" role="tab" aria-selected="false" aria-controls="pane-products">Product Families</button>
+    <button class="page-tab" role="tab" aria-selected="false" aria-controls="pane-technical">Technical Details</button>
+  </div>
+
+  <div class="tab-pane is-active" id="pane-research" role="tabpanel">
+
   <!-- Mobile section nav -->
   <nav class="mobile-section-nav" aria-label="Page sections">
     <a href="#key-finding">Key Finding</a>
@@ -92,7 +101,7 @@
         </div>
         <div class="classification-row">
           <div class="classification-row__label">Lanes</div>
-          <div class="classification-row__value">3 (1 agentic)</div>
+          <div class="classification-row__value">4 (2 agentic)</div>
         </div>
         <div class="classification-row">
           <div class="classification-row__label">Scale</div>
@@ -108,7 +117,7 @@
         </div>
         <div class="classification-row">
           <div class="classification-row__label">Key Partners</div>
-          <div class="classification-row__value">Nametag (action-level biometric + VHS), iProov (enrollment liveness), Persona (IDV orchestration)</div>
+          <div class="classification-row__value">Nametag (action-level biometric + VHS), iProov (enrollment liveness), Persona (IDV orchestration). Acquired: Axiom Security (Aug 2025, $100M — cloud-native PAM).</div>
         </div>
       </div>
 
@@ -207,6 +216,30 @@
             </div>
           </div>
 
+          <!-- Lane 4 — Auth0 Auth for GenAI -->
+          <div id="lane-p04-l4" class="lane-card">
+            <div class="lane-card__header">
+              <div>
+                <div class="lane-card__name"><a href="https://auth0.com/ai" target="_blank" rel="noopener">Auth0 Auth for GenAI</a></div>
+                <div class="lane-card__id">P04-L4 · Layer 2 · Platform issuing authority · <span style="color:var(--accent-2);">Agentic ★</span></div>
+              </div>
+              <span class="bq bq--soft bq--lg">soft</span>
+            </div>
+            <p class="lane-card__note">Developer-facing agent identity layer. <strong>Token Vault</strong> (OAuth 2.0 Token Exchange / RFC 8693) stores and brokers refresh tokens for 30+ OAuth integrations; <strong><span data-tooltip="Client-Initiated Backchannel Authentication — async out-of-band authorization: agent triggers /bc-authorize, Auth0 Guardian push notification sent to user, agent polls /token and resumes only after explicit approval">CIBA</span> async human-in-the-loop</strong> via Auth0 Guardian push notification; <strong>OpenFGA</strong> for RAG document-level and tool-level access control. All binding is governance-enforced at runtime, not cryptographically embedded in the artifact. No documented hard binding upgrade path as of April 2026.</p>
+            <div class="lane-card__pills">
+              <span class="pill pill--artifact">oidc_jwt</span>
+              <span class="pill pill--agentic">agentic</span>
+              <span class="pill">Token Vault (RFC 8693)</span>
+              <span class="pill">CIBA · OpenFGA</span>
+              <span class="pill">LangChain · LlamaIndex · Vercel · Genkit</span>
+            </div>
+            <div class="coverage-wrap">
+              <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text-4);margin-right:0.4rem;">Coverage:</span>
+              <span class="pill" style="border-color:#475569;color:#94a3b8;">agent: <strong style="color:var(--soft-text);">soft</strong></span>
+              <span class="pill" style="border-color:#475569;color:#94a3b8;">action: <strong style="color:var(--soft-text);">soft</strong></span>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -224,6 +257,16 @@
 
           <h4>FIDO2 Passkeys — Hard Binding via Hardware (Relying Party Role)</h4>
           <p>For FIDO2/passkeys, Okta functions as the relying party. The binding sequence is: issuance-time (passkey enrollment — device SE/TPM key generated, biometric bound to device key) and presentation-time (biometric unlocks device key at each authentication; Okta verifies the signed assertion). Okta does not control the binding at either point; it is the verification endpoint. The hard binding is real and independently verifiable — but Okta is not the hardware root operator.</p>
+
+          <h4>Auth0 Auth for GenAI — Developer-Facing Agentic Layer (P04-L4)</h4>
+          <p>Auth0 Auth for GenAI is a distinct product surface targeting developers building GenAI applications — a different buyer profile (developer teams, not enterprise IT) and a different architectural approach (runtime enforcement at moment of action, not IT-provisioned governance) than Okta WIC. Four capabilities:</p>
+          <ul>
+            <li><strong>Token Vault:</strong> Stores and manages refresh tokens for third-party OAuth services (Google, GitHub, Slack, Salesforce, Microsoft, and 30+ others plus any OAuth 2.0-compliant service). When an agent needs to call an external API on a user's behalf, it exchanges the stored refresh token for a short-lived, scoped access token — no user re-authorization required at the moment of the tool call. Built on OAuth 2.0 Token Exchange (RFC 8693). Surfaced via the <code>withTokenVault</code> pattern in the Auth0 AI SDKs.</li>
+            <li><strong>CIBA async human-in-the-loop:</strong> For long-running or sensitive operations, Auth0 implements CIBA (Client-Initiated Backchannel Authentication). The agent initiates an out-of-band authorization request to Auth0's <code>/bc-authorize</code> endpoint; Auth0 sends a push notification through Auth0 Guardian (default; email available as paid add-on). The user reviews a consent prompt populated with RAR (Rich Authorization Requests, RFC 9396) data and approves from that separate trusted device. Agent backend polls <code>/token</code> and resumes or halts on the response.</li>
+            <li><strong>Auth0 FGA for RAG authorization:</strong> OpenFGA (CNCF sandbox project, created by Auth0) integration into the RAG retrieval layer. An <code>FGARetriever</code> class — available for LangChain, LlamaIndex, and Genkit — performs batch access-control checks before documents pass to the LLM. The same FGA-based authorization protects tool execution, preventing agents from invoking tools the user lacks permission to use.</li>
+            <li><strong>SDK families:</strong> <code>auth0-ai-js</code> and <code>auth0-ai-python</code> with framework-specific packages for LangChain, LangGraph, LlamaIndex, Vercel AI SDK, Genkit, Cloudflare Agents, and Microsoft Agent Framework. <strong>Auth for MCP</strong> (Early Access): OAuth 2.1 + OIDC, Custom Token Exchange (RFC 8693), FGA-based tool-level access control for MCP servers and clients.</li>
+          </ul>
+          <p><strong>Binding quality:</strong> Soft. Token Vault, CIBA, and FGA are runtime authorization controls — not biometric bindings. CIBA produces a user-affirmed authorization event (stronger than no event), not a cryptographic biometric proof embedded in the artifact. The issued credential is an OIDC JWT with no biometric reference. <strong>No documented hard binding upgrade path for the Auth0 channel as of April 2026</strong> — the Nametag Signa partnership covers Okta WIC only; the VDC platform (FY2027) applies to WIC; Auth0 has no equivalent.</p>
 
           <h4>Nametag Signa — The Path to Hard Binding (Not Yet Arrived)</h4>
           <p>Nametag Signa (shipped Sept 2025) is Okta's current path toward hard binding for agent actions. The architecture: Okta provides the policy engine (XAA + AI agent governance — when to require human authorization); Nametag provides the biometric and cryptographic attestation layer (selfie + government-issued photo ID verified via Deepfake Defense™ — hardware-backed keystore + Spatial Selfie™ 3D mapping against 2D ID photo). The output is a <strong>Verified Human Signature (VHS)</strong> — described as "cryptographically-attested proof that a legitimate person authorized an AI action."</p>
@@ -253,6 +296,8 @@
 
               <h4>Okta for AI Agents Platform (GA April 30, 2026)</h4>
               <p>Three organizing questions: <strong>(1) Where are my agents?</strong> Shadow AI discovery via ISPM; agent registration as first-class Universal Directory identities with human owner assignment and lifecycle management. <strong>(2) What can they connect to?</strong> XAA (Cross App Access) open protocol extending OAuth via the Identity Assertion Authorization Grant; Agent Gateway (virtual MCP server aggregating tools from Okta's MCP registry). <strong>(3) What can they do?</strong> Nametag Signa human-in-the-loop re-verification at moment of consequence; governance workflows with certification reviews; Universal Logout kill switch.</p>
+              <p><strong>XAA technical detail:</strong> Built on RFC 8693 (Token Exchange), RFC 7523 (JWT assertion profiles), RFC 9396 (Rich Authorization Requests), RFC 9449 (DPoP). Primary author: Aaron Parecki (Okta); co-author: Brian Campbell (Ping Identity) — competitive rivals co-authoring the standards instrument one of them has commercialized. Two analytically distinct MCP events: (1) XAA/ID-JAG incorporated into the official MCP spec as "Enterprise-Managed Authorization" extension (Nov 2025, confirmed); (2) Agent Gateway product as virtual MCP server (coming soon, not yet shipped as of April 2026). XAA governs <em>access control</em> (what agents connect to); it does not embed biometric proof in the credential artifact — XAA and the biometric binding gap are distinct unsolved problems. Architectural limitation: tokens issued at issuance time; no per-action evaluation once token travels — consequence-aware authorization architecturally absent.</p>
+              <p><strong>Acquisition context:</strong> Okta's most recent acquisition was <strong>Axiom Security</strong> (August 2025, ~$100M) — cloud-native identity-centric PAM (JIT access, standing privilege elimination) for non-human identities. Nametag has not been acquired despite a deepening partnership timeline (Oct 2024 Custom IDV → Sept 2025 Signa → April 2026 Showcase co-feature). The Axiom acquisition closed the PAM gap; the Nametag relationship addresses the biometric binding quality gap.</p>
             </div>
           </div>
         </div>
@@ -287,7 +332,7 @@
 
         <div class="gap-callout">
           <div class="gap-callout__label">Critical Gap</div>
-          <p class="gap-callout__text">No native hard-binding mechanism anywhere in the stack; software-only token signing; soft-to-hard binding transition requires acquiring Nametag or executing deep third-party integration — most exposed player in enterprise IAM to regulatory pressure on this gap.</p>
+          <p class="gap-callout__text">No native hard-binding mechanism anywhere in the stack; software-only token signing; soft-to-hard binding transition requires acquiring Nametag or executing deep third-party integration — most exposed player in enterprise IAM to regulatory pressure on this gap. XAA/ID-JAG governs agent-to-app access control (Layer 2, soft binding), not biometric proof embedding — the protocol gap and the binding gap are distinct unsolved problems. Auth0 Auth for GenAI has no documented hard binding upgrade path; Nametag Signa covers WIC only.</p>
         </div>
 
         <div class="prose">
@@ -297,6 +342,8 @@
             <li><strong>NIST SP 800-63-3/4 (IAL2/AAL2, in force):</strong> Okta's IDV integrations (iProov, Nametag, Persona) are positioned to satisfy IAL2 remote proofing requirements. FIDO2/passkeys satisfy AAL2. Direct forcing function for Okta's biometric supplier partnerships — organizations subject to IAL2 requirements must use a biometric verification partner through Okta; the requirement cannot be satisfied natively.</li>
             <li><strong>NIS2 / DORA (in force Oct 2024 / Jan 2025):</strong> Phishing-resistant MFA mandatory. FIDO2/passkeys are the primary compliant MFA mechanism. Strong adoption forcing function for Okta FIDO2 deployment among EU-regulated customers.</li>
             <li><strong>eIDAS 2.0 / EUDIW (implementation 2024–2026):</strong> Relying parties must accept EUDIW-presented credentials via OpenID4VP by 2026. Okta must implement OpenID4VP/SIOP2 acceptance to remain the identity middleware layer for EU enterprise applications.</li>
+            <li><strong>Illinois BIPA and US state biometric privacy laws (in force):</strong> Okta customers deploying biometric authentication for employees in Illinois must comply with BIPA's written policy, consent, and retention requirements. Okta's partner-supplied biometric model reduces direct exposure — the supplier holds biometric data, Okta holds the access record — but customers retain compliance obligations as data controllers.</li>
+            <li><strong>White House AI Framework age assurance mandate (March 2026, in force):</strong> Primarily affects Auth0/CIC customers in consumer contexts. Okta's likely response is partner-supplied credential-based age assertion via IDV integration, not native capability.</li>
           </ul>
         </div>
 
@@ -337,10 +384,13 @@
             </thead>
             <tbody>
               <tr><td>FIDO2 / WebAuthn</td><td><span class="status-badge status-badge--production">production</span></td><td>Both WIC and CIC; passkeys with platform and hardware security keys. FIDO Alliance member.</td></tr>
-              <tr><td>XAA (own protocol)</td><td><span class="status-badge status-badge--production">production</span></td><td>Okta's own open protocol (June 2025); extends OAuth via Identity Assertion Authorization Grant (IETF). Governs agent-to-app access control. xaa.dev</td></tr>
-              <tr><td>OpenID4VP / VCI</td><td><span class="status-badge status-badge--announced">in progress</span></td><td>eIDAS 2.0 alignment stated; mDL acceptance beta Jan 2026. Full W3C VC issuance: FY2027 roadmap.</td></tr>
-              <tr><td>W3C VC Data Model</td><td><span class="status-badge status-badge--announced">FY2027</span></td><td>Verifiable Digital Credentials (VDC) platform announced Sept 2025.</td></tr>
-              <tr><td>MCP</td><td><span class="status-badge status-badge--announced">announced</span></td><td>Agent Gateway as virtual MCP server; coming soon post-April 30 GA.</td></tr>
+              <tr><td>XAA (own protocol)</td><td><span class="status-badge status-badge--production">production</span></td><td>Okta's own open protocol (June 2025). Built on RFC 8693, RFC 7523, RFC 9396 (RAR), RFC 9449 (DPoP). Aaron Parecki (Okta) primary author; Brian Campbell (Ping Identity) co-author. Governs agent-to-app access control — distinct from biometric binding. xaa.dev</td></tr>
+              <tr><td>CIBA</td><td><span class="status-badge status-badge--production">production</span></td><td>Production in Auth0 Auth for GenAI. Async human-in-the-loop via Auth0 Guardian push notification; RAR (RFC 9396) for structured consent payload. Default mechanism for agentic authorization in Auth for GenAI.</td></tr>
+              <tr><td>OpenFGA</td><td><span class="status-badge status-badge--production">production</span></td><td>Production in Auth0 FGA (managed offering). CNCF sandbox project created by Auth0. FGARetriever for RAG document-level access control; FGA-based tool authorization in Auth for MCP.</td></tr>
+              <tr><td>OAuth 2.1</td><td><span class="status-badge status-badge--announced">in progress</span></td><td>Directional alignment; PKCE mandatory, no implicit flow. Auth for MCP explicitly implements OAuth 2.1.</td></tr>
+              <tr><td>OpenID4VP / VCI</td><td><span class="status-badge status-badge--announced">in progress</span></td><td>eIDAS 2.0 alignment stated; mDL acceptance beta Jan 2026 (planned expansion: Google ID Pass, Apple Digital ID, EU PIDs). Full W3C VC issuance: FY2027 roadmap. Note: mDL acceptance (beta) is distinct from full VC issuance (FY2027).</td></tr>
+              <tr><td>W3C VC Data Model</td><td><span class="status-badge status-badge--announced">FY2027</span></td><td>Verifiable Digital Credentials (VDC) platform announced Sept 2025. Represents a new lane: verifying government-issued biometric credentials presented to Okta-protected applications.</td></tr>
+              <tr><td>MCP</td><td><span class="status-badge status-badge--announced">announced</span></td><td>Two distinct events: (1) XAA/ID-JAG incorporated into MCP spec as enterprise authorization extension (Nov 2025, confirmed). (2) Agent Gateway as virtual MCP server product (coming soon — not yet shipped as of April 2026).</td></tr>
               <tr><td>IETF WIMSE</td><td><span class="status-badge status-badge--announced">engaged</span></td><td>Early 2025 working group participation confirmed. Implementation status not confirmed.</td></tr>
               <tr><td>SCIM</td><td><span class="status-badge status-badge--production">production</span></td><td>Core Okta Lifecycle Management integration protocol. Reference SCIM implementation.</td></tr>
             </tbody>
@@ -372,6 +422,11 @@
           <li><a href="https://www.okta.com/blog/product-innovation/okta-digital-id-verification-beta/">Okta Digital ID Verification beta (mDL, Jan 2026)</a></li>
           <li><a href="https://oktacredentials.dev/">Okta Verifiable Digital Credentials platform</a></li>
           <li><a href="https://www.okta.com/newsroom/press-releases/okta-secures-the-agentic-enterprise-with-new-tools-for-discovering-and-mitigating-shadow-ai-risks/">Okta Shadow AI / ISPM agent discovery</a></li>
+          <li><a href="https://auth0.com/ai" target="_blank" rel="noopener">Auth0 Auth for GenAI — product overview</a></li>
+          <li><a href="https://github.com/auth0/auth0-ai-js" target="_blank" rel="noopener">GitHub — auth0/auth0-ai-js — Auth0 AI SDK (Token Vault, CIBA, FGARetriever, LangChain/Vercel/Genkit)</a></li>
+          <li><a href="https://github.com/auth0/auth0-ai-python" target="_blank" rel="noopener">GitHub — auth0/auth0-ai-python — Auth0 AI SDK (Python; LangChain, LlamaIndex)</a></li>
+          <li><a href="https://auth0.com/docs/secure/tokens/token-vault" target="_blank" rel="noopener">Auth0 Token Vault documentation (RFC 8693 Token Exchange, Connected Accounts)</a></li>
+          <li><a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/client-initiated-backchannel-authentication-flow" target="_blank" rel="noopener">Auth0 CIBA documentation (async human-in-the-loop for agentic AI)</a></li>
           <li>Sources verified via live web research, April 2026.</li>
         </ul>
 
@@ -389,6 +444,222 @@
     </main>
   </div><!-- /player-page -->
 
+  </div><!-- /pane-research -->
+
+  <!-- Product Families tab pane -->
+  <div class="tab-pane" id="pane-products" role="tabpanel">
+    <div class="tech-pane">
+
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart TB
+    subgraph WIC ["Okta Workforce Identity Cloud"]
+        UD["Universal Directory"]
+        SSO["Single Sign-On"]
+        MFA["MFA / FastPass"]
+        LM["Lifecycle Management"]
+        IG["Identity Governance"]
+        PA["Privileged Access"]
+        AAM["API Access Management"]
+        ISPM["Identity Security Posture Mgmt"]
+        ITP["Identity Threat Protection"]
+        NHI["Non-Human Identity Security"]
+        OAIA["Okta for AI Agents"]
+        XAA["Cross-App Access (XAA)"]
+        UD --> SSO
+        UD --> MFA
+        UD --> LM
+        UD --> IG
+        UD --> PA
+        UD --> AAM
+        ISPM -.->|posture signals| OAIA
+        ITP -.->|threat signals| OAIA
+        NHI --> OAIA
+        OAIA --> XAA
+    end
+    subgraph A0 ["Auth0 Platform"]
+        UL["Universal Login"]
+        ACT["Actions"]
+        M2M["Machine-to-Machine"]
+        AM["Access Management"]
+        HRI["Highly Regulated Identity"]
+        TV["Token Vault"]
+        A0AIA["Auth0 for AI Agents"]
+        UL --> ACT
+        UL --> M2M
+        UL --> AM
+        HRI -.->|CIBA / SCA| A0AIA
+        AM -.->|fine-grained authz| A0AIA
+        TV --> A0AIA
+    end
+    click UD href "https://www.okta.com/products/universal-directory/" _blank
+    click SSO href "https://www.okta.com/products/single-sign-on-workforce-identity/" _blank
+    click MFA href "https://www.okta.com/products/adaptive-multi-factor-authentication/" _blank
+    click LM href "https://www.okta.com/products/lifecycle-management/" _blank
+    click IG href "https://www.okta.com/products/identity-governance/" _blank
+    click PA href "https://www.okta.com/products/privileged-access/" _blank
+    click AAM href "https://www.okta.com/products/api-access-management/" _blank
+    click ISPM href "https://www.okta.com/products/identity-security-posture-management/" _blank
+    click ITP href "https://www.okta.com/products/identity-threat-protection/" _blank
+    click NHI href "https://www.okta.com/solutions/protect-non-human-identities/" _blank
+    click OAIA href "https://www.okta.com/products/govern-ai-agent-identity/" _blank
+    click XAA href "https://www.okta.com/solutions/cross-app-access/" _blank
+    click UL href "https://auth0.com/features/universal-login" _blank
+    click ACT href "https://auth0.com/features/actions" _blank
+    click M2M href "https://auth0.com/features/machine-to-machine" _blank
+    click AM href "https://auth0.com/platform/access-management" _blank
+    click HRI href "https://www.okta.com/products/regulated-identity/" _blank
+    click TV href "https://auth0.com/features/token-vault/" _blank
+    click A0AIA href "https://auth0.com/ai" _blank
+    classDef core fill:#1e3a5f,stroke:#6366f1,color:#c7d2fe,font-weight:600
+    classDef agent fill:#052e16,stroke:#16a34a,color:#86efac
+    classDef security fill:#2d1b4e,stroke:#7c3aed,color:#ddd6fe
+    classDef ext fill:#1e293b,stroke:#475569,color:#94a3b8
+    class UD,UL core
+    class OAIA,XAA,A0AIA,NHI agent
+    class ISPM,ITP,HRI security
+    class SSO,MFA,LM,IG,PA,AAM,ACT,M2M,AM,TV ext
+        </pre>
+      </div>
+
+      <div class="mermaid-legend">
+        <span class="ml-item"><span class="ml-dot ml-dot--core"></span> Core platform</span>
+        <span class="ml-item"><span class="ml-dot ml-dot--agent"></span> Agent / agentic layer</span>
+        <span class="ml-item"><span class="ml-dot ml-dot--security"></span> Security &amp; posture</span>
+        <span class="ml-item"><span class="ml-dot ml-dot--ext"></span> Extension / service</span>
+      </div>
+      <p class="tech-note">Solid arrows = direct dependency or data flow. Dashed arrows = policy/signal integration. Click any node to open the product page.</p>
+
+    </div>
+  </div><!-- /pane-products -->
+
+  <!-- Technical Details tab pane -->
+  <div class="tab-pane" id="pane-technical" role="tabpanel">
+    <div class="tech-pane">
+
+      <div class="tech-section">
+        <div class="tech-section__title">GitHub Repositories — Auth0</div>
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th style="width:34%">Repository</th>
+              <th style="width:8%">Priority</th>
+              <th>What it covers</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/auth0/auth0-ai-js" target="_blank" rel="noopener">auth0/auth0-ai-js</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>Auth0 AI SDK (TypeScript monorepo) — LangChain, LlamaIndex, Vercel AI, Genkit integrations; CIBA async human-in-the-loop authorization; RAG document-level access control; federated Token Vault</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/auth0/auth0-ai-python" target="_blank" rel="noopener">auth0/auth0-ai-python</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>Auth0 AI SDK (Python) — LangChain and LlamaIndex integrations; same core patterns as JS SDK (token vault, CIBA, RAG authorization)</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/auth0/auth-for-genai" target="_blank" rel="noopener">auth0/auth-for-genai</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>Auth for GenAI product hub — architecture docs, overall secure GenAI application patterns and integration guidance</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/auth0-samples/auth0-ai-samples" target="_blank" rel="noopener">auth0-samples/auth0-ai-samples</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>Canonical sample suite — RAG auth, MCP auth, CIBA human-in-the-loop, token vault, federated tokens, cross-framework examples</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/auth0-lab/cloudflare-agents-starter" target="_blank" rel="noopener">auth0-lab/<br>cloudflare-agents-starter</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>Cloudflare Workers agent starter — Token Vault, CIBA backchannel auth, JWT-protected agent APIs</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/auth0-samples/auth0-task-vantage" target="_blank" rel="noopener">auth0-samples/<br>auth0-task-vantage</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>Multi-interface sample — MCP + REST API + AI agent + web app simultaneously; shows how a single auth layer serves all interfaces</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/auth0/auth0-mcp-server" target="_blank" rel="noopener">auth0/auth0-mcp-server</a></td>
+              <td><span class="tech-priority tech-priority--medium">MED</span></td>
+              <td>MCP server for managing Auth0 tenant via AI — OAuth 2.0 device auth + MCP auth patterns</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/auth0-samples/auth0-assistant0" target="_blank" rel="noopener">auth0-samples/auth0-assistant0</a></td>
+              <td><span class="tech-priority tech-priority--medium">MED</span></td>
+              <td>AI personal assistant demo — Token Vault pattern for brokering API credentials to agents</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/auth0-lab/market0" target="_blank" rel="noopener">auth0-lab/market0</a></td>
+              <td><span class="tech-priority tech-priority--medium">MED</span></td>
+              <td>Authorization + AI patterns in financial/market context</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tech-section">
+        <div class="tech-section__title">GitHub Repositories — Okta (WIC / XAA)</div>
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th style="width:34%">Repository</th>
+              <th style="width:8%">Priority</th>
+              <th>What it covers</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/oktadev/okta-cross-app-access-mcp" target="_blank" rel="noopener">oktadev/<br>okta-cross-app-access-mcp</a></td>
+              <td><span class="tech-priority tech-priority--high">HIGH</span></td>
+              <td>PoC for Identity Assertion Authorization Grant (XAA / ID-JAG) — agent cross-app access without re-authentication; directly addresses agent-to-service identity delegation</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://github.com/okta/okta-mcp-server" target="_blank" rel="noopener">okta/okta-mcp-server</a></td>
+              <td><span class="tech-priority tech-priority--medium">MED</span></td>
+              <td>MCP server for managing Okta org via AI — Private Key JWT auth, MCP Elicitation API for confirmation flows</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tech-section">
+        <div class="tech-section__title">Developer Documentation</div>
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th style="width:28%">Source</th>
+              <th style="width:8%">Pages</th>
+              <th>Content</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-repo"><a href="https://auth0.com/ai/docs/" target="_blank" rel="noopener">Auth0 AI docs</a></td>
+              <td>76</td>
+              <td>Auth for GenAI developer documentation — Token Vault, CIBA async authorization, RAG access control, MCP integration</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://help.okta.com/oie/en-us/content/topics/identity-engine/ai-agents/main.htm" target="_blank" rel="noopener">Okta AI agent help docs</a></td>
+              <td>14</td>
+              <td>Okta WIC AI agent product documentation — ISPM, SAM, lifecycle governance</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://developer.okta.com" target="_blank" rel="noopener">Okta developer docs</a></td>
+              <td>34</td>
+              <td>Okta developer documentation — blogs, Coveo search docs, SDK references</td>
+            </tr>
+            <tr>
+              <td class="col-repo"><a href="https://www.okta.com/products/" target="_blank" rel="noopener">Okta product pages</a></td>
+              <td>52</td>
+              <td>Okta WIC and solution product pages — positioning and feature overviews</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /tech-pane -->
+  </div><!-- /pane-technical -->
+
 </div><!-- /page-wrap -->
 
 <footer class="site-footer">
@@ -396,6 +667,10 @@
   <p><a href="../index.html">← Comparison</a></p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+</script>
 <script src="../js/main.js"></script>
 </body>
 </html>

@@ -1703,6 +1703,300 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 }
 
 /* ============================================================
+   PAGE-LEVEL TAB SWITCHER (player pages)
+   ============================================================ */
+
+.page-tabs {
+  display: flex;
+  gap: 0;
+  margin: 1.25rem 0 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-tab {
+  padding: 0.6rem 1.25rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  color: var(--text-3);
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: var(--sans);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.page-tab:hover { color: var(--text); }
+
+.page-tab.is-active {
+  color: var(--accent-2);
+  border-bottom-color: var(--accent);
+}
+
+.tab-pane { display: none; }
+.tab-pane.is-active { display: block; }
+
+/* ============================================================
+   TECHNICAL DETAILS TAB PANE
+   ============================================================ */
+
+.tech-pane {
+  padding: 2rem 0;
+}
+
+.tech-section {
+  margin-bottom: 2.5rem;
+}
+
+.tech-section__title {
+  font-size: 0.775rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tech-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.tech-table th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  background: var(--surface);
+  color: var(--text-3);
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border);
+}
+
+.tech-table td {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.tech-table tr:last-child td { border-bottom: none; }
+
+.tech-table .col-repo {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.tech-table a { color: var(--accent-2); }
+.tech-table a:hover { color: var(--text); }
+
+.tech-priority {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-family: var(--mono);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tech-priority--high {
+  background: var(--hard-bg);
+  color: var(--hard-text);
+  border: 1px solid var(--hard-border);
+}
+
+.tech-priority--medium {
+  background: var(--surface);
+  color: var(--text-3);
+  border: 1px solid var(--border);
+}
+
+.tech-note {
+  font-size: 0.8rem;
+  color: var(--text-4);
+  font-style: italic;
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--surface);
+  border-left: 2px solid var(--border-2);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+/* ============================================================
+   PRODUCT FAMILIES ACCORDION (index.html)
+   ============================================================ */
+
+.product-families-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 900px) {
+  .product-families-grid { grid-template-columns: 1fr; }
+}
+
+.pf-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.pf-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.125rem;
+  background: var(--surface);
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  font-family: var(--sans);
+  text-align: left;
+  transition: background 0.15s;
+  gap: 0.75rem;
+}
+
+.pf-trigger:hover { background: var(--surface-2); }
+.pf-trigger[aria-expanded="true"] { border-bottom: 1px solid var(--border); }
+
+.pf-trigger__left { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+
+.pf-trigger__name {
+  font-size: 0.925rem;
+  font-weight: 600;
+}
+
+.pf-trigger__meta {
+  font-size: 0.775rem;
+  color: var(--text-3);
+  margin-top: 0.1rem;
+}
+
+.pf-trigger__icon {
+  font-size: 0.85rem;
+  color: var(--text-3);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.pf-trigger[aria-expanded="true"] .pf-trigger__icon { transform: rotate(180deg); }
+
+.pf-body {
+  display: none;
+  padding: 1rem 1.125rem;
+  background: var(--bg);
+}
+
+.pf-body.is-open { display: block; }
+
+.pf-family {
+  margin-bottom: 1.25rem;
+}
+
+.pf-family:last-child { margin-bottom: 0; }
+
+.pf-family__name {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-2);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.pf-products {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.pf-product {
+  font-size: 0.825rem;
+  color: var(--text-2);
+  padding: 0.15rem 0;
+  line-height: 1.4;
+}
+
+.pf-product strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ============================================================
+   MERMAID DIAGRAM CONTAINER
+   ============================================================ */
+
+.mermaid-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1rem;
+  overflow: auto;
+  margin-bottom: 1rem;
+}
+
+.mermaid-wrap svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.mermaid-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  align-items: center;
+  font-size: 0.775rem;
+  color: var(--text-3);
+  padding: 0.5rem 0 0.25rem;
+}
+
+.ml-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.ml-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.ml-dot--core     { background: #6366f1; }
+.ml-dot--agent    { background: #16a34a; }
+.ml-dot--security { background: #7c3aed; }
+.ml-dot--l0       { background: #d97706; }
+.ml-dot--infra    { background: #6366f1; }
+.ml-dot--sdk      { background: #475569; }
+.ml-dot--ext      { background: #475569; }
+.ml-dot--orch     { background: #7c3aed; }
+
+.ml-note {
+  margin-left: auto;
+  font-style: italic;
+  color: var(--text-4);
+  font-size: 0.72rem;
+}
+
+/* ============================================================
    PRINT STYLES — scoped to body.report (report.html)
    ============================================================ */
 @media print {

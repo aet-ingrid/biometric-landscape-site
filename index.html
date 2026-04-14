@@ -40,7 +40,7 @@
   <section class="index-section" aria-labelledby="s1-heading">
     <div class="index-section-header">
       <div class="section-title" id="s1-heading">Player Overview</div>
-      <span class="section-subtitle">Four players — 11 lanes total — annotated by binding quality</span>
+      <span class="section-subtitle">Four players — 13 lanes total — annotated by binding quality</span>
     </div>
 
     <div class="player-strip">
@@ -59,7 +59,7 @@
           <span class="tag tag--agentic">Agentic</span>
           <span class="bq bq--hard">hard</span>
         </div>
-        <p class="player-card__position">Dominant enterprise IAM orchestrator (Entra ID, 600M+ users). Governance shell for agentic AI is complete; agent credential binding remains soft — the biometric proof from Windows Hello provisioning never transfers to the agent credential.</p>
+        <p class="player-card__position">4 lanes including SSAC (self-service account recovery IDV, soft). Dominant enterprise IAM orchestrator (Entra ID, 600M+ users). Governance shell for agentic AI is complete; agent credential binding remains soft — the biometric proof from Windows Hello provisioning never transfers to the agent credential.</p>
         <div class="player-card__footer">
           <a href="players/microsoft.html">→ Full brief</a>
         </div>
@@ -79,7 +79,7 @@
           <span class="tag tag--agentic">Agentic</span>
           <span class="bq bq--hard">hard</span>
         </div>
-        <p class="player-card__position">Most complete agentic governance shell in market (XAA, Nametag Signa, Agent Gateway). No native hard-binding mechanism — Verified Human Signature is an attestation record, not an artifact-embedded proof. Most regulatory exposure in enterprise IAM.</p>
+        <p class="player-card__position">4 lanes including Auth0 Auth for GenAI (agentic, soft). Most complete agentic governance shell in market (XAA, Nametag Signa, Agent Gateway). No native hard-binding mechanism. Most regulatory exposure in enterprise IAM.</p>
         <div class="player-card__footer">
           <a href="players/okta.html">→ Full brief</a>
         </div>
@@ -244,9 +244,9 @@
   <section class="index-section" aria-labelledby="s3-heading">
     <div class="index-section-header">
       <div class="section-title" id="s3-heading">Binding Quality Matrix</div>
-      <span class="section-subtitle">4 players · click a cell to navigate to that player's lane section</span>
+      <span class="section-subtitle">4 players · 13 lanes total · click a cell to navigate to that player's lane section</span>
     </div>
-    <p style="font-size:0.8rem;color:var(--text-3);margin-bottom:1.25rem;">A <strong>lane</strong> is a distinct product or protocol offering within a player's portfolio — each with its own binding mechanism, artifact type, and deployment status. Players with more than one lane cover multiple use cases (e.g., device auth, credential issuance, and agent identity) that may have different binding quality assessments.</p>
+    <p style="font-size:0.8rem;color:var(--text-3);margin-bottom:1.25rem;">A <strong>lane</strong> is a distinct product or protocol offering within a player's portfolio — each with its own binding mechanism, artifact type, and deployment status. Players with more than one lane cover multiple use cases (e.g., device auth, credential issuance, and agent identity) that may have different binding quality assessments. The matrix shows primary lanes per context axis; players with 4 lanes may have additional lanes not shown in every cell.</p>
 
     <div class="matrix-wrap">
       <table class="binding-matrix" role="grid">
@@ -336,7 +336,17 @@
               <div class="lane-cell">
                 <a href="players/okta.html#lane-p04-l3">
                   <span class="bq bq--soft">soft</span>
-                  <div class="lane-cell__name">Okta Agent Identity</div>
+                  <div class="lane-cell__name">Okta Agent Identity (XAA)</div>
+                </a>
+                <div class="flex-wrap mt-1">
+                  <span class="pill pill--artifact">oidc_jwt</span>
+                  <span class="pill pill--agentic">agentic</span>
+                </div>
+              </div>
+              <div class="lane-cell" style="margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.5rem;">
+                <a href="players/okta.html#lane-p04-l4">
+                  <span class="bq bq--soft">soft</span>
+                  <div class="lane-cell__name">Auth0 Auth for GenAI</div>
                 </a>
                 <div class="flex-wrap mt-1">
                   <span class="pill pill--artifact">oidc_jwt</span>
@@ -462,7 +472,7 @@
           <span class="accordion-trigger__icon" aria-hidden="true">▾</span>
         </button>
         <div id="acc-agentic" class="accordion-body is-open">
-          <p style="font-size:0.875rem;color:var(--text-3);margin-bottom:1rem;">5 of 11 lanes across these four players are agentic (AI agent identity). All four players have shipped or announced an agentic lane as of Q1 2026.</p>
+          <p style="font-size:0.875rem;color:var(--text-3);margin-bottom:1rem;">5 of 13 lanes across these four players are agentic (AI agent identity). All four players have shipped or announced an agentic lane as of Q1 2026. Okta now has 2 agentic lanes (XAA/Agent Identity + Auth0 Auth for GenAI).</p>
           <div class="agentic-grid">
             <div class="agentic-card">
               <div class="agentic-card__player">Microsoft</div>
@@ -479,8 +489,13 @@
               <div class="agentic-card__lanes">
                 <div class="agentic-lane">
                   <span class="bq bq--soft">soft</span><br>
-                  <span>Okta Agent Identity</span><br>
-                  <small style="color:var(--text-4);">OAuth service principals; XAA access control; Nametag Signa VHS is governance-logged attestation, not artifact-embedded</small>
+                  <span>Okta Agent Identity (XAA)</span><br>
+                  <small style="color:var(--text-4);">OAuth service principals; XAA access control; Nametag Signa VHS is governance-logged attestation, not artifact-embedded. IETF ID-JAG RFC authorship (Aaron Parecki, Brian Campbell).</small>
+                </div>
+                <div class="agentic-lane" style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border);">
+                  <span class="bq bq--soft">soft</span><br>
+                  <span>Auth0 Auth for GenAI</span><br>
+                  <small style="color:var(--text-4);">Token Vault (RFC 8693), CIBA, OpenFGA for RAG; LangChain/LlamaIndex/Vercel/Genkit SDKs; Auth for MCP (Early Access). No hard binding path as of April 2026.</small>
                 </div>
               </div>
             </div>
@@ -490,7 +505,7 @@
                 <div class="agentic-lane">
                   <span class="bq bq--hard_path_native">hard path native</span><br>
                   <span>AgentKit</span><br>
-                  <small style="color:var(--text-4);">Pseudonymous PoP delegation via World ID; ZK proof chain human → agent; x402 payment integration. <strong>Limited beta only</strong> — production-grade 1.0 deferred to World ID 4.0 generation</small>
+                  <small style="color:var(--text-4);">Pseudonymous PoP delegation via World ID; ZK proof chain human → agent; x402 payment-identity nexus (Coinbase) + Cloudflare integration. AgentBook: public on-chain registry, no institutional intermediary. HITL mid-execution checkpoint (developer preview March 2026). <strong>Limited beta only</strong> — production-grade 1.0 deferred to World ID 4.0 generation.</small>
                 </div>
               </div>
             </div>
@@ -524,11 +539,11 @@
             </div>
             <div class="gap-card">
               <div class="gap-card__player">Okta (P04)</div>
-              <p class="gap-card__text">No native hard-binding mechanism anywhere in the stack; software-only token signing; soft-to-hard binding transition requires acquiring Nametag or executing deep third-party integration — most exposed player in enterprise IAM to regulatory pressure on this gap.</p>
+              <p class="gap-card__text">No native hard-binding mechanism anywhere in the stack; software-only token signing; soft-to-hard binding transition requires acquiring Nametag or executing deep third-party integration — most exposed player in enterprise IAM to regulatory pressure on this gap. Auth0 Auth for GenAI (new lane) adds a second agentic surface with no hard binding path as of April 2026 — widening the binding gap, not closing it.</p>
             </div>
             <div class="gap-card">
               <div class="gap-card__player">World (P05)</div>
-              <p class="gap-card__text">Token-incentivized growth model means user count claims cannot be read equivalently to SaaS adoption; issuance-side is centralized (TFH controls Orb + deduplication algorithm) despite decentralized presentation-side design.</p>
+              <p class="gap-card__text">Token-incentivized growth model means user count claims cannot be read equivalently to SaaS adoption; issuance-side is centralized (TFH controls Orb + deduplication algorithm) despite decentralized presentation-side design. Counterpoint: MEDIROM Healthcare Technologies partnership (Japan, 3,000 retail locations, Tokyo Stock Exchange-listed) is the first large-scale non-token-incentivized institutional adoption signal.</p>
             </div>
             <div class="gap-card">
               <div class="gap-card__player">Ping Identity (P23)</div>
@@ -634,6 +649,20 @@
                 <td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ active bans (10 jurisdictions)</span></td>
                 <td><span style="color:var(--hard-text);font-family:var(--mono);font-size:0.78rem;">✓ Keyless sMPC GDPR-exempt</span></td>
               </tr>
+              <tr>
+                <td><span data-tooltip="Illinois Biometric Information Privacy Act (BIPA) — in force. Supplier holds biometric data in Okta+iProov flow; customer compliance obligation. Keyless no-storage architecture reduces Ping's exposure.">Illinois BIPA</span></td>
+                <td>—</td>
+                <td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ supplier holds biometric data</span></td>
+                <td><span style="color:#fca5a5;font-family:var(--mono);font-size:0.78rem;">⚠ iris data storage (state bans)</span></td>
+                <td><span style="color:#fcd34d;font-family:var(--mono);font-size:0.78rem;">~ reduced (no-storage architecture)</span></td>
+              </tr>
+              <tr>
+                <td><span data-tooltip="White House AI Framework age assurance mandate (March 2026) — primarily affects CIAM lanes (Okta Auth0/CIC, Ping CIAM). Addressed via IdV partner integration in both cases.">WH AI Framework (age)</span></td>
+                <td>—</td>
+                <td><span style="color:#fcd34d;font-family:var(--mono);font-size:0.78rem;">~ Auth0/CIC (CIAM lane)</span></td>
+                <td>—</td>
+                <td><span style="color:#fcd34d;font-family:var(--mono);font-size:0.78rem;">~ CIAM lane (partner integration)</span></td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -699,13 +728,27 @@
                 <td><span class="status-badge status-badge--announced">announced</span></td>
                 <td><span class="status-badge status-badge--announced">engaged</span></td>
                 <td><span class="status-badge status-badge--partial">not referenced</span></td>
-                <td><span class="status-badge status-badge--announced">announced</span></td>
+                <td><span class="status-badge status-badge--announced">active contributor</span></td>
               </tr>
               <tr>
-                <td>XAA (Okta proprietary)</td>
+                <td>XAA / ID-JAG (Okta)</td>
                 <td><span class="status-badge status-badge--partial">not adopted</span></td>
                 <td><span class="status-badge status-badge--production">production (own protocol)</span></td>
                 <td><span class="status-badge status-badge--partial">not referenced</span></td>
+                <td><span class="status-badge status-badge--partial">not adopted</span></td>
+              </tr>
+              <tr>
+                <td>CAIP-122</td>
+                <td><span class="status-badge status-badge--partial">not adopted</span></td>
+                <td><span class="status-badge status-badge--partial">not adopted</span></td>
+                <td><span class="status-badge status-badge--production">production</span></td>
+                <td><span class="status-badge status-badge--partial">not adopted</span></td>
+              </tr>
+              <tr>
+                <td>x402 (payment-identity)</td>
+                <td><span class="status-badge status-badge--partial">not adopted</span></td>
+                <td><span class="status-badge status-badge--partial">not adopted</span></td>
+                <td><span class="status-badge status-badge--production">production</span></td>
                 <td><span class="status-badge status-badge--partial">not adopted</span></td>
               </tr>
             </tbody>
@@ -715,6 +758,7 @@
 
     </div>
   </section>
+
 
 </div><!-- /page-wrap -->
 

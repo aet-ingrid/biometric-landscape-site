@@ -84,6 +84,49 @@ document.addEventListener('DOMContentLoaded', function () {
     onScroll();
   }
 
+  // --- Page-level tabs ---
+  document.querySelectorAll('.page-tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var targetId = this.getAttribute('aria-controls');
+      // Deactivate all tabs and panes in this tab group
+      var tabBar = this.closest('.page-tabs');
+      if (tabBar) {
+        tabBar.querySelectorAll('.page-tab').forEach(function (t) {
+          t.classList.remove('is-active');
+          t.setAttribute('aria-selected', 'false');
+        });
+      }
+      document.querySelectorAll('.tab-pane').forEach(function (pane) {
+        pane.classList.remove('is-active');
+      });
+      // Activate selected tab and pane
+      this.classList.add('is-active');
+      this.setAttribute('aria-selected', 'true');
+      var target = document.getElementById(targetId);
+      if (target) {
+        target.classList.add('is-active');
+        // Render any unprocessed Mermaid diagrams now that the pane is visible
+        if (window.mermaid) {
+          var unprocessed = target.querySelectorAll('.mermaid:not([data-processed])');
+          if (unprocessed.length > 0) {
+            mermaid.run({ nodes: Array.from(unprocessed) });
+          }
+        }
+      }
+    });
+  });
+
+  // --- Product families accordion (pf-trigger) ---
+  document.querySelectorAll('.pf-trigger').forEach(function (trigger) {
+    trigger.addEventListener('click', function () {
+      var expanded = this.getAttribute('aria-expanded') === 'true';
+      var bodyId = this.getAttribute('aria-controls');
+      var body = document.getElementById(bodyId);
+      this.setAttribute('aria-expanded', !expanded);
+      if (body) body.classList.toggle('is-open', !expanded);
+    });
+  });
+
   // --- Smooth scroll for anchor links ---
   document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     link.addEventListener('click', function (e) {
